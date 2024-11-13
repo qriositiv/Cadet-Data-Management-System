@@ -1,4 +1,4 @@
-<div class="h-full flex items-center justify-center bg-gray-100">
+<div class="h-full flex items-center justify-center bg-stone-200">
   <div class="bg-white p-8 rounded-lg shadow-lg w-80">
     <h2 class="text-2xl font-bold mb-6 text-center">Autorizacija</h2>
 
@@ -9,7 +9,7 @@
           type="text"
           id="cadetIdentificationNumber"
           formControlName="cadetIdentificationNumber"
-          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-600"
+          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
         />
         @if (loginForm.get('cadetIdentificationNumber')?.invalid && loginForm.get('cadetIdentificationNumber')?.touched) {
           <div class="text-red-500 text-sm">
@@ -24,7 +24,7 @@
           type="text"
           id="nationalIdentificationNumber"
           formControlName="nationalIdentificationNumber"
-          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-600"
+          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
         />
         @if (loginForm.get('nationalIdentificationNumber')?.invalid && loginForm.get('nationalIdentificationNumber')?.touched) {
           <div class="text-red-500 text-sm">
@@ -35,14 +35,14 @@
 
       <button
         type="submit"
-        class="w-full bg-teal-600 text-white font-semibold py-2 rounded-md hover:bg-teal-700"
+        class="w-full bg-rose-600 text-white font-semibold py-2 rounded-md hover:bg-rose-700"
         [disabled]="loginForm.invalid"
       >
         Prisijungti
       </button>
     </form>
     <div class="w-full text-center pt-4">
-      <a class="text-teal-600 hover:text-teal-700 text-sm">Pagalba</a>
+      <a class="text-rose-600 hover:text-rose-700 text-sm">Pagalba</a>
     </div>
   </div>
 </div>

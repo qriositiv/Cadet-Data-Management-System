@@ -2,7 +2,7 @@
     <div class="text-center mb-6">
         <div class="relative inline-block">
             <img src="{{ cadet.basicInformation.photoUrl }}" alt="Cadet Photo" class="w-40 h-40 rounded-full shadow-md mx-auto" />
-            <!-- <button class="absolute bottom-0 right-0 bg-teal-600 text-white px-4 py-1 rounded-full shadow-md">
+            <!-- <button class="absolute bottom-0 right-0 bg-rose-600 text-white px-4 py-1 rounded-full shadow-md">
                 Vadovas
             </button> -->
         </div>
@@ -13,28 +13,28 @@
     <div class="mt-6">
         <div class="flex justify-center mb-6 space-x-6">
             <button
-                [ngClass]="{ 'text-teal-600 border-teal-600': currentTab === 'basic' }"
+                [ngClass]="{ 'text-rose-600 border-rose-600': currentTab === 'basic' }"
                 class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
                 (click)="selectTab('basic')"
             >
                 Pagrindinė informacija
             </button>
             <button
-                [ngClass]="{ 'text-teal-600 border-teal-600': currentTab === 'contact' }"
+                [ngClass]="{ 'text-rose-600 border-rose-600': currentTab === 'contact' }"
                 class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
                 (click)="selectTab('contact')"
             >
                 Kontaktinė informacija
             </button>
             <button
-                [ngClass]="{ 'text-teal-600 border-teal-600': currentTab === 'health' }"
+                [ngClass]="{ 'text-rose-600 border-rose-600': currentTab === 'health' }"
                 class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
                 (click)="selectTab('health')"
             >
                 Sveikatos informacija
             </button>
             <button
-                [ngClass]="{ 'text-teal-600 border-teal-600': currentTab === 'service' }"
+                [ngClass]="{ 'text-rose-600 border-rose-600': currentTab === 'service' }"
                 class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
                 (click)="selectTab('service')"
             >
