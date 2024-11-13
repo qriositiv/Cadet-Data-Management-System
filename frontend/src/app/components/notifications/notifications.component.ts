@@ -22,6 +22,20 @@ export class NotificationsComponent {
       title: 'Prašimas atšauktas',
       message: 'Jūsų prašimas nr. L31313 dėl leidimo išrašimo atsauktas - "Neteisingai užpylditi duomenys".',
       closed: false
+    },
+    {
+      id: 1,
+      type: '',
+      title: 'Renginis vyksta dabar',
+      message: 'Paskaita – diskusija „Lietuvos žvalgybos veiksmai prijungiant Klaipėdos kraštą”".',
+      closed: false
+    },
+    {
+      id: 1,
+      type: 'important',
+      title: '',
+      message: '',
+      closed: false
     }
   ];
 
