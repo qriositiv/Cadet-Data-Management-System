@@ -1,13 +1,13 @@
-<div class="cadet-profile-container w-full mx-auto bg-white rounded-lg shadow-lg p-6 m-4">
+<div class="w-full mx-auto bg-white rounded-lg shadow-lg p-6 m-4">
     <div class="text-center mb-6">
         <div class="relative inline-block">
-            <img src="{{ cadet.photoUrl }}" alt="Cadet Photo" class="w-40 h-40 rounded-full shadow-md mx-auto" />
+            <img src="{{ cadet.basicInformation.photoUrl }}" alt="Cadet Photo" class="w-40 h-40 rounded-full shadow-md mx-auto" />
             <!-- <button class="absolute bottom-0 right-0 bg-teal-600 text-white px-4 py-1 rounded-full shadow-md">
-                Edit
+                Vadovas
             </button> -->
         </div>
-        <h2 class="text-3xl font-bold mt-4">{{ cadet.name }} <span class="font-normal text-gray-500">
-            [{{ cadet.cadetId }}]</span></h2>
+        <h2 class="text-3xl font-bold mt-4">{{ cadet.basicInformation.name }} <span class="font-normal text-gray-500">
+            [{{ cadet.basicInformation.cadetId }}]</span></h2>
     </div>
 
     <div class="mt-6">
@@ -46,19 +46,19 @@
         <div *ngIf="currentTab === 'basic'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Kariūno Identifikavimo Numeris (KIN):</label>
-                <p class="text-gray-800">{{ cadet.cadetId }}</p>
+                <p class="text-gray-800">{{ cadet.basicInformation.cadetId }}</p>
             </div>
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Vardas ir Pavardė:</label>
-                <p class="text-gray-800">{{ cadet.name }}</p>
+                <p class="text-gray-800">{{ cadet.basicInformation.name }}</p>
             </div>
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Gimimo data:</label>
-                <p class="text-gray-800">{{ cadet.dateOfBirth }}</p>
+                <p class="text-gray-800">{{ cadet.basicInformation.dateOfBirth }}</p>
             </div>
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Asmens Kodas (AK):</label>
-                <p class="text-gray-800">{{ cadet.civilId }}</p>
+                <p class="text-gray-800">{{ cadet.basicInformation.civilId }}</p>
             </div>
         </div>
 
@@ -66,15 +66,15 @@
         <div *ngIf="currentTab === 'contact'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Telefono numeris:</label>
-                <p class="text-gray-800">{{ cadet.phone }}</p>
+                <p class="text-gray-800">{{ cadet.contactInformation.phone }}</p>
             </div>
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">El. pašto adresas:</label>
-                <p class="text-gray-800">{{ cadet.email }}</p>
+                <p class="text-gray-800">{{ cadet.contactInformation.email }}</p>
             </div>
             <div class="profile-info mb-4 col-span-2">
                 <label class="block text-gray-700 font-medium">Gyvenimo adresas:</label>
-                <p class="text-gray-800">{{ cadet.address }}</p>
+                <p class="text-gray-800">{{ cadet.contactInformation.address }}</p>
             </div>
         </div>
 
@@ -82,25 +82,25 @@
         <div *ngIf="currentTab === 'health'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Kraujo grupė:</label>
-                <p class="text-gray-800">{{ cadet.bloodType }}</p>
+                <p class="text-gray-800">{{ cadet.healthInformation.bloodType }}</p>
             </div>
             <div class="flex space-x-16">
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Aukštis:</label>
-                <p class="text-gray-800">{{ cadet.height }} cm</p>
+                <p class="text-gray-800">{{ cadet.healthInformation.height }} cm</p>
             </div>
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Svoris:</label>
-                <p class="text-gray-800">{{ cadet.weight }} kg</p>
+                <p class="text-gray-800">{{ cadet.healthInformation.weight }} kg</p>
             </div>
             </div>
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Alergijos:</label>
-                <p class="text-gray-800">{{ cadet.allergies }}</p>
+                <p class="text-gray-800">{{ cadet.healthInformation.allergies }}</p>
             </div>
             <div class="profile-info mb-4">
                 <label class="block text-gray-700 font-medium">Ligos:</label>
-                <p class="text-gray-800">{{ cadet.medicalConditions }}</p>
+                <p class="text-gray-800">{{ cadet.healthInformation.medicalConditions }}</p>
             </div>
         </div>
     </div>
