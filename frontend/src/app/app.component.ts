@@ -11,4 +11,5 @@ import { LoginComponent } from './components/login/login.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  email = 'info@kdvs.lt'
 }

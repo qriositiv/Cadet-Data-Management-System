@@ -1,5 +1,4 @@
 <div class="cadet-profile-container w-full mx-auto bg-white rounded-lg shadow-lg p-6 m-4">
-    <!-- Profile Image Centered with Edit Button -->
     <div class="text-center mb-6">
         <div class="relative inline-block">
             <img src="{{ cadet.photoUrl }}" alt="Cadet Photo" class="w-40 h-40 rounded-full shadow-md mx-auto" />
@@ -11,7 +10,6 @@
             [{{ cadet.cadetId }}]</span></h2>
     </div>
 
-    <!-- Tabbed Interface for Profile Sections -->
     <div class="mt-6">
         <div class="flex justify-center mb-6 space-x-6">
             <button
@@ -34,6 +32,13 @@
                 (click)="selectTab('health')"
             >
                 Sveikatos informacija
+            </button>
+            <button
+                [ngClass]="{ 'text-teal-600 border-teal-600': currentTab === 'service' }"
+                class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
+                (click)="selectTab('service')"
+            >
+                Tarnybinė informacija
             </button>
         </div>
 
