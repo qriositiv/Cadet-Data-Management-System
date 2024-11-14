@@ -1,4 +1,4 @@
-<nav class="w-full bg-rose-800 text-white shadow-md">
+<nav class="w-full bg-rose-900 text-white shadow-md">
     <div class="w-3/4 mx-auto h-20 flex items-center justify-between">
         <div class="text-2xl font-bold">
             <a [routerLink]="['/']" class="flex items-center space-x-2 hover:text-rose-300">
@@ -12,8 +12,8 @@
                 <span class="relative">
                     <i class="fa-solid fa-bell text-2xl"></i>
                     <span class="absolute top-1.5 left-3 flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
                     </span>
                 </span>
                 <span class="text-xs">Pranešimai</span>
@@ -33,13 +33,12 @@
         </div>
     </div>
 
-    <div class="w-full bg-rose-700 h-10 flex items-center">
-        <div class="w-3/4 mx-auto flex justify-center space-x-12 text-base">
+    <div class="w-full bg-rose-800 h-10 flex items-center">
+        <div class="w-3/4 mx-auto flex justify-center space-x-20 text-base">
             <a [routerLink]="['/equipment']" class="hover:text-rose-300 transition">Ekipuotė</a>
             <a [routerLink]="['/permissions']" class="hover:text-rose-300 transition">Leidimai</a>
-            <a [routerLink]="['/activities']" class="hover:text-rose-300 transition">Veiklos</a>
-            <a [routerLink]="['/']" class="hover:text-rose-300 transition"></a>
-            <a [routerLink]="['/results']" class="hover:text-rose-300 transition">Rezultatai</a>
+            <a [routerLink]="['/activities']" class="hover:text-rose-300 transition">Renginiai</a>
+            <a [routerLink]="['/results']" class="hover:text-rose-300 transition">Disciplinų Rezultatai</a>
         </div>
     </div>
 </nav>
