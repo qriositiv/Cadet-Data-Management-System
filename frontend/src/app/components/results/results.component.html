@@ -1,0 +1,42 @@
+<div class="results-table-container bg-white p-6 rounded-lg shadow-lg w-full mx-auto">
+  <h2 class="text-2xl font-bold mb-4 text-center">Disciplinų Rezultatai</h2>
+
+  <!-- User Information -->
+  <div class="mb-4 flex justify-between">
+    <p class="text-left">
+      {{ user.name }}, {{ user.sex }}, {{ user.age }} m.</p>
+      @if (resultsBelowMinimum > 0) {
+      <p class=""><i class="fa-regular fa-circle-xmark m-1 text-red-500"></i>Rezultatu mažiau minimumo: {{ resultsBelowMinimum }}</p>
+      } @else {
+        <p class=""><i class="fa-regular fa-circle-check m-1 text-green-500"></i>Visi normativai išlaikyti</p>
+      }
+  </div>
+  
+  <!-- Results Table -->
+  <table class="w-full border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border border-gray-300 p-2 text-left">Disciplina</th>
+        <th class="border border-gray-300 p-2 text-left">Rezultatas</th>
+        <th class="border border-gray-300 p-2 text-left">Minimumas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let discipline of disciplines" class="hover:bg-gray-100">
+        <td class="border border-gray-300 p-2">{{ discipline.name }}</td>
+        <td 
+          class="border border-gray-300 p-2"
+          [ngClass]="{ 'text-green-500': discipline.result >= discipline.minimum, 'text-red-500': discipline.result < discipline.minimum }">
+          {{ discipline.result }}
+        </td>
+        <td class="border border-gray-300 p-2">{{ discipline.minimum }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mt-2">
+    <p class="text-sm">
+      Mažiausios vertės yra pagrįstos jūsų amžiaus grupės (22-25 metų amžiaus) tikslais. Visą lentelę galite rasti <a class="underline text-rose-500 hover:text-rose-600">čia</a>
+    </p>
+  </div>
+</div>
