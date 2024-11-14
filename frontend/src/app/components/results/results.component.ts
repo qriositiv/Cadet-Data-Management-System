@@ -15,12 +15,15 @@ export class ResultsComponent {
   };
 
   disciplines = [
-    { name: 'Mathematics', result: 85, minimum: 70 },
-    { name: 'Physics', result: 60, minimum: 65 },
-    { name: 'Chemistry', result: 72, minimum: 70 },
+    { name: 'Atsispaudimai (vnt)', result: 85, control: 70, needsMore: true },
+    { name: 'Atsilenkimai (vnt)', result: 72, control: 70, needsMore: true },
+    { name: 'Begimas 3 km. (min)', result: 15.6, control: 15.5, needsMore: false },
   ];
 
   get resultsBelowMinimum(): number {
-    return this.disciplines.filter(discipline => discipline.result < discipline.minimum).length;
-  }
+    return this.disciplines.filter(discipline => 
+      (discipline.needsMore && discipline.result < discipline.control) || 
+      (!discipline.needsMore && discipline.result > discipline.control)
+    ).length;
+  }  
 }

@@ -5,7 +5,7 @@
     <p class="text-left">
       {{ user.name }}, {{ user.sex }}, {{ user.age }} m.</p>
       @if (resultsBelowMinimum > 0) {
-      <p class=""><i class="fa-regular fa-circle-xmark m-1 text-red-500"></i>Rezultatu mažiau minimumo: {{ resultsBelowMinimum }}</p>
+      <p class=""><i class="fa-regular fa-circle-xmark m-1 text-red-500"></i>Blogų rezultatų: {{ resultsBelowMinimum }}</p>
       } @else {
         <p class=""><i class="fa-regular fa-circle-check m-1 text-green-500"></i>Visi normativai išlaikyti</p>
       }
@@ -16,7 +16,7 @@
       <tr class="bg-gray-200">
         <th class="border border-gray-300 p-2 text-left">Disciplina</th>
         <th class="border border-gray-300 p-2 text-left">Rezultatas</th>
-        <th class="border border-gray-300 p-2 text-left">Minimumas</th>
+        <th class="border border-gray-300 p-2 text-left">Kontrolinė</th>
       </tr>
     </thead>
     <tbody>
@@ -24,17 +24,20 @@
         <td class="border border-gray-300 p-2">{{ discipline.name }}</td>
         <td 
           class="border border-gray-300 p-2"
-          [ngClass]="{ 'text-green-500': discipline.result >= discipline.minimum, 'text-red-500': discipline.result < discipline.minimum }">
+          [ngClass]="{
+            'text-green-500': (discipline.needsMore && discipline.result >= discipline.control) || (!discipline.needsMore && discipline.result <= discipline.control),
+            'text-red-500': (discipline.needsMore && discipline.result < discipline.control) || (!discipline.needsMore && discipline.result > discipline.control)
+          }">
           {{ discipline.result }}
         </td>
-        <td class="border border-gray-300 p-2">{{ discipline.minimum }}</td>
+        <td class="border border-gray-300 p-2">{{ discipline.control }}</td>
       </tr>
     </tbody>
   </table>
 
   <div class="mt-2">
     <p class="text-sm">
-      Mažiausios vertės yra pagrįstos jūsų amžiaus grupės (22-25 metų amžiaus) tikslais. Visą lentelę galite rasti <a class="underline text-rose-500 hover:text-rose-600">čia</a>
+      Kontrolinės vertės yra pagrįstos jūsų amžiaus grupės (22-25 metų amžiaus) tikslais. Visą lentelę galite rasti <a class="underline text-rose-500 hover:text-rose-600">čia</a>
     </p>
   </div>
 </div>

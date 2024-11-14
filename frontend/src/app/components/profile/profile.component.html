@@ -80,16 +80,22 @@
 
         <!-- Health Information -->
         <div *ngIf="currentTab === 'health'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="profile-info mb-4">
+            <div class="flex justify-start">
+            <div class="profile-info mb-4 w-1/2">
                 <label class="block text-gray-700 font-medium">Kraujo grupė:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.bloodType }}</p>
             </div>
-            <div class="flex space-x-16">
-            <div class="profile-info mb-4">
+            <div class="profile-info mb-4 w-1/2">
+                <label class="block text-gray-700 font-medium">Lytis:</label>
+                <p class="text-gray-800">{{ cadet.healthInformation.sex }}</p>
+            </div>
+            </div>
+            <div class="flex justify-start">
+            <div class="profile-info mb-4 w-1/2">
                 <label class="block text-gray-700 font-medium">Aukštis:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.height }} cm</p>
             </div>
-            <div class="profile-info mb-4">
+            <div class="profile-info mb-4 w-1/2">
                 <label class="block text-gray-700 font-medium">Svoris:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.weight }} kg</p>
             </div>

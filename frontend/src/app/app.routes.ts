@@ -7,6 +7,7 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 import { ResultsComponent } from './components/results/results.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { EventsComponent } from './components/events/events.component';
+import { PermissionsComponent } from './components/permissions/permissions.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,7 +15,8 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'equipment', component: InventoryComponent },
-  { path: 'permissions', component: NotFoundComponent },
+  { path: 'permissions', component: PermissionsComponent },
   { path: 'activities', component: EventsComponent },
   { path: 'results', component: ResultsComponent },
+  { path: '**', component: NotFoundComponent },
 ];

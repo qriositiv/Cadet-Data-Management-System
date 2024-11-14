@@ -1,0 +1,75 @@
+<div class="permissions-container bg-white p-6 rounded-lg shadow-lg w-full my-4 mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-center">Leidimai įvažioti į teretoriją</h2>
+  
+    <table class="w-full border-collapse border border-gray-300 mb-6">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 p-2 text-left">Statusas</th>
+          <th class="border border-gray-300 p-2 text-left">Nuo</th>
+          <th class="border border-gray-300 p-2 text-left">Iki</th>
+          <th class="border border-gray-300 p-2 text-left">Automobilio duomenis</th>
+          <th class="border border-gray-300 p-2 text-left">Vieta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let permission of permissions" class="hover:bg-gray-100">
+          <td class="border border-gray-300 p-2">{{ permission.status }}</td>
+          <td class="border border-gray-300 p-2">{{ permission.dateFrom | date: 'shortDate' }}</td>
+          <td class="border border-gray-300 p-2">{{ permission.dateTo | date: 'shortDate' }}</td>
+          <td class="border border-gray-300 p-2">{{ permission.carNumber }}, {{ permission.brand }}</td>
+          <td class="border border-gray-300 p-2">{{ permission.area }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <button (click)="toggleFormVisibility()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full mb-4">
+      {{ isFormVisible ? 'Atšaukti Pyldima' : 'Užpyldyti Prašymo Formą' }}
+    </button>
+  
+    <form *ngIf="isFormVisible" [formGroup]="permissionForm" (ngSubmit)="submitPermission()" class="space-y-4">
+      <div>
+        <label for="area" class="block text-sm font-medium text-gray-700">Pasirinkite vietą</label>
+        <select id="area" formControlName="area" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+          <option value="" disabled selected>-- Pasirinkite vietą --</option>
+          <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="dateFrom" class="block text-sm font-medium text-gray-700">Data nuo</label>
+          <input type="date" id="dateFrom" formControlName="dateFrom" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+        </div>
+        <div>
+          <label for="dateTo" class="block text-sm font-medium text-gray-700">Data iki</label>
+          <input type="date" id="dateTo" formControlName="dateTo" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+        </div>
+        <div>
+          <label for="carNumber" class="block text-sm font-medium text-gray-700">Automobilio numeris</label>
+          <input type="text" id="carNumber" formControlName="carNumber" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+        </div>
+        <div>
+          <label for="brand" class="block text-sm font-medium text-gray-700">Automobilio markė</label>
+          <input type="text" id="brand" formControlName="brand" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+        </div>
+      
+      <div>
+        <label for="userName" class="block text-sm font-medium text-gray-700">Vardas ir pavardė</label>
+        <input type="text" id="userName" formControlName="userName" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm bg-gray-100">
+      </div>
+      <div>
+        <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Telefono numeris</label>
+        <input type="text" id="phoneNumber" formControlName="phoneNumber" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+      </div>
+    </div>
+      <div>
+        <label for="additionalInfo" class="block text-sm font-medium text-gray-700">Papildoma informacija</label>
+        <textarea id="additionalInfo" formControlName="additionalInfo" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600"></textarea>
+      </div>
+      <button type="submit" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full" [disabled]="!permissionForm.valid">
+        Pateikti Prašima
+      </button>
+    </form>
+  </div>
+
+
+  
