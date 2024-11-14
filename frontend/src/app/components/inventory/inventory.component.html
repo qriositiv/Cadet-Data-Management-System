@@ -1,0 +1,53 @@
+<div class="bg-white p-6 pb-2 rounded-lg shadow-lg my-4 w-full mx-auto">
+  <h2 class="text-2xl font-bold mb-2 text-center">Ekiperuotė</h2>
+  
+  <ul>
+    <li *ngFor="let item of items" class="flex flex-col mb-2 p-2 border-b rounded-md">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <span class="status-icon text-3xl">
+            <i *ngIf="item.status === 'important'" class="fa-solid fa-triangle-exclamation text-orange-400"></i>
+            <i *ngIf="item.status === 'success'" class="fa-solid fa-circle-check text-green-400"></i>
+            <i *ngIf="item.status === 'fail'" class="fa-solid fa-circle-xmark text-red-400"></i>
+            <i *ngIf="item.status === 'wait'" class="fa-solid fa-clock text-amber-400"></i>
+          </span>
+          <img [src]="item.photo" alt="{{ item.name }}" class="w-12 h-12 rounded-md shadow">
+          
+          <div>
+            <div class="text-lg font-semibold text-gray-800">{{ item.name }}</div>
+            <div class="text-sm text-gray-600">Didis: {{ item.size }}, Spalva: {{ item.color }}</div>
+            <div class="text-sm text-gray-500">Išduotas: {{ item.dateGiven | date: 'mediumDate' }}</div>
+          </div>
+        </div>
+  
+        <div class="flex space-x-2">
+          <button *ngIf="item.status !== 'wait'" (click)="validateItem(item.id)" class="bg-rose-500 text-white py-1 px-3 rounded-md hover:bg-rose-600">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+          <button *ngIf="item.status === 'wait'" class="bg-gray-500 text-white py-1 px-3 rounded-md" disabled>
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="selectedItemId === item.id" class="mt-4 flex items-end space-x-4">
+        <div class="w-1/2">
+          <label for="sizeSelect" class="block text-sm font-medium text-gray-700">Pasirinkti didį</label>
+          <select id="sizeSelect" [(ngModel)]="selectedSize" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600">
+            <option *ngFor="let size of availableSizes" [value]="size">{{ size }}</option>
+          </select>
+        </div>
+      
+        <div class="flex space-x-2 w-1/2">
+          <button (click)="submitOrder()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full" [disabled]="!selectedSize">
+            Pateikti prašyma
+          </button>
+          <button (click)="cancelOrder()" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 w-full">
+            Atšaukti
+          </button>
+        </div>
+      </div>
+      
+    </li>
+  </ul>
+</div>

@@ -19,9 +19,9 @@ export class ProfileComponent {
       civilId: '5001226****'
     },
     contactInformation: {
-      phone: '+37063013123',
-      email: 'qriositiv@gmail.com',
-      address: 'Baltijos pr. XX / XX, Klaipėda, Klaipėdos apsk.',
+      phone: '+37067777777',
+      email: 'antanaitis.a@gmail.com',
+      address: 'Minijos g. XX / XX, Klaipėda, Klaipėdos apsk.',
     },
     healthInformation: {
       bloodType: 'O+',
