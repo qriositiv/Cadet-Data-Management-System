@@ -66,7 +66,7 @@ export class InventoryComponent {
     },
     {
       id: 6,
-      status: 'fail',
+      status: 'success',
       photo: 'https://matuza-tactical.lt/wp-content/uploads/2020/11/5-1-scaled.jpg',
       name: 'Gertuvė',
       size: '-',
@@ -75,7 +75,7 @@ export class InventoryComponent {
     },
     {
       id: 7,
-      status: 'fail',
+      status: 'wait',
       photo: 'https://www.aic.lt/8044-medium_default/metalinis-puodukas-gertuvei.jpg',
       name: 'Maisto katilukas',
       size: '-',
@@ -84,7 +84,7 @@ export class InventoryComponent {
     },
     {
       id: 8,
-      status: 'fail',
+      status: 'important',
       photo: 'https://www.aic.lt/5240-large_default/taktines-pirstines-arsenal-swat-be-pirstu-l.jpg',
       name: 'Taktinės pirštines',
       size: 'M',

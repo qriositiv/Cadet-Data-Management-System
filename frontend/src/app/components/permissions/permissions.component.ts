@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
   templateUrl: './permissions.component.html'
 })
 export class PermissionsComponent {
-  permissions = [
+  enterWithCarPermissions = [
     {
       id: 1,
       status: 'Patvirtintas',
@@ -21,11 +21,22 @@ export class PermissionsComponent {
       phoneNumber: '+37067777777',
       additionalInfo: '',
       area: 'Vilnius' 
-    },
+    }
   ];
 
+  physicalActivityPermissions = [
+    {
+      status: 'Patvirtintas',
+      dateFrom: new Date('2023-11-01'),
+      dateTo: new Date('2023-11-05'),
+      additionalInfo: 'Sulaužita ranka.'
+    }
+  ];
+
+  physicalPermissionForm: FormGroup;
+  isPhysicalPermissionFormVisible = false;
   areas = ['Vilnius', 'Klaipėda', 'Kaunas'];
-  isFormVisible: boolean = false;
+  isFormVisible = false;
   permissionForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -41,13 +52,36 @@ export class PermissionsComponent {
       dateTo: [threeDaysLaterStr, Validators.required],
       carNumber: ['', Validators.required],
       brand: ['', Validators.required],
-      userName: [{ value: this.permissions[0].userName, disabled: true }, Validators.required],
-      phoneNumber: ['+37067777777', [Validators.required, Validators.pattern(/^[+0-9\s-]+$/)]],
+      userName: [{ value: this.enterWithCarPermissions[0].userName, disabled: true }, Validators.required],
+      phoneNumber: [this.enterWithCarPermissions[0].phoneNumber, [Validators.required, Validators.pattern(/^[+0-9\s-]+$/)]],
       additionalInfo: [''],
-      area: ['', Validators.required] 
+      area: ['', Validators.required]
+    });
+
+    this.physicalPermissionForm = this.fb.group({
+      userName: ['', Validators.required],
+      documentPhoto: ['', Validators.required],
+      dateFrom: ['', Validators.required],
+      dateTo: ['', Validators.required],
+      additionalInfo: ['']
     });
   }
 
+  togglePhysicalPermissionFormVisibility() {
+    this.isPhysicalPermissionFormVisible = !this.isPhysicalPermissionFormVisible;
+  }
+
+  submitPhysicalPermission() {
+    if (this.physicalPermissionForm.valid) {
+      const newPermission = {
+        ...this.physicalPermissionForm.value,
+        status: 'Pending'
+      };
+      this.physicalActivityPermissions.push(newPermission);
+      this.physicalPermissionForm.reset();
+      this.isPhysicalPermissionFormVisible = false;
+    }
+  }
 
   toggleFormVisibility() {
     this.isFormVisible = !this.isFormVisible;
@@ -55,13 +89,19 @@ export class PermissionsComponent {
 
   submitPermission() {
     if (this.permissionForm.valid) {
-      const newPermission = { 
-        ...this.permissionForm.getRawValue(), 
-        status: 'Pending', 
-        id: this.permissions.length + 1 
+      const newPermission = {
+        ...this.permissionForm.getRawValue(),
+        status: 'Pending',
+        id: this.enterWithCarPermissions.length + 1
       };
-      this.permissions.push(newPermission);
-      this.permissionForm.reset({ userName: 'John Doe' });
+      this.enterWithCarPermissions.push(newPermission);
+      this.permissionForm.reset({
+        userName: this.enterWithCarPermissions[0].userName,
+        phoneNumber: this.enterWithCarPermissions[0].phoneNumber,
+        dateFrom: this.permissionForm.controls['dateFrom'].value,
+        dateTo: this.permissionForm.controls['dateTo'].value
+      });
+      this.isFormVisible = false;
     }
   }
 }
