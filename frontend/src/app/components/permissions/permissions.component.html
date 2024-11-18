@@ -1,31 +1,31 @@
 <!-- Permissions for Vehicle Entry -->
-<div class="permissions-container bg-white p-6 rounded-lg shadow-lg w-full my-4 mx-auto">
-  <h2 class="text-2xl font-bold mb-4 text-center">Leidimai įvažiuoti į teritoriją</h2>
+<div class="permissions-container bg-white md:p-4 p-2 rounded-lg shadow-lg w-full my-4 mx-auto">
+  <h2 class="md:text-2xl text-lg font-bold mb-4 text-center">Leidimai įvažiuoti į teritoriją</h2>
 
   <!-- Vehicle Entry Permissions Table -->
-  <table class="w-full border-collapse border border-gray-300 mb-6">
+  <table class="w-full border-collapse border border-gray-300 mb-6 md:text-base text-xs">
     <thead>
       <tr class="bg-gray-200">
-        <th class="border border-gray-300 p-2 text-left">Statusas</th>
-        <th class="border border-gray-300 p-2 text-left">Galioja nuo</th>
-        <th class="border border-gray-300 p-2 text-left">Galioja iki</th>
-        <th class="border border-gray-300 p-2 text-left">Automobilio informacija</th>
-        <th class="border border-gray-300 p-2 text-left">Vieta</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Statusas</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Galioja nuo</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Galioja iki</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Automobilio informacija</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Vieta</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let permission of enterWithCarPermissions" class="hover:bg-gray-100">
-        <td class="border border-gray-300 p-2">{{ permission.status }}</td>
-        <td class="border border-gray-300 p-2">{{ permission.dateFrom | date: 'shortDate' }}</td>
-        <td class="border border-gray-300 p-2">{{ permission.dateTo | date: 'shortDate' }}</td>
-        <td class="border border-gray-300 p-2">{{ permission.carNumber }}, {{ permission.brand }}</td>
-        <td class="border border-gray-300 p-2">{{ permission.area }}</td>
+        <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center"><i class="fa-solid fa-circle-check text-green-500 text-lg md:mr-2"></i><span class="max-sm:hidden">{{ permission.status }}</span></td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.carNumber }}, {{ permission.brand }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.area }}</td>
       </tr>
     </tbody>
   </table>
 
   <!-- Toggle Form Button -->
-  <button (click)="toggleFormVisibility()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full mb-4">
+  <button (click)="toggleFormVisibility()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full mb-4 md:text-base text-sm">
     {{ isFormVisible ? 'Atšaukti prašymą' : 'Pildyti naują prašymą' }}
   </button>
 
@@ -33,7 +33,7 @@
   <form *ngIf="isFormVisible" [formGroup]="permissionForm" (ngSubmit)="submitPermission()" class="space-y-4">
     <div>
       <label for="area" class="block text-sm font-medium text-gray-700">Pasirinkite vietą</label>
-      <select id="area" formControlName="area" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+      <select id="area" formControlName="area" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
         <option value="" disabled selected>-- Pasirinkite vietą --</option>
         <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
       </select>
@@ -41,73 +41,93 @@
     <div class="grid grid-cols-2 gap-4">
       <div>
         <label for="dateFrom" class="block text-sm font-medium text-gray-700">Galioja nuo</label>
-        <input type="date" id="dateFrom" formControlName="dateFrom" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+        <input type="date" id="dateFrom" formControlName="dateFrom" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
       <div>
         <label for="dateTo" class="block text-sm font-medium text-gray-700">Galioja iki</label>
-        <input type="date" id="dateTo" formControlName="dateTo" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+        <input type="date" id="dateTo" formControlName="dateTo" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
       <div>
         <label for="carNumber" class="block text-sm font-medium text-gray-700">Automobilio numeris</label>
-        <input type="text" id="carNumber" formControlName="carNumber" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+        <input type="text" id="carNumber" formControlName="carNumber" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
       <div>
         <label for="brand" class="block text-sm font-medium text-gray-700">Automobilio markė</label>
-        <input type="text" id="brand" formControlName="brand" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+        <input type="text" id="brand" formControlName="brand" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
     </div>
     <div>
       <label for="additionalInfo" class="block text-sm font-medium text-gray-700">Papildoma informacija</label>
-      <textarea id="additionalInfo" formControlName="additionalInfo" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600"></textarea>
+      <textarea id="additionalInfo" formControlName="additionalInfo" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"></textarea>
     </div>
-    <button type="submit" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full" [disabled]="!permissionForm.valid">
+    <button type="submit" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full md:text-base text-sm" [disabled]="!permissionForm.valid">
       Pateikti prašymą
     </button>
   </form>
 </div>
-
-<!-- Permissions for Physical Activity Exemptions -->
-<div class="permissions-container bg-white p-6 rounded-lg shadow-lg w-full my-4 mx-auto">
-  <h2 class="text-2xl font-bold mb-4 text-center">Leidimas nuo fizinės veiklos</h2>
+<div class="permissions-container bg-white md:p-4 p-2 rounded-lg shadow-lg w-full my-4 mx-auto">
+  <h2 class="md:text-2xl text-lg font-bold mb-4 text-center">Leidimas nuo fizinės veiklos</h2>
 
   <!-- Physical Activity Permissions Table -->
-  <table class="w-full border-collapse border border-gray-300 mb-6">
+  <table class="w-full border-collapse border border-gray-300 mb-6 md:text-base text-xs">
     <thead>
       <tr class="bg-gray-200">
-        <th class="border border-gray-300 p-2 text-left">Statusas</th>
-        <th class="border border-gray-300 p-2 text-left">Galioja nuo</th>
-        <th class="border border-gray-300 p-2 text-left">Galioja iki</th>
-        <th class="border border-gray-300 p-2 text-left">Papildoma informacija</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Statusas</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Galioja nuo</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Galioja iki</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Papildoma informacija</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let permission of physicalActivityPermissions" class="hover:bg-gray-100">
-        <td class="border border-gray-300 p-2">{{ permission.status }}</td>
-        <td class="border border-gray-300 p-2">{{ permission.dateFrom | date: 'shortDate' }}</td>
-        <td class="border border-gray-300 p-2">{{ permission.dateTo | date: 'shortDate' }}</td>
-        <td class="border border-gray-300 p-2">{{ permission.additionalInfo }}</td>
+        <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center"><i class="fa-solid fa-circle-check text-green-500 text-lg md:mr-2"></i><span class="max-sm:hidden">{{ permission.status }}</span></td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.additionalInfo }}</td>
       </tr>
     </tbody>
   </table>
 
   <!-- Toggle Form Button -->
-  <button (click)="togglePhysicalPermissionFormVisibility()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full mb-4">
+  <button
+    (click)="togglePhysicalPermissionFormVisibility()"
+    class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full mb-4 md:text-base text-sm"
+  >
     {{ isPhysicalPermissionFormVisible ? 'Slėpti prašymą' : 'Pildyti naują prašymą' }}
   </button>
 
   <!-- New Physical Activity Permission Form -->
-  <form *ngIf="isPhysicalPermissionFormVisible" [formGroup]="physicalPermissionForm" (ngSubmit)="submitPhysicalPermission()" class="space-y-4">
-    <div class="grid grid-cols-2 gap-4">
-    <div>
-      <label for="userName" class="block text-sm font-medium text-gray-700">Vardas ir pavardė</label>
-      <input type="text" id="userName" formControlName="userName" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
+  <form
+    *ngIf="isPhysicalPermissionFormVisible"
+    [formGroup]="physicalPermissionForm"
+    (ngSubmit)="submitPhysicalPermission()"
+    class="space-y-4"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="userName" class="block text-sm font-medium text-gray-700">Vardas ir pavardė</label>
+        <input
+          type="text"
+          id="userName"
+          formControlName="userName"
+          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"
+        />
+      </div>
+      <div>
+        <label for="documentPhoto" class="block text-sm font-medium text-gray-700">Dokumento nuotrauka</label>
+        <input
+          type="file"
+          id="documentPhoto"
+          formControlName="documentPhoto"
+          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"
+        />
+      </div>
     </div>
-    <div>
-      <label for="documentPhoto" class="block text-sm font-medium text-gray-700">Dokumento nuotrauka</label>
-      <input type="file" id="documentPhoto" formControlName="documentPhoto" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600">
-    </div>
-  </div>
-    <button type="submit" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full" [disabled]="!physicalPermissionForm.valid">
+    <button
+      type="submit"
+      class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full md:text-base text-sm"
+      [disabled]="!physicalPermissionForm.valid"
+    >
       Pateikti prašymą
     </button>
   </form>

@@ -1,11 +1,11 @@
-<div class="bg-white p-6 pb-2 rounded-lg shadow-lg my-4 w-full mx-auto">
-  <h2 class="text-2xl font-bold mb-2 text-center">Ekiperuotė</h2>
+<div class="bg-white p-4 pb-2 rounded-lg shadow-lg my-4 w-full mx-auto">
+  <h2 class="md:text-2xl text-lg font-bold mb-2 text-center">Ekiperuotė</h2>
   
   <ul>
-    <li *ngFor="let item of items" class="flex flex-col mb-2 p-2 border-b rounded-md">
+    <li *ngFor="let item of items" class="flex flex-col mb-2 py-2 border-b rounded-md">
       <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-          <span class="status-icon text-3xl">
+        <div class="flex items-center md:space-x-4 space-x-2">
+          <span class="status-icon md:text-3xl text-xl">
             <i *ngIf="item.status === 'important'" class="fa-solid fa-triangle-exclamation text-orange-400"></i>
             <i *ngIf="item.status === 'success'" class="fa-solid fa-circle-check text-green-400"></i>
             <i *ngIf="item.status === 'fail'" class="fa-solid fa-circle-xmark text-red-400"></i>
@@ -14,9 +14,9 @@
           <img [src]="item.photo" alt="{{ item.name }}" class="w-16 h-16 rounded-md shadow">
           
           <div>
-            <div class="text-lg font-semibold text-gray-800">{{ item.name }}</div>
-            <div class="text-sm text-gray-600">Didis: {{ item.size }}, Spalva: {{ item.color }}</div>
-            <div class="text-sm text-gray-500">Išduotas: {{ item.dateGiven | date: 'mediumDate' }}</div>
+            <div class="md:text-lg font-semibold text-gray-800">{{ item.name }}</div>
+            <div class="md:text-sm text-xs text-gray-600">Didis: {{ item.size }}, Spalva: {{ item.color }}</div>
+            <div class="md:text-sm text-xs text-gray-500">Išduotas: {{ item.dateGiven | date: 'mediumDate' }}</div>
           </div>
         </div>
   
@@ -31,15 +31,15 @@
       </div>
 
       <div *ngIf="selectedItemId === item.id" class="mt-4 flex flex-col space-y-4">
-        <div class="flex items-end space-x-4">
-          <div class="w-1/2">
+        <div class="md:flex items-end md:space-x-4 space-y-2">
+          <div class="md:w-1/2">
             <label for="sizeSelect" class="block text-sm font-medium text-gray-700">Pasirinkti didį</label>
             <select id="sizeSelect" [(ngModel)]="selectedSize" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600">
               <option *ngFor="let size of availableSizes" [value]="size">{{ size }}</option>
             </select>
           </div>
       
-          <div class="flex space-x-2 w-1/2">
+          <div class="flex space-x-2 md:w-1/2 md:text-base text-sm">
             <button (click)="submitOrder()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full" [disabled]="!selectedSize || !isConfirmed">
               Pateikti prašyma
             </button>
@@ -52,7 +52,7 @@
         <!-- Confirmation Checkbox -->
         <div class="flex items-center">
           <input type="checkbox" id="confirmationCheckbox" [(ngModel)]="isConfirmed" class="h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-300 rounded">
-          <label for="confirmationCheckbox" class="ml-2 block text-sm text-gray-700">Patvirtinu, kad seną įrangą (jei ją jau turiu) pakeisiu nauja arba atsivešiu naują įrangą (jei jos neturiu) į: Karių akademiją, Vilnius.</label>
+          <label for="confirmationCheckbox" class="ml-2 block md:text-sm text-xs text-gray-700">Patvirtinu, kad seną įrangą (jei ją jau turiu) pakeisiu nauja arba atsivešiu naują įrangą (jei jos neturiu) į: Karių akademiją, Vilnius.</label>
         </div>
       </div>      
       

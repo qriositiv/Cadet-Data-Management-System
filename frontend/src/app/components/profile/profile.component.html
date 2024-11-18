@@ -1,110 +1,108 @@
-<div class="w-full mx-auto bg-white rounded-lg shadow-lg p-6 m-4">
-    <div class="text-center mb-6">
+<div class="w-full mx-auto bg-white rounded-lg shadow-lg md:p-4 p-4 m-4">
+    <div class="text-center">
         <div class="relative inline-block">
-            <img src="{{ cadet.basicInformation.photoUrl }}" alt="Cadet Photo" class="w-40 h-40 rounded-full shadow-md mx-auto" />
-            <!-- <button class="absolute bottom-0 right-0 bg-rose-600 text-white px-4 py-1 rounded-full shadow-md">
-                Vadovas
-            </button> -->
+            <img src="{{ cadet.basicInformation.photoUrl }}" alt="Cadet Photo" class="md:w-40 md:h-40 w-32 h-32 rounded-full shadow-md mx-auto" />
         </div>
-        <h2 class="text-3xl font-bold mt-4">{{ cadet.basicInformation.name }} <span class="font-normal text-gray-500">
+        <h2 class="md:text-2xl text-lg font-bold md:mt-4">{{ cadet.basicInformation.name }} <br/><span class="font-normal text-gray-500">
             [{{ cadet.basicInformation.cadetId }}]</span></h2>
     </div>
 
-    <div class="mt-6">
+    <div class="md:mt-4 mt-2">
         <div class="flex justify-center mb-6 space-x-6">
             <button
                 [ngClass]="{ 'text-rose-600 border-rose-600': currentTab === 'basic' }"
                 class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
                 (click)="selectTab('basic')"
             >
-                Pagrindinė informacija
+                <i class="fa-solid fa-user my-auto md:hidden"></i><span class="max-sm:hidden">Pagrindinė informacija</span>
             </button>
             <button
                 [ngClass]="{ 'text-rose-600 border-rose-600': currentTab === 'contact' }"
                 class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
                 (click)="selectTab('contact')"
             >
-                Kontaktinė informacija
+                <i class="fa-solid fa-phone md:hidden"></i><span class="max-sm:hidden">Kontaktinė informacija</span>
+                
             </button>
             <button
                 [ngClass]="{ 'text-rose-600 border-rose-600': currentTab === 'health' }"
                 class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
                 (click)="selectTab('health')"
             >
-                Sveikatos informacija
+                <i class="fa-solid fa-heart my-auto md:hidden"></i><span class="max-sm:hidden">Sveikatos informacija</span>
             </button>
             <button
                 [ngClass]="{ 'text-rose-600 border-rose-600': currentTab === 'service' }"
                 class="px-4 py-2 border-b-2 text-gray-600 font-semibold focus:outline-none"
                 (click)="selectTab('service')"
             >
-                Tarnybinė informacija
+                <i class="fa-solid fa-star my-auto md:hidden"></i><span class="max-sm:hidden">Tarnybinė informacija</span>
             </button>
         </div>
 
         <!-- Basic Information -->
-        <div *ngIf="currentTab === 'basic'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="profile-info mb-4">
+        <div *ngIf="currentTab === 'basic'" class="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4">
+            <div class="profile-info">
                 <label class="block text-gray-700 font-medium">Kariūno Identifikavimo Numeris (KIN):</label>
                 <p class="text-gray-800">{{ cadet.basicInformation.cadetId }}</p>
             </div>
-            <div class="profile-info mb-4">
+            <div class="profile-info">
                 <label class="block text-gray-700 font-medium">Vardas ir Pavardė:</label>
                 <p class="text-gray-800">{{ cadet.basicInformation.name }}</p>
             </div>
-            <div class="profile-info mb-4">
+            <div class="profile-info">
                 <label class="block text-gray-700 font-medium">Gimimo data:</label>
                 <p class="text-gray-800">{{ cadet.basicInformation.dateOfBirth }}</p>
             </div>
-            <div class="profile-info mb-4">
+            <div class="profile-info">
                 <label class="block text-gray-700 font-medium">Asmens Kodas (AK):</label>
                 <p class="text-gray-800">{{ cadet.basicInformation.civilId }}</p>
             </div>
         </div>
 
         <!-- Contact Information -->
-        <div *ngIf="currentTab === 'contact'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="profile-info mb-4">
+        <div *ngIf="currentTab === 'contact'" class="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4">
+            <div class="profile-info">
                 <label class="block text-gray-700 font-medium">Telefono numeris:</label>
                 <p class="text-gray-800">{{ cadet.contactInformation.phone }}</p>
             </div>
-            <div class="profile-info mb-4">
+            <div class="profile-info">
                 <label class="block text-gray-700 font-medium">El. pašto adresas:</label>
                 <p class="text-gray-800">{{ cadet.contactInformation.email }}</p>
             </div>
-            <div class="profile-info mb-4 col-span-2">
+            <div class="profile-info col-span-2">
                 <label class="block text-gray-700 font-medium">Gyvenimo adresas:</label>
                 <p class="text-gray-800">{{ cadet.contactInformation.address }}</p>
             </div>
         </div>
 
         <!-- Health Information -->
-        <div *ngIf="currentTab === 'health'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div *ngIf="currentTab === 'health'" class="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4">
             <div class="flex justify-start">
-            <div class="profile-info mb-4 w-1/2">
+            <div class="profile-info w-1/2">
                 <label class="block text-gray-700 font-medium">Kraujo grupė:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.bloodType }}</p>
             </div>
-            <div class="profile-info mb-4 w-1/2">
+            <div class="profile-info w-1/2">
                 <label class="block text-gray-700 font-medium">Lytis:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.sex }}</p>
             </div>
             </div>
             <div class="flex justify-start">
-            <div class="profile-info mb-4 w-1/2">
+            <div class="profile-info w-1/2">
                 <label class="block text-gray-700 font-medium">Aukštis:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.height }} cm</p>
             </div>
-            <div class="profile-info mb-4 w-1/2">
+            <div class="profile-info w-1/2">
                 <label class="block text-gray-700 font-medium">Svoris:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.weight }} kg</p>
             </div>
             </div>
-            <div class="profile-info mb-4">
+            <div class="profile-info">
                 <label class="block text-gray-700 font-medium">Alergijos:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.allergies }}</p>
             </div>
-            <div class="profile-info mb-4">
+            <div class="profile-info">
                 <label class="block text-gray-700 font-medium">Ligos:</label>
                 <p class="text-gray-800">{{ cadet.healthInformation.medicalConditions }}</p>
             </div>

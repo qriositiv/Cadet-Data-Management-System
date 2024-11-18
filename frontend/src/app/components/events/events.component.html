@@ -1,10 +1,10 @@
-<div class="bg-white p-6 rounded-lg my-4 shadow-lg w-full mx-auto">
-    <h2 class="text-2xl font-bold mb-4 text-center">Renginiai</h2>
+<div class="bg-white p-4 rounded-lg my-4 shadow-lg w-full mx-auto">
+    <h2 class="md:text-2xl text-lg font-bold mb-4 text-center">Renginiai</h2>
   
     <ul>
-      <li *ngFor="let event of upcomingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="mb-4 p-4 rounded-md hover:bg-rose-200">
-        <div class="text-lg font-semibold text-gray-800">{{ event.title }}</div>
-        <div class="flex justify-between items-center text-sm text-gray-600">
+      <li *ngFor="let event of upcomingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="md:mb-4 md-2 md:p-4 p-2 rounded-md hover:bg-rose-200">
+        <div class="md:text-lg font-semibold text-gray-800">{{ event.title }}</div>
+        <div class="flex justify-between items-center md:text-sm text-xs text-gray-600">
           <span>Pradžia: {{ event.startDate | date: 'short' }} - Pabaiga: {{ event.endDate | date: 'short' }}</span>
           <button (click)="exportToGoogleCalendar(event)" class="text-rose-500 mt-2 text-xs font-semibold underline">
             Pridėti į kalendorį
@@ -14,7 +14,7 @@
       </li>
   
       <ng-container *ngIf="showAllEvents">
-        <li *ngFor="let event of remainingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="mb-4 p-4 rounded-md hover:bg-rose-200">
+        <li *ngFor="let event of remainingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="md:mb-4 md-2 p-4 rounded-md hover:bg-rose-200">
           <div class="text-lg font-semibold text-gray-800">{{ event.title }}</div>
           <div class="flex justify-between items-center text-sm text-gray-600">
             <span>Pradžia: {{ event.startDate | date: 'short' }} - Pabaiga: {{ event.endDate | date: 'short' }}</span>
