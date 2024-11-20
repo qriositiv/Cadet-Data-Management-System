@@ -18,8 +18,8 @@
         <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center"><i class="fa-solid fa-circle-check text-green-500 text-lg md:mr-2"></i><span class="max-sm:hidden">{{ permission.status }}</span></td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
-        <td class="border border-gray-300 md:p-2 p-1">{{ permission.carNumber }}, {{ permission.brand }}</td>
-        <td class="border border-gray-300 md:p-2 p-1">{{ permission.area }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.carNumber }}, {{ permission.carBrand }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.location }}</td>
       </tr>
     </tbody>
   </table>
@@ -83,7 +83,7 @@
         <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center"><i class="fa-solid fa-circle-check text-green-500 text-lg md:mr-2"></i><span class="max-sm:hidden">{{ permission.status }}</span></td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
-        <td class="border border-gray-300 md:p-2 p-1">{{ permission.additionalInfo }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.additionalInformation }}</td>
       </tr>
     </tbody>
   </table>

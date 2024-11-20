@@ -1,42 +1,48 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CarEnterPermission, ExemptionFromPhysicalActivity } from '../../interfaces'; // Adjust the path as necessary
 
 @Component({
   selector: 'app-permissions',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './permissions.component.html'
+  templateUrl: './permissions.component.html',
 })
 export class PermissionsComponent {
-  enterWithCarPermissions = [
+  enterWithCarPermissions: CarEnterPermission[] = [
     {
-      id: 1,
+      permissionId: 1,
+      cadetId: 'A12345', // Example cadetId
       status: 'Patvirtintas',
       dateFrom: new Date('2023-11-01'),
       dateTo: new Date('2023-11-10'),
       carNumber: 'DDM088',
-      brand: 'Toyota',
-      userName: 'Antanas Antanauskas',
-      phoneNumber: '+37067777777',
-      additionalInfo: '',
-      area: 'Vilnius' 
-    }
+      carBrand: 'Toyota',
+      additionalInformation: '',
+      location: 'Vilnius',
+    },
   ];
 
-  physicalActivityPermissions = [
+  physicalActivityPermissions: ExemptionFromPhysicalActivity[] = [
     {
+      permissionId: 1,
+      cadetId: 'A12345', // Example cadetId
       status: 'Patvirtintas',
       dateFrom: new Date('2023-11-01'),
       dateTo: new Date('2023-11-05'),
-      additionalInfo: 'Sulaužita ranka.'
-    }
+      documentPhotoUrl: 'photo-url-example',
+      additionalInformation: 'Sulaužita ranka.',
+      location: 'Vilnius',
+    },
   ];
 
   physicalPermissionForm: FormGroup;
   isPhysicalPermissionFormVisible = false;
+
   areas = ['Vilnius', 'Klaipėda', 'Kaunas'];
   isFormVisible = false;
+
   permissionForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -51,19 +57,20 @@ export class PermissionsComponent {
       dateFrom: [todayStr, Validators.required],
       dateTo: [threeDaysLaterStr, Validators.required],
       carNumber: ['', Validators.required],
-      brand: ['', Validators.required],
-      userName: [{ value: this.enterWithCarPermissions[0].userName, disabled: true }, Validators.required],
-      phoneNumber: [this.enterWithCarPermissions[0].phoneNumber, [Validators.required, Validators.pattern(/^[+0-9\s-]+$/)]],
-      additionalInfo: [''],
-      area: ['', Validators.required]
+      carBrand: ['', Validators.required],
+      cadetId: ['A12345', Validators.required], // Example cadetId
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[+0-9\s-]+$/)]],
+      additionalInformation: [''],
+      location: ['', Validators.required],
     });
 
     this.physicalPermissionForm = this.fb.group({
-      userName: ['', Validators.required],
-      documentPhoto: ['', Validators.required],
+      cadetId: ['A12345', Validators.required], // Example cadetId
+      documentPhotoUrl: ['', Validators.required],
       dateFrom: ['', Validators.required],
       dateTo: ['', Validators.required],
-      additionalInfo: ['']
+      additionalInformation: [''],
+      location: ['', Validators.required],
     });
   }
 
@@ -73,9 +80,10 @@ export class PermissionsComponent {
 
   submitPhysicalPermission() {
     if (this.physicalPermissionForm.valid) {
-      const newPermission = {
+      const newPermission: ExemptionFromPhysicalActivity = {
+        permissionId: this.physicalActivityPermissions.length + 1,
         ...this.physicalPermissionForm.value,
-        status: 'Pending'
+        status: 'Pending',
       };
       this.physicalActivityPermissions.push(newPermission);
       this.physicalPermissionForm.reset();
@@ -89,17 +97,16 @@ export class PermissionsComponent {
 
   submitPermission() {
     if (this.permissionForm.valid) {
-      const newPermission = {
-        ...this.permissionForm.getRawValue(),
+      const newPermission: CarEnterPermission = {
+        permissionId: this.enterWithCarPermissions.length + 1,
+        ...this.permissionForm.value,
         status: 'Pending',
-        id: this.enterWithCarPermissions.length + 1
       };
       this.enterWithCarPermissions.push(newPermission);
       this.permissionForm.reset({
-        userName: this.enterWithCarPermissions[0].userName,
-        phoneNumber: this.enterWithCarPermissions[0].phoneNumber,
+        cadetId: 'A12345',
         dateFrom: this.permissionForm.controls['dateFrom'].value,
-        dateTo: this.permissionForm.controls['dateTo'].value
+        dateTo: this.permissionForm.controls['dateTo'].value,
       });
       this.isFormVisible = false;
     }

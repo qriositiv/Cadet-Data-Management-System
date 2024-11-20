@@ -1,48 +1,53 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Notification } from '../../interfaces';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './notifications.component.html'
+  templateUrl: './notifications.component.html',
 })
 export class NotificationsComponent {
-  notifications = [
+  notifications: Notification[] = [
     {
-      id: 0,
+      notificationId: 0,
+      cadetId: 'E07794',
       type: 'success',
       title: 'Prašimas patvirtintas',
       message: 'Jūsų prašimas nr. E07794 dėl ekipuotės užsakimo patvirtintas.',
-      closed: false
+      hidden: false,
     },
     {
-      id: 1,
+      notificationId: 1,
+      cadetId: 'L31313',
       type: 'fail',
       title: 'Prašimas atšauktas',
-      message: 'Jūsų prašimas nr. L31313 dėl leidimo išrašimo atsauktas - "Neteisingai užpylditi duomenys".',
-      closed: false
+      message: 'Jūsų prašimas nr. L31313 dėl leidimo išrašimo atšauktas - "Neteisingai užpyldyti duomenys".',
+      hidden: false,
     },
     {
-      id: 1,
+      notificationId: 2,
+      cadetId: 'N/A',
       type: '',
-      title: 'Renginis vyksta dabar',
-      message: 'Paskaita – diskusija „Lietuvos žvalgybos veiksmai prijungiant Klaipėdos kraštą”".',
-      closed: false
+      title: 'Renginys vyksta dabar',
+      message: 'Paskaita – diskusija „Lietuvos žvalgybos veiksmai prijungiant Klaipėdos kraštą”.',
+      hidden: false,
     },
     {
-      id: 1,
+      notificationId: 3,
+      cadetId: 'N/A',
       type: 'important',
-      title: '',
-      message: '',
-      closed: false
-    }
+      title: 'Svarbi žinutė',
+      message: 'Atkreipkite dėmesį į naujausius sistemos pakeitimus.',
+      hidden: false,
+    },
   ];
 
   closeNotification(notificationId: number) {
-    const index = this.notifications.findIndex(n => n.id === notificationId);
-    if (index !== -1) {
-      this.notifications.splice(index, 1);
+    const notification = this.notifications.find(n => n.notificationId === notificationId);
+    if (notification) {
+      notification.hidden = true;
     }
-  }  
+  }
 }

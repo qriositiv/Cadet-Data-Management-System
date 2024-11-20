@@ -5,7 +5,7 @@
       <li *ngFor="let event of upcomingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="md:mb-4 md-2 md:p-4 p-2 rounded-md hover:bg-rose-200">
         <div class="md:text-lg font-semibold text-gray-800">{{ event.title }}</div>
         <div class="flex justify-between items-center md:text-sm text-xs text-gray-600">
-          <span>Pradžia: {{ event.startDate | date: 'short' }} - Pabaiga: {{ event.endDate | date: 'short' }}</span>
+          <span>Pradžia: {{ event.dateFrom | date: 'short' }} - Pabaiga: {{ event.dateTo | date: 'short' }}</span>
           <button (click)="exportToGoogleCalendar(event)" class="text-rose-500 mt-2 text-xs font-semibold underline">
             Pridėti į kalendorį
           </button>
@@ -17,7 +17,7 @@
         <li *ngFor="let event of remainingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="md:mb-4 md-2 p-4 rounded-md hover:bg-rose-200">
           <div class="text-lg font-semibold text-gray-800">{{ event.title }}</div>
           <div class="flex justify-between items-center text-sm text-gray-600">
-            <span>Pradžia: {{ event.startDate | date: 'short' }} - Pabaiga: {{ event.endDate | date: 'short' }}</span>
+            <span>Pradžia: {{ event.dateFrom | date: 'short' }} - Pabaiga: {{ event.dateTo | date: 'short' }}</span>
             <button (click)="exportToGoogleCalendar(event)" class="text-rose-500 mt-2 text-xs font-semibold underline">
               Pridėti į kalendorį
             </button>
