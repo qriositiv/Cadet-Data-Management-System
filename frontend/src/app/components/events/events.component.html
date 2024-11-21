@@ -14,9 +14,9 @@
       </li>
   
       <ng-container *ngIf="showAllEvents">
-        <li *ngFor="let event of remainingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="md:mb-4 md-2 p-4 rounded-md hover:bg-rose-200">
-          <div class="text-lg font-semibold text-gray-800">{{ event.title }}</div>
-          <div class="flex justify-between items-center text-sm text-gray-600">
+        <li *ngFor="let event of remainingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="md:mb-4 md-2 md:p-4 p-2 rounded-md hover:bg-rose-200">
+          <div class="md:text-lg font-semibold text-gray-800">{{ event.title }}</div>
+          <div class="flex justify-between items-center md:text-sm text-xs text-gray-600">
             <span>Pradžia: {{ event.dateFrom | date: 'short' }} - Pabaiga: {{ event.dateTo | date: 'short' }}</span>
             <button (click)="exportToGoogleCalendar(event)" class="text-rose-500 mt-2 text-xs font-semibold underline">
               Pridėti į kalendorį
@@ -27,9 +27,12 @@
       </ng-container>
     </ul>
     @if (events.length > 3) {
-    <button (click)="toggleShowAll()" class="w-full mt-4 bg-rose-600 text-white font-semibold py-2 rounded-md hover:bg-rose-700">
+    <button (click)="toggleShowAll()" class="w-full mt-2 bg-rose-600 text-white font-semibold py-2 rounded-md hover:bg-rose-700">
       {{ showAllEvents ? 'Rodyti mažiau' : 'Rodyti daugiau' }}
     </button>
+    }
+    @if (events.length === 0) {
+      <div class="text-center">Nėra renginių.</div>
     }
   </div>
   

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Event } from '../../interfaces';
+import { CadetService } from '../../cadet.service';
 
 @Component({
   selector: 'app-events',
@@ -8,31 +9,21 @@ import { Event } from '../../interfaces';
   imports: [CommonModule],
   templateUrl: './events.component.html',
 })
-export class EventsComponent {
-  events: Event[] = [
-    { 
-      eventId: 1, 
-      title: 'Paskaita – diskusija „Lietuvos žvalgybos veiksmai prijungiant Klaipėdos kraštą”', 
-      dateFrom: new Date(new Date().getTime() - 3600 * 1000),
-      dateTo: new Date(new Date().getTime() + 3600 * 1000),
-      location: 'LITEXPO, Vilnius'
-    },
-    { 
-      eventId: 2, 
-      title: 'Karo istoriko prof. dr. Valdo Rakučio knygos PRIEŠ PANYRANT Į SUTEMAS pristatymas', 
-      dateFrom: new Date(new Date().getTime() + 7200 * 1000),
-      dateTo: new Date(new Date().getTime() + 10800 * 1000),
-      location: 'Poligonas, Kaunas'
-    },
-    // Uncomment and adjust these if more mock data is needed
-    // { 
-    //   eventId: 3, 
-    //   title: 'Event 3', 
-    //   dateFrom: new Date(new Date().getTime() + 14400 * 1000), // Starts in 4 hours
-    //   dateTo: new Date(new Date().getTime() + 18000 * 1000), // Ends in 5 hours
-    //   location: 'Location C'
-    // },
-  ];
+export class EventsComponent implements OnInit {
+  events: Event[] = [];
+
+  constructor(private cadetService: CadetService) {}
+
+  ngOnInit(): void {
+    this.cadetService.getEvents().subscribe(
+      (data) => {
+        this.events = data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+  }
   
   showAllEvents = false;
 
@@ -50,9 +41,12 @@ export class EventsComponent {
 
   isEventLive(event: Event): boolean {
     const now = new Date();
-    return now >= event.dateFrom && now <= event.dateTo;
-  }
+    const dateFrom = new Date(event.dateFrom);
+    const dateTo = new Date(event.dateTo);
 
+    return now >= dateFrom && now <= dateTo;
+  }
+  
   exportToGoogleCalendar(event: Event) {
     const startDate = event.dateFrom.toISOString().replace(/-|:|\.\d+/g, '');
     const endDate = event.dateTo.toISOString().replace(/-|:|\.\d+/g, '');
