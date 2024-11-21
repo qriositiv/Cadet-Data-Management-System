@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS Event;
+DROP TABLE IF EXISTS UserProfileData;
+DROP TABLE IF EXISTS UserAuthentication;
