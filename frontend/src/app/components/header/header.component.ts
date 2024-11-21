@@ -10,6 +10,11 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
   mobileMenuOpen: boolean = false;
+  dropdownOpen = false;
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
   
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;

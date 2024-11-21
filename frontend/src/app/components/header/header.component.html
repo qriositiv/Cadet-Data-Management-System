@@ -1,66 +1,85 @@
 <nav class="w-full bg-rose-900 text-white">
-    <div class="w-11/12 mx-auto md:h-20 h-16 flex items-center justify-between">
-      <div class="text-xl md:text-2xl font-bold flex items-center">
-        <a [routerLink]="['/']" class="flex items-center space-x-2 hover:text-rose-300">
-          <img src="logo.png" alt="Logo" class="h-10 w-10 md:h-12 md:w-12" />
-          <span class="hidden sm:block">Kariūnų Duomenų Valdymo Sistema</span>
-        </a>
-      </div>
-  
-      <div class="md:hidden">
-        <button (click)="toggleMobileMenu()" aria-label="Toggle menu">
-          <i class="fa-solid fa-bars text-2xl"></i>
-        </button>
-      </div>
-  
-      <div class="hidden md:flex items-center space-x-4 lg:space-x-8 text-sm lg:text-lg">
-        <a [routerLink]="['/notifications']" class="flex flex-col items-center hover:text-rose-300 transition">
-          <span class="relative">
-            <i class="fa-solid fa-bell text-lg lg:text-2xl"></i>
-            <span class="absolute top-1.5 left-3 flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
-            </span>
+  <div class="w-11/12 mx-auto md:h-20 h-16 flex items-center justify-between">
+    <div class="text-xl md:text-2xl font-bold flex items-center">
+      <a [routerLink]="['/']" class="flex items-center space-x-2 hover:text-rose-300">
+        <img src="logo.png" alt="Logo" class="h-10 w-10 md:h-12 md:w-12" />
+        <span class="hidden sm:block">Kariūnų Duomenų Valdymo Sistema</span>
+      </a>
+    </div>
+
+    <div class="md:hidden">
+      <button (click)="toggleMobileMenu()" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars text-2xl"></i>
+      </button>
+    </div>
+
+    <div class="hidden md:flex items-center space-x-4 lg:space-x-8 text-sm lg:text-lg">
+      <a [routerLink]="['/notifications']" class="flex flex-col items-center hover:text-rose-300 transition">
+        <span class="relative">
+          <i class="fa-solid fa-bell text-lg lg:text-2xl"></i>
+          <span class="absolute top-1.5 left-3 flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
           </span>
-          <span class="text-xs">Pranešimai</span>
-        </a>
-        <a [routerLink]="['/info']" class="flex flex-col items-center hover:text-rose-300 transition">
-          <i class="fa-solid fa-circle-info text-lg lg:text-2xl"></i>
-          <span class="text-xs">Informacija</span>
-        </a>
-        <a [routerLink]="['/profile']" class="flex flex-col items-center hover:text-rose-300 transition">
-          <i class="fa-solid fa-circle-user text-lg lg:text-2xl"></i>
-          <span class="text-xs">Jūsų Paskyra</span>
-        </a>
-        <a [routerLink]="['/login']" class="flex flex-col items-center hover:text-rose-300 transition">
-          <i class="fa-solid fa-right-from-bracket text-lg lg:text-2xl"></i>
-          <span class="text-xs">Atsijungti</span>
-        </a>
-      </div>
+        </span>
+        <span class="text-xs">Pranešimai</span>
+      </a>
+      <a [routerLink]="['/info']" class="flex flex-col items-center hover:text-rose-300 transition">
+        <i class="fa-solid fa-circle-info text-lg lg:text-2xl"></i>
+        <span class="text-xs">Informacija</span>
+      </a>
+      <a [routerLink]="['/profile']" class="flex flex-col items-center hover:text-rose-300 transition">
+        <i class="fa-solid fa-circle-user text-lg lg:text-2xl"></i>
+        <span class="text-xs">Jūsų Paskyra</span>
+      </a>
+      <a [routerLink]="['/login']" class="flex flex-col items-center hover:text-rose-300 transition">
+        <i class="fa-solid fa-right-from-bracket text-lg lg:text-2xl"></i>
+        <span class="text-xs">Atsijungti</span>
+      </a>
     </div>
-  
-    <div class="hidden md:flex w-full bg-rose-800 h-10 items-center">
-      <div class="w-11/12 mx-auto flex justify-center space-x-5 md:space-x-10 lg:space-x-20 text-xs md:text-base">
-        <a [routerLink]="['/activities']" class="hover:text-rose-300 transition">Renginiai</a>
-        <a [routerLink]="['/permissions']" class="hover:text-rose-300 transition">Leidimai</a>
-        <a [routerLink]="['/equipment']" class="hover:text-rose-300 transition">Ekipuotė</a>
-        <a [routerLink]="['/results']" class="hover:text-rose-300 transition">Disciplinų Rezultatai</a>
-        <a [routerLink]="['/career']" class="hover:text-rose-300 transition">Karjera</a>
+  </div>
+
+  <div class="hidden md:flex w-full bg-rose-800 h-10 items-center">
+    <div class="w-11/12 h-full mx-auto flex justify-center items-center space-x-5 md:space-x-10 lg:space-x-20 text-xs md:text-base">
+      <a [routerLink]="['/activities']" class="hover:text-rose-300 transition">Renginiai</a>
+
+      <!-- Dropdown for Leidimai -->
+      <div class="relative group">
+        <button class="hover:text-rose-300 transition">Leidimai</button>
+        <div
+          class="absolute hidden group-hover:block bg-white text-black text-sm shadow-lg rounded-md mt-0 w-64"
+        >
+          <a [routerLink]="['/permissions/a']" class="block px-4 py-2 hover:bg-rose-100">Leidimai įvažiuoti į teritoriją</a>
+          <a [routerLink]="['/permissions/b']" class="block px-4 py-2 hover:bg-rose-100">Atleidimai nuo fizinės veiklos</a>
+        </div>
       </div>
+
+      <a [routerLink]="['/equipment']" class="hover:text-rose-300 transition">Ekipuotė</a>
+      <a [routerLink]="['/results']" class="hover:text-rose-300 transition">Disciplinų Rezultatai</a>
+      <a [routerLink]="['/career']" class="hover:text-rose-300 transition">Karjera</a>
     </div>
-  
-    <div *ngIf="mobileMenuOpen" class="md:hidden bg-rose-800">
-      <div class="w-11/12 mx-auto py-4 flex flex-col space-y-4">
-        <a [routerLink]="['/notifications']" class="hover:text-rose-300" (click)="closeMobileMenu()">Pranešimai</a>
-        <a [routerLink]="['/info']" class="hover:text-rose-300" (click)="closeMobileMenu()">Informacija</a>
-        <a [routerLink]="['/profile']" class="hover:text-rose-300" (click)="closeMobileMenu()">Jūsų Paskyra</a>
-        <a [routerLink]="['/login']" class="hover:text-rose-300" (click)="closeMobileMenu()">Atsijungti</a>
-        <hr class="border-rose-700" />
-        <a [routerLink]="['/activities']" class="hover:text-rose-300" (click)="closeMobileMenu()">Renginiai</a>
-        <a [routerLink]="['/permissions']" class="hover:text-rose-300" (click)="closeMobileMenu()">Leidimai</a>
-        <a [routerLink]="['/equipment']" class="hover:text-rose-300" (click)="closeMobileMenu()">Ekipuotė</a>
-        <a [routerLink]="['/results']" class="hover:text-rose-300" (click)="closeMobileMenu()">Disciplinų Rezultatai</a>
+  </div>
+
+  <div *ngIf="mobileMenuOpen" class="md:hidden bg-rose-800">
+    <div class="w-11/12 mx-auto py-4 flex flex-col space-y-4">
+      <a [routerLink]="['/notifications']" class="hover:text-rose-300" (click)="closeMobileMenu()">Pranešimai</a>
+      <a [routerLink]="['/info']" class="hover:text-rose-300" (click)="closeMobileMenu()">Informacija</a>
+      <a [routerLink]="['/profile']" class="hover:text-rose-300" (click)="closeMobileMenu()">Jūsų Paskyra</a>
+      <a [routerLink]="['/login']" class="hover:text-rose-300" (click)="closeMobileMenu()">Atsijungti</a>
+      <hr class="border-rose-700" />
+      <a [routerLink]="['/activities']" class="hover:text-rose-300" (click)="closeMobileMenu()">Renginiai</a>
+      
+      <!-- Mobile Dropdown for Leidimai -->
+      <div>
+        <button (click)="toggleDropdown()" class="hover:text-rose-300 w-full text-left">Leidimai</button>
+        <div *ngIf="dropdownOpen" class="pl-4 space-y-0.5 mt-1">
+          <a [routerLink]="['/permissions/a']" class="block hover:text-rose-300" (click)="closeMobileMenu()">Leidimai įvažiuoti į teritoriją</a>
+          <a [routerLink]="['/permissions/b']" class="block hover:text-rose-300" (click)="closeMobileMenu()">Atleidimas nuo fizinės veiklos</a>
+        </div>
       </div>
-    </div>    
-  </nav>
-  
+      
+      <a [routerLink]="['/equipment']" class="hover:text-rose-300" (click)="closeMobileMenu()">Ekipuotė</a>
+      <a [routerLink]="['/results']" class="hover:text-rose-300" (click)="closeMobileMenu()">Disciplinų Rezultatai</a>
+    </div>
+  </div>
+</nav>

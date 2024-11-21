@@ -27,7 +27,7 @@ export class PermissionsComponent {
   physicalActivityPermissions: ExemptionFromPhysicalActivity[] = [
     {
       permissionId: 1,
-      cadetId: 'A12345', // Example cadetId
+      cadetId: 'A12345',
       status: 'Patvirtintas',
       dateFrom: new Date('2023-11-01'),
       dateTo: new Date('2023-11-05'),
