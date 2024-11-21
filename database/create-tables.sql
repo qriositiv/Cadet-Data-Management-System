@@ -1,7 +1,7 @@
 CREATE TABLE `UserAuthentication` (
     cadetId VARCHAR(14) PRIMARY KEY,
     -- 3 letters and 11 numbers.
-    nationalId INT(11) UNIQUE NOT NULL
+    nationalId VARCHAR(11) UNIQUE NOT NULL
     -- https://lt.wikipedia.org/wiki/Asmens_kodas -> civilId exactly 11 digits.
 );
 

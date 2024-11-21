@@ -4,14 +4,14 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="mb-4">
-        <label for="cadetIdentificationNumber" class="block text-sm font-medium text-gray-700">Kariūno Numeris</label>
+        <label for="cadetId" class="block text-sm font-medium text-gray-700">Kariūno Numeris</label>
         <input
           type="text"
-          id="cadetIdentificationNumber"
-          formControlName="cadetIdentificationNumber"
+          id="cadetId"
+          formControlName="cadetId"
           class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
         />
-        @if (loginForm.get('cadetIdentificationNumber')?.invalid && loginForm.get('cadetIdentificationNumber')?.touched) {
+        @if (loginForm.get('cadetId')?.invalid && loginForm.get('cadetId')?.touched) {
           <div class="text-red-500 text-sm">
             Kariūno Numeris būtinas laukas
           </div>
@@ -19,14 +19,14 @@
       </div>
 
       <div class="mb-6">
-        <label for="nationalIdentificationNumber" class="block text-sm font-medium text-gray-700">Asmens kodas</label>
+        <label for="nationalId" class="block text-sm font-medium text-gray-700">Asmens kodas</label>
         <input
           type="text"
-          id="nationalIdentificationNumber"
-          formControlName="nationalIdentificationNumber"
+          id="nationalId"
+          formControlName="nationalId"
           class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
         />
-        @if (loginForm.get('nationalIdentificationNumber')?.invalid && loginForm.get('nationalIdentificationNumber')?.touched) {
+        @if (loginForm.get('nationalId')?.invalid && loginForm.get('nationalId')?.touched) {
           <div class="text-red-500 text-sm">
             Asmens kodas būtinas laukas
           </div>

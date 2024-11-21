@@ -3,6 +3,10 @@ export interface UserAuthenticationData {
     nationalId: number;
 }
 
+export interface LoginResponse {
+    access_token: string;
+  }
+
 export interface UserProfileData {
     authentication: UserAuthenticationData;
     basicData: UserProfileBasicData;

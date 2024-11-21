@@ -8,15 +8,16 @@ import { ResultsComponent } from './components/results/results.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { EventsComponent } from './components/events/events.component';
 import { PermissionsComponent } from './components/permissions/permissions.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'notifications', component: NotificationsComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'equipment', component: InventoryComponent },
-  { path: 'permissions', component: PermissionsComponent },
-  { path: 'activities', component: EventsComponent },
-  { path: 'results', component: ResultsComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'equipment', component: InventoryComponent, canActivate: [AuthGuard] },
+  { path: 'permissions', component: PermissionsComponent, canActivate: [AuthGuard] },
+  { path: 'activities', component: EventsComponent, canActivate: [AuthGuard] },
+  { path: 'results', component: ResultsComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent },
 ];

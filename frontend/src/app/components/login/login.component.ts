@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserAuthenticationData } from '../../interfaces';
+import { CadetService } from '../../cadet.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +14,10 @@ import { UserAuthenticationData } from '../../interfaces';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private loginService: CadetService, private router: Router) {
     this.loginForm = this.fb.group({
-      cadetId: ['', [Validators.required, Validators.pattern(/^\w+$/)]], // Ensure it's alphanumeric
-      nationalId: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Ensure it's numeric
+      cadetId: ['', [Validators.required, Validators.pattern(/^\w+$/)]],
+      nationalId: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
     });
   }
 
@@ -26,10 +28,17 @@ export class LoginComponent {
         nationalId: Number(this.loginForm.value.nationalId),
       };
 
-      console.log('User Authentication Data:', formValue);
+      this.loginService.login(formValue).subscribe(
+        (response) => {
+          localStorage.setItem('access_token', response.access_token);
+          this.router.navigate(['/']);
+        },
+        (error) => {
+          console.error('Login failed:', error.error);
+        }
+      );
     } else {
       this.loginForm.markAllAsTouched();
-      console.error('Both fields are required and must be valid.');
     }
   }
 }

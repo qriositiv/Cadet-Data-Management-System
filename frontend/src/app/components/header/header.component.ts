@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +11,8 @@ import { RouterLink } from '@angular/router';
 export class HeaderComponent {
   mobileMenuOpen: boolean = false;
   dropdownOpen = false;
+
+  constructor(router: Router) {}
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
@@ -23,4 +25,9 @@ export class HeaderComponent {
   closeMobileMenu() {
     this.mobileMenuOpen = false;
   }
+
+  logout() {
+    localStorage.removeItem('access_token');
+  }
+  
 }

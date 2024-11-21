@@ -32,7 +32,7 @@
         <i class="fa-solid fa-circle-user text-lg lg:text-2xl"></i>
         <span class="text-xs">Jūsų Paskyra</span>
       </a>
-      <a [routerLink]="['/login']" class="flex flex-col items-center hover:text-rose-300 transition">
+      <a [routerLink]="['/login']" (click)="logout()" class="flex flex-col items-center hover:text-rose-300 transition">
         <i class="fa-solid fa-right-from-bracket text-lg lg:text-2xl"></i>
         <span class="text-xs">Atsijungti</span>
       </a>
@@ -65,7 +65,7 @@
       <a [routerLink]="['/notifications']" class="hover:text-rose-300" (click)="closeMobileMenu()">Pranešimai</a>
       <a [routerLink]="['/info']" class="hover:text-rose-300" (click)="closeMobileMenu()">Informacija</a>
       <a [routerLink]="['/profile']" class="hover:text-rose-300" (click)="closeMobileMenu()">Jūsų Paskyra</a>
-      <a [routerLink]="['/login']" class="hover:text-rose-300" (click)="closeMobileMenu()">Atsijungti</a>
+      <a [routerLink]="['/login']" class="hover:text-rose-300" (click)="logout()" (click)="closeMobileMenu()">Atsijungti</a>
       <hr class="border-rose-700" />
       <a [routerLink]="['/activities']" class="hover:text-rose-300" (click)="closeMobileMenu()">Renginiai</a>
       
