@@ -1,38 +1,22 @@
-from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from flask_cors import CORS
+from extensions import db
+from routes import bp
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
 
-CORS(app)
+    CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin@localhost/CadetDatabase'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin@localhost/CadetDatabase'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+    db.init_app(app)
 
-class Event(db.Model):
-    __tablename__ = 'Event'
-    eventId = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), nullable=False)
-    dateFrom = db.Column(db.DateTime, nullable=False)
-    dateTo = db.Column(db.DateTime, nullable=False)
-    location = db.Column(db.String(255), nullable=False)
+    app.register_blueprint(bp)
 
-@app.route('/events', methods=['GET'])
-def get_events():
-    events = Event.query.all()
-    event_list = [
-        {
-            'eventId': event.eventId,
-            'title': event.title,
-            'dateFrom': event.dateFrom.strftime('%Y-%m-%d %H:%M:%S'),
-            'dateTo': event.dateTo.strftime('%Y-%m-%d %H:%M:%S'),
-            'location': event.location
-        }
-        for event in events
-    ]
-    return jsonify(event_list)
+    return app
 
 if __name__ == '__main__':
+    app = create_app()
     app.run(debug=True)
