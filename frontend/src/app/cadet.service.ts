@@ -32,5 +32,8 @@ export class CadetService {
       .get<{ enterWithCarPermissions: CarEnterPermission[] }>(`${this.apiUrl}permission/car/${cadetId}`)
       .pipe(map((response) => response.enterWithCarPermissions));
   }
-  
+
+  createCarPermission(permission: CarEnterPermission): Observable<CarEnterPermission> {
+    return this.http.post<CarEnterPermission>(`${this.apiUrl}permission/car`, permission);
+  }
 }

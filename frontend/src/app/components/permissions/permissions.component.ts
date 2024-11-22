@@ -45,10 +45,10 @@ export class PermissionsComponent implements OnInit {
     this.permissionForm = this.fb.group({
       dateFrom: [todayStr, Validators.required],
       dateTo: [threeDaysLaterStr, Validators.required],
-      carNumber: ['', [Validators.required, Validators.pattern(/^[A-Z0-9]{5,10}$/)]],
+      carNumber: ['', Validators.required],
       carBrand: ['', Validators.required],
-      cadetId: ['A12345', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^[+0-9\s-]+$/)]],
+      cadetId: ['LKA12345678901'],
+      phoneNumber: ['+37067777777'],
       additionalInformation: [''],
       location: ['', [Validators.required, Validators.pattern(/^(Vilnius|Kaunas|Klaipėda)$/)]],
     });
@@ -102,13 +102,15 @@ export class PermissionsComponent implements OnInit {
   }
 
   submitPermission(): void {
+    console.log('called');
+    
     if (this.permissionForm.valid) {
       const formValue = this.permissionForm.value;
   
       const newPermission: CarEnterPermission = {
-        permissionId: this.enterWithCarPermissions.length + 1,
+        permissionId: 0,
         cadetId: formValue.cadetId,
-        status: formValue.status,
+        status: 'wait',
         location: formValue.location,
         dateFrom: new Date(formValue.dateFrom),
         dateTo: new Date(formValue.dateTo),
@@ -117,19 +119,31 @@ export class PermissionsComponent implements OnInit {
         additionalInformation: formValue.additionalInformation || '',
       };
   
-      this.enterWithCarPermissions.push(newPermission);
+      this.cadetService.createCarPermission(newPermission).subscribe({
+        next: (createdPermission) => {
+          console.log('Created Permission:', createdPermission);
   
-      console.log('New Permission:', newPermission);
+          this.enterWithCarPermissions.push({
+            ...createdPermission,
+            dateFrom: new Date(createdPermission.dateFrom),
+            dateTo: new Date(createdPermission.dateTo),
+          });
   
-      this.permissionForm.reset({
-        cadetId: 'LKA12345678901',
-        status: 'Patvirtintas',
+          this.permissionForm.reset({
+            cadetId: 'LKA12345678901',
+            status: 'Patvirtintas',
+          });
+  
+          this.isFormVisible = false;
+        },
+        error: (err) => {
+          console.error('Failed to create permission:', err);
+        },
       });
-  
-      this.isFormVisible = false;
     } else {
       console.error('Form is invalid');
       this.permissionForm.markAllAsTouched();
     }
-  }  
+  }
+  
 }

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime, timedelta
-from models import Event, UserAuthentication, UserProfileData, CarEnterPermission
+from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, db
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 bp = Blueprint('events', __name__)
@@ -104,3 +104,50 @@ def get_car_permissions(cadetId):
     ]
 
     return jsonify({'enterWithCarPermissions': permissions_list})
+
+@bp.route('/permission/car', methods=['POST'])
+def create_car_permission():
+    data = request.get_json()
+
+    # Validate required fields
+    required_fields = ['cadetId', 'status', 'location', 'dateFrom', 'dateTo', 'carNumber', 'carBrand']
+    for field in required_fields:
+        if field not in data or not data[field]:
+            return jsonify({'error': f'{field} is required'}), 400
+
+    try:
+        # Parse dates
+        date_from = datetime.fromisoformat(data['dateFrom'])
+        date_to = datetime.fromisoformat(data['dateTo'])
+
+        # Create a new permission instance
+        new_permission = CarEnterPermission(
+            cadetId=data['cadetId'],
+            status=data['status'],
+            location=data['location'],
+            dateFrom=date_from,
+            dateTo=date_to,
+            carNumber=data['carNumber'],
+            carBrand=data['carBrand'],
+            additionalInformation=data.get('additionalInformation', ''),
+        )
+
+        # Add to database and commit
+        db.session.add(new_permission)
+        db.session.commit()
+
+        # Return the created permission as JSON
+        return jsonify({
+            'permissionId': new_permission.permissionId,
+            'cadetId': new_permission.cadetId,
+            'status': new_permission.status,
+            'location': new_permission.location,
+            'dateFrom': new_permission.dateFrom.isoformat(),
+            'dateTo': new_permission.dateTo.isoformat(),
+            'carNumber': new_permission.carNumber,
+            'carBrand': new_permission.carBrand,
+            'additionalInformation': new_permission.additionalInformation,
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to create permission: {str(e)}'}), 500
