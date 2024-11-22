@@ -3,7 +3,34 @@ from extensions import db
 class UserAuthentication(db.Model):
     __tablename__ = 'UserAuthentication'
     cadetId = db.Column(db.String(14), primary_key=True)
-    nationalId = db.Column(db.Integer, unique=True, nullable=False)
+    nationalId = db.Column(db.BigInteger, unique=True, nullable=False)
+
+    
+class UserProfileData(db.Model):
+    __tablename__ = 'UserProfileData'
+
+    cadetId = db.Column(db.String(14), db.ForeignKey('UserAuthentication.cadetId'), primary_key=True)
+    dateOfBirth = db.Column(db.Date, nullable=False)
+    fullName = db.Column(db.String(255), nullable=False)
+    photoUrl = db.Column(db.Text)
+    phoneNumber = db.Column(db.String(20))
+    email = db.Column(db.String(255), unique=True)
+    address = db.Column(db.Text)
+    bloodType = db.Column(db.Enum('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'), nullable=False)
+    gender = db.Column(db.Enum('Vyras', 'Moteris', 'Nenuroditas'), nullable=False)
+    heightCm = db.Column(db.Numeric(5, 2))
+    weightKg = db.Column(db.Numeric(5, 2))
+    allergies = db.Column(db.Text)
+    medicalConditions = db.Column(db.Text)
+    baseLocation = db.Column(db.String(50))
+    status = db.Column(db.Enum('ppkt/pkt', 'intendantas'), default='ppkt/pkt')
+
+    # Relationship with UserAuthentication
+    authentication = db.relationship(
+        'UserAuthentication',
+        backref=db.backref('profile', lazy=True),
+        primaryjoin='UserProfileData.cadetId == UserAuthentication.cadetId'
+    )
     
 class Event(db.Model):
     __tablename__ = 'Event'

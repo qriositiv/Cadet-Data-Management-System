@@ -37,7 +37,8 @@ interface UserProfileHealthData {
 }
 
 interface UserProfileServiceData {
-    
+    location: string;
+    status: string;
 }
 
 export interface Event {

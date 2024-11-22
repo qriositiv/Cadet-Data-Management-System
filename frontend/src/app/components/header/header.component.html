@@ -7,13 +7,13 @@
       </a>
     </div>
 
-    <div class="md:hidden">
+    <div *ngIf="cadetService.isAuthenticated()" class="md:hidden">
       <button (click)="toggleMobileMenu()" aria-label="Toggle menu">
         <i class="fa-solid fa-bars text-2xl"></i>
       </button>
-    </div>
+    </div>  
 
-    <div class="hidden md:flex items-center space-x-4 lg:space-x-8 text-sm lg:text-lg">
+    <div *ngIf="cadetService.isAuthenticated()" class="hidden md:flex items-center space-x-4 lg:space-x-8 text-sm lg:text-lg">
       <a [routerLink]="['/notifications']" class="flex flex-col items-center hover:text-rose-300 transition">
         <span class="relative">
           <i class="fa-solid fa-bell text-lg lg:text-2xl"></i>
@@ -39,11 +39,10 @@
     </div>
   </div>
 
-  <div class="hidden md:flex w-full bg-rose-800 h-10 items-center">
-    <div class="w-11/12 h-full mx-auto flex justify-center items-center space-x-5 md:space-x-10 lg:space-x-20 text-xs md:text-base">
+  <div *ngIf="cadetService.isAuthenticated()" class="hidden md:flex w-full bg-rose-800 h-10 items-center">
+    <div class="w-11/12 h-full mx-auto flex justify-center items-center space-x-5 sm:space-x-10 lg:space-x-20 text-xs md:text-base">
       <a [routerLink]="['/activities']" class="hover:text-rose-300 transition">Renginiai</a>
 
-      <!-- Dropdown for Leidimai -->
       <div class="relative group">
         <button class="hover:text-rose-300 transition">Leidimai</button>
         <div

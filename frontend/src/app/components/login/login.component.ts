@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private loginService: CadetService, private router: Router) {
+  constructor(private fb: FormBuilder, private cadetService: CadetService, private router: Router) {
     this.loginForm = this.fb.group({
       cadetId: ['', [Validators.required, Validators.pattern(/^\w+$/)]],
       nationalId: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -28,7 +28,7 @@ export class LoginComponent {
         nationalId: Number(this.loginForm.value.nationalId),
       };
 
-      this.loginService.login(formValue).subscribe(
+      this.cadetService.login(formValue).subscribe(
         (response) => {
           localStorage.setItem('access_token', response.access_token);
           this.router.navigate(['/']);

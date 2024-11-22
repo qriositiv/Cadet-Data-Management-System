@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Event, LoginResponse, UserAuthenticationData } from './interfaces';
+import { Event, LoginResponse, UserAuthenticationData, UserProfileData } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,14 @@ export class CadetService {
 
   login(userData: UserAuthenticationData): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.apiUrl + 'login', userData);
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('access_token');
+  }
+
+  getUserProfile(cadetId: string): Observable<UserProfileData> {
+    return this.http.get<UserProfileData>(this.apiUrl + 'profile/' + cadetId);
   }
 
   getEvents(): Observable<Event[]> {

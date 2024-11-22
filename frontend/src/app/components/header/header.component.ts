@@ -1,23 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { CadetService } from '../../cadet.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [RouterLink, CommonModule],
-  templateUrl: './header.component.html'
+  templateUrl: './header.component.html',
 })
 export class HeaderComponent {
   mobileMenuOpen: boolean = false;
   dropdownOpen = false;
 
-  constructor(router: Router) {}
+  constructor(private router: Router, public cadetService: CadetService) {}
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
-  
+
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
@@ -29,5 +30,4 @@ export class HeaderComponent {
   logout() {
     localStorage.removeItem('access_token');
   }
-  
 }

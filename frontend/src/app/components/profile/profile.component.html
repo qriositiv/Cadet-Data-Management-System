@@ -1,4 +1,4 @@
-<div class="w-full mx-auto bg-white rounded-lg shadow-lg md:p-4 p-4 m-4">
+<div *ngIf="cadet" class="w-full mx-auto bg-white rounded-lg shadow-lg md:p-4 p-4 m-4">
     <!-- Header Section -->
     <div class="text-center">
       <div class="relative inline-block">
@@ -56,15 +56,15 @@
   
       <!-- Basic Information -->
       <div *ngIf="currentTab === 'basic'" class="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4">
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Kariūno Identifikavimo Numeris (KIN):</label>
           <p class="text-gray-800">{{ cadet.authentication.cadetId }}</p>
         </div>
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Vardas ir Pavardė:</label>
           <p class="text-gray-800">{{ cadet.basicData.fullName }}</p>
         </div>
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Gimimo data:</label>
           <p class="text-gray-800">{{ cadet.basicData.dateOfBirth | date: 'longDate' }}</p>
         </div>
@@ -72,15 +72,15 @@
   
       <!-- Contact Information -->
       <div *ngIf="currentTab === 'contact'" class="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4">
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Telefono numeris:</label>
           <p class="text-gray-800">{{ cadet.contactData.phoneNumber }}</p>
         </div>
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">El. pašto adresas:</label>
           <p class="text-gray-800">{{ cadet.contactData.email }}</p>
         </div>
-        <div class="profile-info col-span-2">
+        <div class="">
           <label class="block text-gray-700 font-medium">Gyvenimo adresas:</label>
           <p class="text-gray-800">{{ cadet.contactData.address }}</p>
         </div>
@@ -88,29 +88,41 @@
   
       <!-- Health Information -->
       <div *ngIf="currentTab === 'health'" class="grid grid-cols-2 md:grid-cols-3 md:gap-4 gap-4">
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Kraujo grupė:</label>
           <p class="text-gray-800">{{ cadet.healthData.bloodType }}</p>
         </div>
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Lytis:</label>
           <p class="text-gray-800">{{ cadet.healthData.gender }}</p>
         </div>
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Aukštis:</label>
           <p class="text-gray-800">{{ cadet.healthData.heightCm }} cm</p>
         </div>
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Svoris:</label>
           <p class="text-gray-800">{{ cadet.healthData.weightKg }} kg</p>
         </div>
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Alergijos:</label>
           <p class="text-gray-800">{{ cadet.healthData.allergies }}</p>
         </div>
-        <div class="profile-info">
+        <div class="">
           <label class="block text-gray-700 font-medium">Ligos:</label>
           <p class="text-gray-800">{{ cadet.healthData.medicalConditions }}</p>
+        </div>
+      </div>
+
+      <!-- Service Information -->
+      <div *ngIf="currentTab === 'service'" class="grid grid-cols-1 md:grid-cols-2 md:gap-4 gap-4">
+        <div class="">
+          <label class="block text-gray-700 font-medium">Štabo lokacija:</label>
+          <p class="text-gray-800">{{ cadet.serviceData.location }}</p>
+        </div>
+        <div class="">
+          <label class="block text-gray-700 font-medium">Kariūno statusas:</label>
+          <p class="text-gray-800">{{ cadet.serviceData.status }}</p>
         </div>
       </div>
     </div>

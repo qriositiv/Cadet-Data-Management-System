@@ -11,17 +11,18 @@ CREATE TABLE `UserProfileData` (
     fullName VARCHAR(255) NOT NULL,
     photoUrl TEXT,
     phoneNumber VARCHAR(20),
-    email VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     address TEXT,
-    bloodType VARCHAR(3),
-    gender VARCHAR(10),
+    bloodType ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-') NOT NULL,
+    gender ENUM('Vyras', 'Moteris', 'Nenuroditas') NOT NULL,
     heightCm DECIMAL(5,2),
     weightKg DECIMAL(5,2),
     allergies TEXT,
     medicalConditions TEXT,
+    baseLocation VARCHAR(50),
+    status ENUM('ppkt/pkt', 'intendantas') DEFAULT 'ppkt/pkt',
     FOREIGN KEY (cadetId) REFERENCES UserAuthentication(cadetId)
 );
-
 
 CREATE TABLE `Event` (
     eventId INT AUTO_INCREMENT PRIMARY KEY,
