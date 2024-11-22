@@ -32,8 +32,8 @@
   <!-- New Permission Form (Vehicle Entry) -->
   <form *ngIf="isFormVisible" [formGroup]="permissionForm" (ngSubmit)="submitPermission()" class="space-y-4">
     <div>
-      <label for="area" class="block text-sm font-medium text-gray-700">Pasirinkite vietą</label>
-      <select id="area" formControlName="area" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
+      <label for="location" class="block text-sm font-medium text-gray-700">Pasirinkite vietą</label>
+      <select id="location" formControlName="location" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
         <option value="" disabled selected>-- Pasirinkite vietą --</option>
         <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
       </select>
@@ -52,13 +52,13 @@
         <input type="text" id="carNumber" formControlName="carNumber" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
       <div>
-        <label for="brand" class="block text-sm font-medium text-gray-700">Automobilio markė</label>
-        <input type="text" id="brand" formControlName="brand" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
+        <label for="carBrand" class="block text-sm font-medium text-gray-700">Automobilio markė</label>
+        <input type="text" id="carBrand" formControlName="carBrand" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
     </div>
     <div>
-      <label for="additionalInfo" class="block text-sm font-medium text-gray-700">Papildoma informacija</label>
-      <textarea id="additionalInfo" formControlName="additionalInfo" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"></textarea>
+      <label for="additionalInformation" class="block text-sm font-medium text-gray-700">Papildoma informacija</label>
+      <textarea id="additionalInformation" formControlName="additionalInformation" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"></textarea>
     </div>
     <button type="submit" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full md:text-base text-sm" [disabled]="!permissionForm.valid">
       Pateikti prašymą

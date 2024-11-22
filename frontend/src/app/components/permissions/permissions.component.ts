@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CarEnterPermission, ExemptionFromPhysicalActivity } from '../../interfaces'; // Adjust the path as necessary
+import { CadetService } from '../../cadet.service';
 
 @Component({
   selector: 'app-permissions',
@@ -9,20 +10,8 @@ import { CarEnterPermission, ExemptionFromPhysicalActivity } from '../../interfa
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './permissions.component.html',
 })
-export class PermissionsComponent {
-  enterWithCarPermissions: CarEnterPermission[] = [
-    {
-      permissionId: 1,
-      cadetId: 'A12345', // Example cadetId
-      status: 'Patvirtintas',
-      dateFrom: new Date('2023-11-01'),
-      dateTo: new Date('2023-11-10'),
-      carNumber: 'DDM088',
-      carBrand: 'Toyota',
-      additionalInformation: '',
-      location: 'Vilnius',
-    },
-  ];
+export class PermissionsComponent implements OnInit {
+  enterWithCarPermissions: CarEnterPermission[] = [];
 
   physicalActivityPermissions: ExemptionFromPhysicalActivity[] = [
     {
@@ -45,7 +34,7 @@ export class PermissionsComponent {
 
   permissionForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private cadetService: CadetService) {
     const today = new Date();
     const threeDaysLater = new Date();
     threeDaysLater.setDate(today.getDate() + 3);
@@ -56,12 +45,12 @@ export class PermissionsComponent {
     this.permissionForm = this.fb.group({
       dateFrom: [todayStr, Validators.required],
       dateTo: [threeDaysLaterStr, Validators.required],
-      carNumber: ['', Validators.required],
+      carNumber: ['', [Validators.required, Validators.pattern(/^[A-Z0-9]{5,10}$/)]],
       carBrand: ['', Validators.required],
-      cadetId: ['A12345', Validators.required], // Example cadetId
+      cadetId: ['A12345', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^[+0-9\s-]+$/)]],
       additionalInformation: [''],
-      location: ['', Validators.required],
+      location: ['', [Validators.required, Validators.pattern(/^(Vilnius|Kaunas|Klaipėda)$/)]],
     });
 
     this.physicalPermissionForm = this.fb.group({
@@ -71,6 +60,23 @@ export class PermissionsComponent {
       dateTo: ['', Validators.required],
       additionalInformation: [''],
       location: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    const cadetId = 'LKA12345678901';
+    this.cadetService.getCarPermissions(cadetId).subscribe({
+      next: (permissions) => {
+        this.enterWithCarPermissions = permissions.map(permission => ({
+          ...permission,
+          dateFrom: new Date(permission.dateFrom),
+          dateTo: new Date(permission.dateTo),
+        }));
+        console.log(this.enterWithCarPermissions);
+      },
+      error: (err) => {
+        console.error('Failed to fetch car permissions:', err);
+      },
     });
   }
 
@@ -95,20 +101,35 @@ export class PermissionsComponent {
     this.isFormVisible = !this.isFormVisible;
   }
 
-  submitPermission() {
+  submitPermission(): void {
     if (this.permissionForm.valid) {
+      const formValue = this.permissionForm.value;
+  
       const newPermission: CarEnterPermission = {
         permissionId: this.enterWithCarPermissions.length + 1,
-        ...this.permissionForm.value,
-        status: 'Pending',
+        cadetId: formValue.cadetId,
+        status: formValue.status,
+        location: formValue.location,
+        dateFrom: new Date(formValue.dateFrom),
+        dateTo: new Date(formValue.dateTo),
+        carNumber: formValue.carNumber,
+        carBrand: formValue.carBrand,
+        additionalInformation: formValue.additionalInformation || '',
       };
+  
       this.enterWithCarPermissions.push(newPermission);
+  
+      console.log('New Permission:', newPermission);
+  
       this.permissionForm.reset({
-        cadetId: 'A12345',
-        dateFrom: this.permissionForm.controls['dateFrom'].value,
-        dateTo: this.permissionForm.controls['dateTo'].value,
+        cadetId: 'LKA12345678901',
+        status: 'Patvirtintas',
       });
+  
       this.isFormVisible = false;
+    } else {
+      console.error('Form is invalid');
+      this.permissionForm.markAllAsTouched();
     }
-  }
+  }  
 }

@@ -39,3 +39,16 @@ class Event(db.Model):
     dateFrom = db.Column(db.DateTime, nullable=False)
     dateTo = db.Column(db.DateTime, nullable=False)
     location = db.Column(db.String(255), nullable=False)
+
+class CarEnterPermission(db.Model):
+    __tablename__ = 'CarEnterPermission'
+
+    permissionId = db.Column(db.Integer, primary_key=True)
+    cadetId = db.Column(db.String(14), db.ForeignKey('UserAuthentication.cadetId'))
+    status = db.Column(db.String(14), nullable=False)
+    location = db.Column(db.String(255))
+    dateFrom = db.Column(db.DateTime, nullable=False)
+    dateTo = db.Column(db.DateTime, nullable=False)
+    carNumber = db.Column(db.String(20))
+    carBrand = db.Column(db.String(14))
+    additionalInformation = db.Column(db.Text)

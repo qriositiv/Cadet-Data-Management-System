@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime, timedelta
-from models import Event, UserAuthentication, UserProfileData
+from models import Event, UserAuthentication, UserProfileData, CarEnterPermission
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 bp = Blueprint('events', __name__)
@@ -79,3 +79,28 @@ def get_events():
         for event in events
     ]
     return jsonify(event_list)
+
+@bp.route('/permission/car/<string:cadetId>', methods=['GET'])
+# @jwt_required()
+def get_car_permissions(cadetId):
+    permissions = CarEnterPermission.query.filter_by(cadetId=cadetId).all()
+
+    if not permissions:
+        return jsonify({'error': 'No car permissions found for this cadet'}), 404
+
+    permissions_list = [
+        {
+            'permissionId': permission.permissionId,
+            'cadetId': permission.cadetId,
+            'status': permission.status,
+            'location': permission.location,
+            'dateFrom': permission.dateFrom.strftime('%Y-%m-%d'),
+            'dateTo': permission.dateTo.strftime('%Y-%m-%d'),
+            'carNumber': permission.carNumber,
+            'carBrand': permission.carBrand,
+            'additionalInformation': permission.additionalInformation,
+        }
+        for permission in permissions
+    ]
+
+    return jsonify({'enterWithCarPermissions': permissions_list})

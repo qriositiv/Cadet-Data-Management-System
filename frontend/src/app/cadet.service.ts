@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Event, LoginResponse, UserAuthenticationData, UserProfileData } from './interfaces';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+import { CarEnterPermission, Event, LoginResponse, UserAuthenticationData, UserProfileData } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -26,4 +26,11 @@ export class CadetService {
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(this.apiUrl + 'events');
   }
+
+  getCarPermissions(cadetId: string): Observable<CarEnterPermission[]> {
+    return this.http
+      .get<{ enterWithCarPermissions: CarEnterPermission[] }>(`${this.apiUrl}permission/car/${cadetId}`)
+      .pipe(map((response) => response.enterWithCarPermissions));
+  }
+  
 }
