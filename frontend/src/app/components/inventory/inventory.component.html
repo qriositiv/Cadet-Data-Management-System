@@ -21,7 +21,7 @@
   </div>
   
 
-  <ul>
+  <ul *ngIf="items">
     <li *ngFor="let item of items" class="flex flex-col mb-2 py-2 border-b rounded-md">
       <div class="flex items-center justify-between">
         <div class="flex items-center md:space-x-4 space-x-2">

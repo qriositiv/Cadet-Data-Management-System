@@ -63,3 +63,50 @@ class ExemptionFromPhysicalActivity(db.Model):
     dateTo = db.Column(db.DateTime, nullable=False)
     documentPhotoUrl = db.Column(db.Text)
     additionalInformation = db.Column(db.Text)
+    
+class UserEquipment(db.Model):
+    __tablename__ = 'UserEquipment'
+
+    cadetId = db.Column(db.String(14), db.ForeignKey('UserAuthentication.cadetId'), primary_key=True)
+    equipmentId = db.Column(db.Integer, db.ForeignKey('Equipment.equipmentId'), primary_key=True)
+    status = db.Column(db.String(14))
+    size = db.Column(db.String(5), db.ForeignKey('EquipmentSize.size'), nullable=False)
+    dateGiven = db.Column(db.DateTime, nullable=False)
+
+    # Relationships
+    equipment = db.relationship('Equipment', backref='user_equipment')
+    equipment_size = db.relationship('EquipmentSize', backref='user_equipment_size', foreign_keys=[size])
+
+    def __init__(self, cadetId, equipmentId, status, size, dateGiven):
+        self.cadetId = cadetId
+        self.equipmentId = equipmentId
+        self.status = status
+        self.size = size
+        self.dateGiven = dateGiven
+
+
+class Equipment(db.Model):
+    __tablename__ = 'Equipment'
+
+    equipmentId = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    photoUrl = db.Column(db.String(200))
+
+    def __init__(self, name, photoUrl):
+        self.name = name
+        self.photoUrl = photoUrl
+
+
+class EquipmentSize(db.Model):
+    __tablename__ = 'EquipmentSize'
+
+    equipmentId = db.Column(db.Integer, db.ForeignKey('Equipment.equipmentId'), primary_key=True)
+    size = db.Column(db.String(5), primary_key=True)
+
+    # Relationship to the Equipment table
+    equipment = db.relationship('Equipment', backref='equipment_size')
+
+    def __init__(self, equipmentId, size):
+        self.equipmentId = equipmentId
+        self.size = size
+

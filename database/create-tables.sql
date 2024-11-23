@@ -32,7 +32,7 @@ CREATE TABLE `Event` (
     location VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE CarEnterPermission (
+CREATE TABLE `CarEnterPermission` (
     permissionId INT AUTO_INCREMENT PRIMARY KEY,
     cadetId VARCHAR(14),
     status VARCHAR(14) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE CarEnterPermission (
     FOREIGN KEY (cadetId) REFERENCES UserAuthentication(cadetId)
 );
 
-CREATE TABLE ExemptionFromPhysicalActivity (
+CREATE TABLE `ExemptionFromPhysicalActivity` (
     permissionId INT AUTO_INCREMENT PRIMARY KEY,
     cadetId VARCHAR(14),
     status VARCHAR(14) NOT NULL,
@@ -56,27 +56,30 @@ CREATE TABLE ExemptionFromPhysicalActivity (
     FOREIGN KEY (cadetId) REFERENCES UserAuthentication(cadetId)
 );
 
--- CREATE TABLE Equipment (
---     equipmentId INT AUTO_INCREMENT PRIMARY KEY,
---     photoUrl TEXT, 
---     name VARCHAR(255) NOT NULL,  
---     cadetId VARCHAR(14), 
---     FOREIGN KEY (cadetId) REFERENCES UserEquipment(cadetId)
--- );
+CREATE TABLE `Equipment` (
+    equipmentId INT AUTO_INCREMENT PRIMARY KEY,
+    photoUrl TEXT, 
+    name VARCHAR(255) NOT NULL
+);
 
--- CREATE TABLE UserEquipment (
---     cadetId VARCHAR(14), 
---     status VARCHAR(14), 
---     size VARCHAR(10), 
---     dateGiven DATETIME NOT NULL,
---     FOREIGN KEY (cadetId) REFERENCES UserAuthentication(cadetId),
---     FOREIGN KEY (equipmentId) REFERENCES Equipment(equipmentId)
--- );
+CREATE TABLE `EquipmentSize` (
+    size VARCHAR(5),
+    equipmentId INT,
+    PRIMARY KEY (equipmentId, size),
+    FOREIGN KEY (equipmentId) REFERENCES Equipment(equipmentId)
+);
 
--- CREATE TABLE EquipmentSize (
---     sizeId INT AUTO_INCREMENT PRIMARY KEY,  
---     size VARCHAR(5) NOT NULL UNIQUE
--- );
+CREATE TABLE `UserEquipment` (
+    cadetId VARCHAR(14), 
+    equipmentId INT,
+    status VARCHAR(14), 
+    size VARCHAR(5), 
+    dateGiven DATETIME NOT NULL,
+    FOREIGN KEY (cadetId) REFERENCES UserAuthentication(cadetId),
+    FOREIGN KEY (equipmentId) REFERENCES Equipment(equipmentId),
+    FOREIGN KEY (equipmentId, size) REFERENCES EquipmentSize(equipmentId, size),
+    PRIMARY KEY (cadetId, equipmentId)
+);
 
 
 CREATE TABLE Notification (

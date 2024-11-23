@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime, timedelta
-from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, ExemptionFromPhysicalActivity, db
+from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, ExemptionFromPhysicalActivity, UserEquipment, Equipment, EquipmentSize, db
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.utils import secure_filename
 import os
@@ -248,3 +248,39 @@ def upload_file():
         return jsonify({'file_name': random_filename}), 201
 
     return jsonify({'error': 'File type not allowed'}), 400
+
+@bp.route('/equipment/<string:cadetId>', methods=['GET'])
+def get_user_equipment(cadetId):
+    try:
+        # Query UserEquipment by cadetId and join with Equipment and EquipmentSize
+        user_equipment = db.session.query(
+            UserEquipment,
+            Equipment,
+            EquipmentSize
+        ).join(
+            Equipment, Equipment.equipmentId == UserEquipment.equipmentId
+        ).join(
+            EquipmentSize, (EquipmentSize.equipmentId == Equipment.equipmentId) & (UserEquipment.size == EquipmentSize.size)
+        ).filter(
+            UserEquipment.cadetId == cadetId
+        ).all()
+
+
+        if user_equipment:
+            # Format the result
+            equipment_list = [
+                {
+                    'equipmentId': eq[1].equipmentId,
+                    'name': eq[1].name,
+                    'photoUrl': eq[1].photoUrl,
+                    'size': eq[2].size,
+                    'status': eq[0].status,
+                    'dateGiven': eq[0].dateGiven.strftime('%Y-%m-%d')
+                }
+                for eq in user_equipment
+            ]
+            return jsonify(equipment_list), 200
+        else:
+            return jsonify({'message': 'No equipment found for this cadet.'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

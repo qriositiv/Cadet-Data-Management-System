@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { CarEnterPermission, Event, ExemptionFromPhysicalActivity, LoginResponse, UserAuthenticationData, UserProfileData } from './interfaces';
+import { CarEnterPermission, Equipment, Event, ExemptionFromPhysicalActivity, LoginResponse, UserAuthenticationData, UserProfileData } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +50,9 @@ export class CadetService {
     formData.append('file', file);
 
     return this.http.post<{ file_name: string }>(this.apiUrl + 'upload', formData);
+  }
+
+  getAllEquipment(cadetId: string): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(this.apiUrl + 'equipment/' + cadetId);
   }
 }
