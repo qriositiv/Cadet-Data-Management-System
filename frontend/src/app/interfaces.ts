@@ -79,7 +79,6 @@ export interface Equipment {
     name: string;
     sizes: string[];
     size: string;
-    color: string;
     dateGiven: Date;
 }
 

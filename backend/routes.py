@@ -252,7 +252,6 @@ def upload_file():
 @bp.route('/equipment/<string:cadetId>', methods=['GET'])
 def get_user_equipment(cadetId):
     try:
-        # Query UserEquipment by cadetId and join with Equipment and EquipmentSize
         user_equipment = db.session.query(
             UserEquipment,
             Equipment,
@@ -265,22 +264,55 @@ def get_user_equipment(cadetId):
             UserEquipment.cadetId == cadetId
         ).all()
 
-
         if user_equipment:
-            # Format the result
-            equipment_list = [
-                {
-                    'equipmentId': eq[1].equipmentId,
-                    'name': eq[1].name,
-                    'photoUrl': eq[1].photoUrl,
-                    'size': eq[2].size,
-                    'status': eq[0].status,
-                    'dateGiven': eq[0].dateGiven.strftime('%Y-%m-%d')
-                }
-                for eq in user_equipment
-            ]
+            equipment_list = []
+            for user_eq, equipment, equipment_size in user_equipment:
+                sizes = [es.size for es in db.session.query(EquipmentSize).filter(EquipmentSize.equipmentId == equipment.equipmentId).all()]
+
+                equipment_list.append({
+                    'equipmentId': equipment.equipmentId,
+                    'name': equipment.name,
+                    'photoUrl': equipment.photoUrl,
+                    'size': user_eq.size,
+                    'status': user_eq.status,
+                    'dateGiven': user_eq.dateGiven.strftime('%Y-%m-%d'),
+                    'sizes': sizes
+                })
+
             return jsonify(equipment_list), 200
         else:
             return jsonify({'message': 'No equipment found for this cadet.'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@bp.route('/updateUserEquipment', methods=['PUT'])
+def update_user_equipment():
+    try:
+        # Get data from the request body
+        data = request.get_json()
+        cadetId = data.get('cadetId')
+        equipmentId = data.get('equipmentId')
+        size = data.get('size')
+        status = data.get('status')
+
+        # Check if all required data is provided
+        if not cadetId or not equipmentId or not size or not status:
+            return jsonify({'error': 'Missing required data'}), 400
+
+        # Find the UserEquipment entry by cadetId and equipmentId
+        user_equipment = db.session.query(UserEquipment).filter_by(cadetId=cadetId, equipmentId=equipmentId).first()
+
+        if not user_equipment:
+            return jsonify({'error': 'User equipment not found'}), 404
+
+        # Update the status and size
+        user_equipment.status = status
+        user_equipment.size = size
+
+        # Commit changes to the database
+        db.session.commit()
+
+        return jsonify({'message': 'User equipment updated successfully'}), 200
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500

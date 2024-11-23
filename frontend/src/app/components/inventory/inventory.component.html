@@ -35,7 +35,7 @@
           
           <div>
             <div class="md:text-lg font-semibold text-gray-800">{{ item.name }}</div>
-            <div class="md:text-sm text-xs text-gray-600">Didis: {{ item.size }}, Spalva: {{ item.color }}</div>
+            <div class="md:text-sm text-xs text-gray-600">Didis: {{ item.size }}</div>
             <div class="md:text-sm text-xs text-gray-500">Išduotas: {{ item.dateGiven | date: 'mediumDate' }}</div>
           </div>
         </div>
@@ -55,12 +55,12 @@
           <div class="md:w-1/2">
             <label for="sizeSelect" class="block text-sm font-medium text-gray-700">Pasirinkti didį</label>
             <select id="sizeSelect" [(ngModel)]="selectedSize" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600">
-              <option *ngFor="let size of availableSizes" [value]="size">{{ size }}</option>
+              <option *ngFor="let size of item.sizes" [value]="size" class="uppercase">{{ size }}</option>
             </select>
           </div>
       
           <div class="flex space-x-2 md:w-1/2 md:text-base text-sm">
-            <button (click)="submitOrder()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full" [disabled]="!selectedSize || !isConfirmed">
+            <button (click)="submitOrder()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full" [disabled]="!selectedSize">
               Pateikti prašyma
             </button>
             <button (click)="cancelOrder()" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 w-full">
@@ -68,6 +68,7 @@
             </button>
           </div>
         </div>
+      
       
         <!-- Confirmation Checkbox -->
         <div class="flex items-center">

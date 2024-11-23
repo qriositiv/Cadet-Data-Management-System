@@ -12,11 +12,11 @@ import { CadetService } from '../../cadet.service';
 })
 export class InventoryComponent implements OnInit {
   items: Equipment[] = [];
-  availableSizes = ['S', 'M', 'L', 'XL', 'XXL'];
   selectedItemId: number | null = null;
   selectedSize: string = '';
   isConfirmed: boolean = false;
   cadetId: string = 'LKA12345678901';
+  status: string = 'wait';
 
   constructor(private cadetService: CadetService) {}
 
@@ -36,16 +36,36 @@ export class InventoryComponent implements OnInit {
   validateItem(itemId: number) {
     this.selectedItemId = itemId;
     this.selectedSize = '';
+    this.status = 'wait';
   }
 
   submitOrder() {
-    if (this.selectedItemId !== null) {
-      console.log(`Ordering new size ${this.selectedSize} for item ID ${this.selectedItemId}`);
-      this.selectedItemId = null;
+    if (this.selectedItemId !== null && this.selectedSize) {
+      const orderData = {
+        cadetId: this.cadetId,
+        equipmentId: this.selectedItemId,
+        size: this.selectedSize,
+        status: this.status,
+      };
+  
+      this.cadetService.updateUserEquipment(orderData).subscribe(
+        (response) => {
+          console.log('Order submitted successfully', response);
+          this.selectedItemId = null;
+        },
+        (error) => {
+          console.error('Error submitting order:', error);
+        }
+      );
+    } else {
+      console.error('Please select size and status.');
     }
   }
+  
 
   cancelOrder() {
     this.selectedItemId = null;
+    this.selectedSize = '';
+    this.status = '';
   }
 }
