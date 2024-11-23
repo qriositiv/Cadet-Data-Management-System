@@ -1,7 +1,11 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime, timedelta
-from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, db
+from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, ExemptionFromPhysicalActivity, db
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from werkzeug.utils import secure_filename
+import os
+import random
+import string
 
 bp = Blueprint('events', __name__)
 
@@ -151,3 +155,96 @@ def create_car_permission():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': f'Failed to create permission: {str(e)}'}), 500
+    
+    
+@bp.route('/permission/physical/<string:cadetId>', methods=['GET'])
+def get_physical_permissions(cadetId):
+    permissions = ExemptionFromPhysicalActivity.query.filter_by(cadetId=cadetId).all()
+
+    permission_list = [
+        {
+            'permissionId': permission.permissionId,
+            'cadetId': permission.cadetId,
+            'status': permission.status,
+            'dateFrom': permission.dateFrom.isoformat(),
+            'dateTo': permission.dateTo.isoformat(),
+            'documentPhotoUrl': permission.documentPhotoUrl,
+            'additionalInformation': permission.additionalInformation,
+        }
+        for permission in permissions
+    ]
+
+    return jsonify(permission_list)
+    
+@bp.route('/permission/physical', methods=['POST'])
+def create_physical_permission():
+    data = request.get_json()
+
+    required_fields = ['cadetId', 'status', 'dateFrom', 'dateTo', 'documentPhotoUrl']
+    for field in required_fields:
+        if field not in data or not data[field]:
+            return jsonify({'error': f'{field} is required'}), 400
+
+    try:
+        # Parse dates
+        date_from = datetime.fromisoformat(data['dateFrom'])
+        date_to = datetime.fromisoformat(data['dateTo'])
+
+        # Create a new permission
+        new_permission = ExemptionFromPhysicalActivity(
+            cadetId=data['cadetId'],
+            status=data['status'],
+            dateFrom=date_from,
+            dateTo=date_to,
+            documentPhotoUrl=data['documentPhotoUrl'],
+            additionalInformation=data.get('additionalInformation', ''),
+        )
+
+        # Add and commit to the database
+        db.session.add(new_permission)
+        db.session.commit()
+
+        return jsonify({
+            'permissionId': new_permission.permissionId,
+            'cadetId': new_permission.cadetId,
+            'status': new_permission.status,
+            'dateFrom': new_permission.dateFrom.isoformat(),
+            'dateTo': new_permission.dateTo.isoformat(),
+            'documentPhotoUrl': new_permission.documentPhotoUrl,
+            'additionalInformation': new_permission.additionalInformation,
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to create permission: {str(e)}'}), 500
+
+def allowed_file(filename):
+    allowed_extensions = current_app.config['ALLOWED_EXTENSIONS']
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
+def generate_random_filename(extension):
+    random_str = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+    return f"{random_str}.{extension}"
+
+@bp.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part in the request'}), 400
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'error': 'No file selected for uploading'}), 400
+
+    if file and allowed_file(file.filename):
+        # Get the file extension
+        extension = file.filename.rsplit('.', 1)[1].lower()
+        # Generate a random file name
+        random_filename = generate_random_filename(extension)
+        # Secure the file name and save it to the upload folder
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        file_path = os.path.join(upload_folder, secure_filename(random_filename))
+        file.save(file_path)
+        return jsonify({'file_name': random_filename}), 201
+
+    return jsonify({'error': 'File type not allowed'}), 400

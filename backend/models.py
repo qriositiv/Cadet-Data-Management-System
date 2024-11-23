@@ -52,3 +52,14 @@ class CarEnterPermission(db.Model):
     carNumber = db.Column(db.String(20))
     carBrand = db.Column(db.String(14))
     additionalInformation = db.Column(db.Text)
+
+class ExemptionFromPhysicalActivity(db.Model):
+    __tablename__ = 'ExemptionFromPhysicalActivity'
+
+    permissionId = db.Column(db.Integer, primary_key=True)
+    cadetId = db.Column(db.String(14), db.ForeignKey('UserAuthentication.cadetId'))
+    status = db.Column(db.String(14), nullable=False)
+    dateFrom = db.Column(db.DateTime, nullable=False)
+    dateTo = db.Column(db.DateTime, nullable=False)
+    documentPhotoUrl = db.Column(db.Text)
+    additionalInformation = db.Column(db.Text)

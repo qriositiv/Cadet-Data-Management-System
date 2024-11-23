@@ -49,7 +49,6 @@ CREATE TABLE ExemptionFromPhysicalActivity (
     permissionId INT AUTO_INCREMENT PRIMARY KEY,
     cadetId VARCHAR(14),
     status VARCHAR(14) NOT NULL,
-    location VARCHAR(255),
     dateFrom DATETIME NOT NULL,
     dateTo DATETIME NOT NULL,
     documentPhotoUrl TEXT,

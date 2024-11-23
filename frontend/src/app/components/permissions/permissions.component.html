@@ -105,24 +105,15 @@
   >
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <label for="userName" class="block text-sm font-medium text-gray-700">Vardas ir pavardė</label>
-        <input
-          type="text"
-          id="userName"
-          formControlName="userName"
-          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"
-        />
-      </div>
-      <div>
         <label for="documentPhoto" class="block text-sm font-medium text-gray-700">Dokumento nuotrauka</label>
         <input
           type="file"
           id="documentPhoto"
-          formControlName="documentPhoto"
-          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"
+          (change)="onFileChange($event)"
+          required
         />
       </div>
-    </div>
+    
     <button
       type="submit"
       class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full md:text-base text-sm"
@@ -130,5 +121,6 @@
     >
       Pateikti prašymą
     </button>
+    </div>
   </form>
 </div>

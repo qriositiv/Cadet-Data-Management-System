@@ -9,3 +9,19 @@ INSERT INTO Event (eventId, title, dateFrom, dateTo, location) VALUES
     NOW() - INTERVAL 1 HOUR, NOW() + INTERVAL 1 HOUR, 'LITEXPO, Vilnius'),
 (2, 'Karo istoriko prof. dr. Valdo Rakučio knygos PRIEŠ PANYRANT Į SUTEMAS pristatymas', 
     NOW() + INTERVAL 2 HOUR, NOW() + INTERVAL 3 HOUR, 'Poligonas, Kaunas');
+
+INSERT INTO `ExemptionFromPhysicalActivity` (
+    cadetId, 
+    status,
+    dateFrom, 
+    dateTo, 
+    documentPhotoUrl, 
+    additionalInformation
+) VALUES (
+    'LKA12345678901',
+    'Patvirtintas',
+    '2023-11-01 00:00:00',
+    '2023-11-05 00:00:00',
+    'https://example.com/document.jpg',
+    'Sulaužita ranka.'
+);

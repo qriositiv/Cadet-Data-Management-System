@@ -65,7 +65,6 @@ export interface ExemptionFromPhysicalActivity {
     permissionId: number;
     cadetId: string;
     status: string;
-    location: string;
     dateFrom: Date;
     dateTo: Date;
     documentPhotoUrl: string;
