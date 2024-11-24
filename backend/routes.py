@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime, timedelta
-from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, ExemptionFromPhysicalActivity, UserEquipment, Equipment, EquipmentSize, db
+from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, ExemptionFromPhysicalActivity, UserEquipment, Equipment, EquipmentSize, Location, db
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.utils import secure_filename
 import os
@@ -307,3 +307,14 @@ def update_user_equipment():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@bp.route('/locations', methods=['GET'])
+def get_all_locations():
+    try:
+        locations = Location.query.all()
+
+        location_list = [loc.location for loc in locations]
+
+        return jsonify(location_list), 200
+    except Exception as e:
+        return jsonify({'error': f'Failed to fetch locations: {str(e)}'}), 500

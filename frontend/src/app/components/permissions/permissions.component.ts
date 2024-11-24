@@ -15,11 +15,11 @@ export class PermissionsComponent implements OnInit {
   physicalActivityPermissions: ExemptionFromPhysicalActivity[] = [];
   cadetId: string = 'LKA12345678901';
   uploadedFileName: string | null = null;
+  locations!: string[];
 
   physicalPermissionForm: FormGroup;
   isPhysicalPermissionFormVisible = false;
 
-  areas = ['Vilnius', 'Klaipėda', 'Kaunas'];
   isFormVisible = false;
 
   permissionForm: FormGroup;
@@ -49,6 +49,12 @@ export class PermissionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cadetService.getAllLocations().subscribe(
+      (data) => (this.locations = data),
+      (error) => console.error('Failed to load locations', error)
+    );
+
+
     this.cadetService.getCarPermissions(this.cadetId).subscribe({
       next: (permissions) => {
         this.enterWithCarPermissions = permissions.map(permission => ({

@@ -19,6 +19,10 @@ export class CadetService {
     return !!localStorage.getItem('access_token');
   }
 
+  getAllLocations(): Observable<string[]> {
+    return this.http.get<string[]>(this.apiUrl + 'locations');
+  }
+
   getUserProfile(cadetId: string): Observable<UserProfileData> {
     return this.http.get<UserProfileData>(this.apiUrl + 'profile/' + cadetId);
   }

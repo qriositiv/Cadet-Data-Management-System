@@ -5,7 +5,11 @@ export interface UserAuthenticationData {
 
 export interface LoginResponse {
     access_token: string;
-  }
+}
+
+export interface Location {
+    location: string;
+}
 
 export interface UserProfileData {
     authentication: UserAuthenticationData;
