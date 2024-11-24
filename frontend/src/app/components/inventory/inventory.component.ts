@@ -16,7 +16,7 @@ export class InventoryComponent implements OnInit {
   selectedSize: string = '';
   isConfirmed: boolean = false;
   cadetId: string = 'LKA12345678901';
-  status: string = 'wait';
+  status: string = 'Apdorojama';
 
   constructor(private cadetService: CadetService) {}
 
@@ -24,8 +24,6 @@ export class InventoryComponent implements OnInit {
     this.cadetService.getAllEquipment(this.cadetId).subscribe(
       (data) => {
         this.items = data;
-        console.log(data);
-        
       },
       (error) => {
         console.error('Error fetching equipment:', error);
@@ -36,7 +34,7 @@ export class InventoryComponent implements OnInit {
   validateItem(itemId: number) {
     this.selectedItemId = itemId;
     this.selectedSize = '';
-    this.status = 'wait';
+    this.status = 'Apdorojama';
   }
 
   submitOrder() {
@@ -50,7 +48,6 @@ export class InventoryComponent implements OnInit {
   
       this.cadetService.updateUserEquipment(orderData).subscribe(
         (response) => {
-          console.log('Order submitted successfully', response);
           this.selectedItemId = null;
         },
         (error) => {

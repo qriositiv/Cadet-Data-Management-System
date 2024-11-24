@@ -39,7 +39,7 @@ def get_user_profile(cadetId):
     profile_data = {
         "authentication": {
             "cadetId": profile.cadetId,
-            "nationalId": profile.authentication.nationalId  # Access the related authentication data
+            "nationalId": profile.authentication.nationalId
         },
         "basicData": {
             "dateOfBirth": profile.dateOfBirth.strftime('%Y-%m-%d'),
@@ -85,12 +85,8 @@ def get_events():
     return jsonify(event_list)
 
 @bp.route('/permission/car/<string:cadetId>', methods=['GET'])
-# @jwt_required()
 def get_car_permissions(cadetId):
     permissions = CarEnterPermission.query.filter_by(cadetId=cadetId).all()
-
-    if not permissions:
-        return jsonify({'error': 'No car permissions found for this cadet'}), 404
 
     permissions_list = [
         {
@@ -113,18 +109,18 @@ def get_car_permissions(cadetId):
 def create_car_permission():
     data = request.get_json()
 
-    # Validate required fields
     required_fields = ['cadetId', 'status', 'location', 'dateFrom', 'dateTo', 'carNumber', 'carBrand']
     for field in required_fields:
         if field not in data or not data[field]:
             return jsonify({'error': f'{field} is required'}), 400
 
     try:
-        # Parse dates
-        date_from = datetime.fromisoformat(data['dateFrom'])
-        date_to = datetime.fromisoformat(data['dateTo'])
+        try:
+            date_from = datetime.fromisoformat(data['dateFrom'])
+            date_to = datetime.fromisoformat(data['dateTo'])
+        except ValueError:
+            return jsonify({'error': 'Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:MM:SS)'}), 400
 
-        # Create a new permission instance
         new_permission = CarEnterPermission(
             cadetId=data['cadetId'],
             status=data['status'],
@@ -136,11 +132,9 @@ def create_car_permission():
             additionalInformation=data.get('additionalInformation', ''),
         )
 
-        # Add to database and commit
         db.session.add(new_permission)
         db.session.commit()
 
-        # Return the created permission as JSON
         return jsonify({
             'permissionId': new_permission.permissionId,
             'cadetId': new_permission.cadetId,
@@ -156,6 +150,9 @@ def create_car_permission():
         db.session.rollback()
         return jsonify({'error': f'Failed to create permission: {str(e)}'}), 500
     
+    
+    
+        
     
 @bp.route('/permission/physical/<string:cadetId>', methods=['GET'])
 def get_physical_permissions(cadetId):
@@ -186,11 +183,9 @@ def create_physical_permission():
             return jsonify({'error': f'{field} is required'}), 400
 
     try:
-        # Parse dates
         date_from = datetime.fromisoformat(data['dateFrom'])
         date_to = datetime.fromisoformat(data['dateTo'])
 
-        # Create a new permission
         new_permission = ExemptionFromPhysicalActivity(
             cadetId=data['cadetId'],
             status=data['status'],
@@ -200,7 +195,6 @@ def create_physical_permission():
             additionalInformation=data.get('additionalInformation', ''),
         )
 
-        # Add and commit to the database
         db.session.add(new_permission)
         db.session.commit()
 
@@ -237,11 +231,8 @@ def upload_file():
         return jsonify({'error': 'No file selected for uploading'}), 400
 
     if file and allowed_file(file.filename):
-        # Get the file extension
         extension = file.filename.rsplit('.', 1)[1].lower()
-        # Generate a random file name
         random_filename = generate_random_filename(extension)
-        # Secure the file name and save it to the upload folder
         upload_folder = current_app.config['UPLOAD_FOLDER']
         file_path = os.path.join(upload_folder, secure_filename(random_filename))
         file.save(file_path)
@@ -288,28 +279,28 @@ def get_user_equipment(cadetId):
 @bp.route('/updateUserEquipment', methods=['PUT'])
 def update_user_equipment():
     try:
-        # Get data from the request body
         data = request.get_json()
         cadetId = data.get('cadetId')
         equipmentId = data.get('equipmentId')
         size = data.get('size')
         status = data.get('status')
 
-        # Check if all required data is provided
         if not cadetId or not equipmentId or not size or not status:
             return jsonify({'error': 'Missing required data'}), 400
 
-        # Find the UserEquipment entry by cadetId and equipmentId
         user_equipment = db.session.query(UserEquipment).filter_by(cadetId=cadetId, equipmentId=equipmentId).first()
 
         if not user_equipment:
             return jsonify({'error': 'User equipment not found'}), 404
 
-        # Update the status and size
+        size_entry = EquipmentSize.query.filter_by(equipmentId=equipmentId, size=size).first()
+
+        if not size_entry:
+            return jsonify({'error': 'Invalid size for the given equipment'}), 400
+
         user_equipment.status = status
         user_equipment.size = size
 
-        # Commit changes to the database
         db.session.commit()
 
         return jsonify({'message': 'User equipment updated successfully'}), 200

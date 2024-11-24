@@ -1,8 +1,43 @@
-INSERT INTO `UserAuthentication` (cadetId, nationalId)
-VALUES
-('ABC12345678901', '12345678901'),
-('DEF98765432109', '98765432109'),
-('GHI45678912345', '45678912345');
+INSERT INTO UserAuthentication (cadetId, nationalId)
+VALUES ('LKA12345678901', 5001226);
+
+INSERT INTO `Location` (location) VALUES 
+('Vilnius'), ('Pabradė'), ('Rūdninkai');
+
+INSERT INTO `UserProfileData` (
+    cadetId, 
+    dateOfBirth, 
+    fullName, 
+    photoUrl, 
+    phoneNumber, 
+    email, 
+    address, 
+    bloodType, 
+    gender, 
+    heightCm, 
+    weightKg, 
+    allergies, 
+    medicalConditions, 
+    baseLocation, 
+    status
+)
+VALUES (
+    'LKA12345678901',                      
+    '2000-12-26',                          
+    'Antanas Antanaitis',                  
+    'https://media.istockphoto.com/id/482417564/vector/captain-line-icon.jpg?s=612x612&w=0&k=20&c=UUcjc08MjP_VGwp5g6qOgtT0TtuLcGRiEpaX2JvmBgg=', -- photoUrl
+    '+37067777777',                        
+    'antanaitis.a@gmail.com',              
+    'Minijos g. XX / XX, Vilnius, Vilniaus apsk.',
+    'O+',                                  
+    'Vyras',                               
+    180.00,                                
+    75.70,                                 
+    'Žuvys, riešutai',                     
+    'Astma',                               
+    'Vilnius',                             
+    'ppkt'                                 
+);
 
 INSERT INTO Event (eventId, title, dateFrom, dateTo, location) VALUES
 (1, 'Paskaita – diskusija „Lietuvos žvalgybos veiksmai prijungiant Klaipėdos kraštą”', 
@@ -57,14 +92,14 @@ INSERT INTO `EquipmentSize` (equipmentId, size) VALUES
 
 
 INSERT INTO `UserEquipment` (cadetId, equipmentId, status, size, dateGiven) VALUES
-('LKA12345678901', 1, 'fail', '-', '2024-11-14'),
-('LKA12345678901', 2, 'fail', 'm', '2024-11-14'),
-('LKA12345678901', 3, 'fail', '-', '2024-11-14'),
-('LKA12345678901', 4, 'fail', 'l', '2024-11-14'),
-('LKA12345678901', 5, 'fail', 'xs', '2024-11-14'),
-('LKA12345678901', 6, 'fail', '-', '2024-11-14'),
-('LKA12345678901', 7, 'success', '-', '2024-11-14'),
-('LKA12345678901', 8, 'wait', 'm', '2024-11-14'),
-('LKA12345678901', 9, 'fail', 'm', '2024-11-14'),
-('LKA12345678901', 10, 'fail', '40', '2024-11-14'),
-('LKA12345678901', 11, 'fail', '40', '2024-11-14');
+('LKA12345678901', 1, 'Negauta', '-', '2024-11-14'),
+('LKA12345678901', 2, 'Negauta', 'm', '2024-11-14'),
+('LKA12345678901', 3, 'Negauta', '-', '2024-11-14'),
+('LKA12345678901', 4, 'Negauta', 'l', '2024-11-14'),
+('LKA12345678901', 5, 'Negauta', 'xs', '2024-11-14'),
+('LKA12345678901', 6, 'Negauta', '-', '2024-11-14'),
+('LKA12345678901', 7, 'Gauta', '-', '2024-11-14'),
+('LKA12345678901', 8, 'Apdorojama', 'm', '2024-11-14'),
+('LKA12345678901', 9, 'Negauta', 'm', '2024-11-14'),
+('LKA12345678901', 10, 'Negauta', '40', '2024-11-14'),
+('LKA12345678901', 11, 'Negauta', '40', '2024-11-14');

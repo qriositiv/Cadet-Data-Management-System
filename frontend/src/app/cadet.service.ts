@@ -57,8 +57,6 @@ export class CadetService {
   }
 
   updateUserEquipment(orderData: { cadetId: string, equipmentId: number; size: string; status: string }): Observable<any> {
-    console.log(orderData);
-    
     return this.http.put(this.apiUrl + 'updateUserEquipment', orderData);
   }
 }

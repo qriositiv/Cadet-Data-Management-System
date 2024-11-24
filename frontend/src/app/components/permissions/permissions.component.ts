@@ -56,7 +56,6 @@ export class PermissionsComponent implements OnInit {
           dateFrom: new Date(permission.dateFrom),
           dateTo: new Date(permission.dateTo),
         }));
-        console.log(this.enterWithCarPermissions);
       },
       error: (err) => {
         console.error('Failed to fetch car permissions:', err);
@@ -70,7 +69,6 @@ export class PermissionsComponent implements OnInit {
           dateFrom: new Date(permission.dateFrom),
           dateTo: new Date(permission.dateTo),
         }));
-        console.log('Fetched Permissions:', this.physicalActivityPermissions);
       },
       error: (err) => {
         console.error('Error fetching physical permissions:', err);
@@ -106,7 +104,7 @@ export class PermissionsComponent implements OnInit {
             permissionId: 0,
             cadetId: this.cadetId,
             documentPhotoUrl: uploadedFileName, // Use the uploaded file URL
-            status: 'Pending', // Default status
+            status: 'Nepatvirtintas', // Default status
             dateFrom: new Date(), // Placeholder
             dateTo: new Date(), // Placeholder
             additionalInformation: '', // Optional field
@@ -124,8 +122,6 @@ export class PermissionsComponent implements OnInit {
               // Reset the form and UI states
               this.physicalPermissionForm.reset();
               this.isPhysicalPermissionFormVisible = false;
-  
-              console.log('Created Physical Permission:', createdPermission);
               alert(`Physical permission created successfully!`);
             },
             error: (err) => {
@@ -156,7 +152,7 @@ export class PermissionsComponent implements OnInit {
       const newPermission: CarEnterPermission = {
         permissionId: 0,
         cadetId: formValue.cadetId,
-        status: 'wait',
+        status: 'Nepatvirtintas',
         location: formValue.location,
         dateFrom: new Date(formValue.dateFrom),
         dateTo: new Date(formValue.dateTo),
@@ -167,8 +163,6 @@ export class PermissionsComponent implements OnInit {
 
       this.cadetService.createCarPermission(newPermission).subscribe({
         next: (createdPermission) => {
-          console.log('Created Permission:', createdPermission);
-
           this.enterWithCarPermissions.push({
             ...createdPermission,
             dateFrom: new Date(createdPermission.dateFrom),

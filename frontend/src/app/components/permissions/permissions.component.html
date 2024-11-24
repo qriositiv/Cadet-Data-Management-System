@@ -15,7 +15,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let permission of enterWithCarPermissions" class="hover:bg-gray-100">
-        <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center"><i class="fa-solid fa-circle-check text-green-500 text-lg md:mr-2"></i><span class="max-sm:hidden">{{ permission.status }}</span></td>
+        <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center text-nowrap space-x-1">
+          <i *ngIf="permission.status === 'Patvirtintas'" class="fa-solid fa-circle-check text-green-400"></i>
+          <i *ngIf="permission.status === 'Atšauktas'" class="fa-solid fa-circle-xmark text-red-400"></i>
+          <i *ngIf="permission.status === 'Nepatvirtintas'" class="fa-solid fa-clock text-amber-400"></i>
+          <span class="max-sm:hidden">{{ permission.status }}</span>
+        </td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.carNumber }}, {{ permission.carBrand }}</td>
@@ -80,7 +85,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let permission of physicalActivityPermissions" class="hover:bg-gray-100">
-        <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center"><i class="fa-solid fa-circle-check text-green-500 text-lg md:mr-2"></i><span class="max-sm:hidden">{{ permission.status }}</span></td>
+        <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center text-nowrap space-x-1">
+          <i *ngIf="permission.status === 'Patvirtintas'" class="fa-solid fa-circle-check text-green-400"></i>
+          <i *ngIf="permission.status === 'Atšauktas'" class="fa-solid fa-circle-xmark text-red-400"></i>
+          <i *ngIf="permission.status === 'Nepatvirtintas'" class="fa-solid fa-clock text-amber-400"></i>
+          <span class="max-sm:hidden">{{ permission.status }}</span></td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.additionalInformation }}</td>
