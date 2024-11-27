@@ -1,0 +1,68 @@
+<div class="permissions-container bg-white md:p-4 p-2 rounded-lg shadow-lg w-full my-4 mx-auto">
+  <h2 class="md:text-2xl text-lg font-bold mb-4 text-center">Leidimai įvažiuoti į teritoriją</h2>
+
+  <table class="w-full border-collapse border border-gray-300 mb-6 md:text-base text-xs">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Statusas</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Galioja nuo</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Galioja iki</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Automobilio informacija</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Vieta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let permission of enterWithCarPermissions" class="hover:bg-gray-100">
+        <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center text-nowrap space-x-1">
+          <i *ngIf="permission.status === 'Patvirtintas'" class="fa-solid fa-circle-check text-green-400"></i>
+          <i *ngIf="permission.status === 'Atšauktas'" class="fa-solid fa-circle-xmark text-red-400"></i>
+          <i *ngIf="permission.status === 'Nepatvirtintas'" class="fa-solid fa-clock text-amber-400"></i>
+          <span class="max-sm:hidden">{{ permission.status }}</span>
+        </td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.carNumber }}, {{ permission.carBrand }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.location }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="toggleFormVisibility()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full mb-4 md:text-base text-sm">
+    {{ isFormVisible ? 'Atšaukti prašymą' : 'Pildyti naują prašymą' }}
+  </button>
+
+  <form *ngIf="isFormVisible" [formGroup]="permissionForm" (ngSubmit)="submitPermission()" class="space-y-4">
+    <div *ngIf="locations">
+      <label for="location" class="block text-sm font-medium text-gray-700">Pasirinkite vietą</label>
+      <select id="location" formControlName="location" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
+        <option value="" disabled selected>-- Pasirinkite vietą --</option>
+        <option *ngFor="let area of locations" [value]="area">{{ area }}</option>
+      </select>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="dateFrom" class="block text-sm font-medium text-gray-700">Galioja nuo</label>
+        <input type="date" id="dateFrom" formControlName="dateFrom" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
+      </div>
+      <div>
+        <label for="dateTo" class="block text-sm font-medium text-gray-700">Galioja iki</label>
+        <input type="date" id="dateTo" formControlName="dateTo" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
+      </div>
+      <div>
+        <label for="carNumber" class="block text-sm font-medium text-gray-700">Automobilio numeris</label>
+        <input type="text" id="carNumber" formControlName="carNumber" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
+      </div>
+      <div>
+        <label for="carBrand" class="block text-sm font-medium text-gray-700">Automobilio markė</label>
+        <input type="text" id="carBrand" formControlName="carBrand" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
+      </div>
+    </div>
+    <div>
+      <label for="additionalInformation" class="block text-sm font-medium text-gray-700">Papildoma informacija</label>
+      <textarea id="additionalInformation" formControlName="additionalInformation" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"></textarea>
+    </div>
+    <button type="submit" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full md:text-base text-sm" [disabled]="!permissionForm.valid">
+      Pateikti prašymą
+    </button>
+  </form>
+</div>

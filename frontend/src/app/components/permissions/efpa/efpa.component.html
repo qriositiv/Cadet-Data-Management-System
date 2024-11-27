@@ -1,0 +1,61 @@
+<div class="permissions-container bg-white md:p-4 p-2 rounded-lg shadow-lg w-full my-4 mx-auto">
+  <h2 class="md:text-2xl text-lg font-bold mb-4 text-center">Leidimas nuo fizinės veiklos</h2>
+
+  <table class="w-full border-collapse border border-gray-300 mb-6 md:text-base text-xs">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Statusas</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Galioja nuo</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Galioja iki</th>
+        <th class="border border-gray-300 md:p-2 p-1 text-left">Papildoma informacija</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let permission of physicalActivityPermissions" class="hover:bg-gray-100">
+        <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center text-nowrap space-x-1">
+          <i *ngIf="permission.status === 'Patvirtintas'" class="fa-solid fa-circle-check text-green-400"></i>
+          <i *ngIf="permission.status === 'Atšauktas'" class="fa-solid fa-circle-xmark text-red-400"></i>
+          <i *ngIf="permission.status === 'Nepatvirtintas'" class="fa-solid fa-clock text-amber-400"></i>
+          <span class="max-sm:hidden">{{ permission.status }}</span>
+        </td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
+        <td class="border border-gray-300 md:p-2 p-1">{{ permission.additionalInformation }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button
+    (click)="togglePhysicalPermissionFormVisibility()"
+    class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full mb-4 md:text-base text-sm"
+  >
+    {{ isPhysicalPermissionFormVisible ? 'Slėpti prašymą' : 'Pildyti naują prašymą' }}</button>
+
+    <form
+      *ngIf="isPhysicalPermissionFormVisible"
+      [formGroup]="physicalPermissionForm"
+      (ngSubmit)="submitPhysicalPermission()"
+      class="space-y-4"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="documentPhoto" class="block text-sm font-medium text-gray-700">Dokumento nuotrauka</label>
+          <input
+            type="file"
+            id="documentPhoto"
+            (change)="onFileChange($event)"
+            required
+            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"
+          />
+        </div>
+      </div>
+  
+      <button
+        type="submit"
+        class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full md:text-base text-sm"
+        [disabled]="!physicalPermissionForm.valid"
+      >
+        Pateikti prašymą
+      </button>
+    </form>
+  </div>

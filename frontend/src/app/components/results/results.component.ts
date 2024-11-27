@@ -15,9 +15,9 @@ export class ResultsComponent {
   };
 
   disciplines = [
-    { name: 'Atsispaudimai (vnt)', result: 85, control: 70, needsMore: true },
-    { name: 'Atsilenkimai (vnt)', result: 72, control: 70, needsMore: true },
-    { name: 'Begimas 3 km. (min)', result: 15.0, control: 15.5, needsMore: false },
+    { name: 'Atsispaudimai (kartai per 2 min.)', result: 85, control: 70, needsMore: true },
+    { name: 'Atsilenkimai (kartai per 2 min.)', result: 72, control: 70, needsMore: true },
+    { name: 'Begimas 3 km. (laikas, min., s)', result: 15.0, control: 15.5, needsMore: false },
   ];
 
   get resultsBelowMinimum(): number {
