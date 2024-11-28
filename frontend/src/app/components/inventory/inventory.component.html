@@ -1,7 +1,6 @@
 <div class="bg-white p-4 pb-2 rounded-lg shadow-lg my-4 w-full mx-auto">
   <h2 class="md:text-2xl text-lg font-bold mb-2 text-center">Ekiperuotė</h2>
 
-  <!-- Legend Section -->
   <div class="md:mb-4 md:p-4 p-2 mb-2 bg-stone-100 rounded-md shadow-sm">
     <h3 class="md:text-lg font-semibold md:mb-2">Statuso reikšmės</h3>
     <ul class="flex flex-wrap md:space-x-4">
@@ -17,6 +16,10 @@
         <i class="fa-solid fa-clock text-amber-400 md:text-lg"></i>
         <span class="text-sm text-gray-600">Prašymas apdorojamas</span>
       </li>
+      <li class="flex items-center space-x-2 p-1">
+        <i class="fa-solid fa-circle-check text-cyan-400 md:text-lg"></i>
+        <span class="text-sm text-gray-600">Paruošta</span>
+      </li>
     </ul>
   </div>
   
@@ -26,7 +29,7 @@
       <div class="flex items-center justify-between">
         <div class="flex items-center md:space-x-4 space-x-2">
           <span class="status-icon md:text-3xl text-xl">
-            <!-- <i *ngIf="item.status === 'important'" class="fa-solid fa-triangle-exclamation text-orange-400"></i> -->
+            <i *ngIf="item.status === 'Paruošta'" class="fa-solid fa-circle-check text-cyan-400"></i>
             <i *ngIf="item.status === 'Gauta'" class="fa-solid fa-circle-check text-green-400"></i>
             <i *ngIf="item.status === 'Negauta'" class="fa-solid fa-circle-xmark text-red-400"></i>
             <i *ngIf="item.status === 'Apdorojama'" class="fa-solid fa-clock text-amber-400"></i>
@@ -35,16 +38,16 @@
           
           <div>
             <div class="md:text-lg font-semibold text-gray-800">{{ item.name }}</div>
-            <div class="md:text-sm text-xs text-gray-600">Didis: {{ item.size }}</div>
-            <div class="md:text-sm text-xs text-gray-500">Išduotas: {{ item.dateGiven | date: 'mediumDate' }}</div>
+            <div *ngIf="item.status !== 'Negauta'" class="md:text-sm text-xs text-gray-600">Didis: {{ item.size }}</div>
+            <div *ngIf="item.status !== 'Negauta'" class="md:text-sm text-xs text-gray-500">Išduotas: {{ item.dateGiven | date: 'mediumDate' }}</div>
           </div>
         </div>
   
         <div class="flex space-x-2">
-          <button *ngIf="item.status !== 'wait'" (click)="validateItem(item.equipmentId)" class="bg-rose-500 text-white py-1 px-3 rounded-md hover:bg-rose-600">
+          <button *ngIf="item.status === 'Negauta' || item.status === 'Gauta'" (click)="validateItem(item.equipmentId)" class="bg-rose-500 text-white py-1 px-3 rounded-md hover:bg-rose-600">
             <i class="fa-solid fa-plus"></i>
           </button>
-          <button *ngIf="item.status === 'wait'" class="bg-gray-500 text-white py-1 px-3 rounded-md" disabled>
+          <button *ngIf="item.status === 'Apdorojama' || item.status === 'Paruošta'" class="bg-gray-500 text-white py-1 px-3 rounded-md" disabled>
             <i class="fa-solid fa-plus"></i>
           </button>
         </div>
@@ -69,11 +72,9 @@
           </div>
         </div>
       
-      
-        <!-- Confirmation Checkbox -->
         <div class="flex items-center">
           <input type="checkbox" id="confirmationCheckbox" [(ngModel)]="isConfirmed" class="h-4 w-4 text-rose-600 focus:ring-rose-500 border-gray-300 rounded">
-          <label for="confirmationCheckbox" class="ml-2 block md:text-sm text-xs text-gray-700">Patvirtinu, kad seną įrangą (jei ją jau turiu) pakeisiu nauja arba atsivešiu naują įrangą (jei jos neturiu) į: Karių akademiją, Vilnius.</label>
+          <label for="confirmationCheckbox" class="ml-2 block md:text-sm text-xs text-gray-700">Patvirtinu, kad seną įrangą (jei ją jau turiu) pakeisiu nauja arba atsivešiu naują įrangą (jei jos neturiu) į base.</label>
         </div>
       </div>      
     </li>

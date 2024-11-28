@@ -88,10 +88,24 @@ class UserEquipment(db.Model):
 
     cadetId = db.Column(db.String(14), db.ForeignKey('UserAuthentication.cadetId'), primary_key=True)
     equipmentId = db.Column(db.Integer, db.ForeignKey('Equipment.equipmentId'), primary_key=True)
-    status = db.Column(db.Enum('Negauta', 'Apdorojama', 'Gauta'), default='Negauta', nullable=False)
+    status = db.Column(db.Enum('Negauta', 'Apdorojama', 'Gauta', 'Paruošta'), default='Negauta', nullable=False)
     size = db.Column(db.String(5), db.ForeignKey('EquipmentSize.size'), nullable=False)
     dateGiven = db.Column(db.DateTime, nullable=False)
 
     user = db.relationship('UserAuthentication', backref=db.backref('equipment', lazy=True))
     equipment = db.relationship('Equipment', backref=db.backref('user_equipments', lazy=True))
     equipment_size = db.relationship('EquipmentSize', backref=db.backref('user_equipments', lazy=True))
+
+class UserDisciplineResult(db.Model):
+    __tablename__ = 'UserDisciplineResult'
+    cadetId = db.Column(db.String(14), db.ForeignKey('UserAuthentication.cadetId'), primary_key=True)
+    disciplineId = db.Column(db.Integer, db.ForeignKey('Discipline.disciplineId'), primary_key=True)
+    result = db.Column(db.Float, nullable=False)
+
+class Discipline(db.Model):
+    __tablename__ = 'Discipline'
+    disciplineId = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(100), nullable=False)
+    controlForMale = db.Column(db.Float)
+    controlForFemale = db.Column(db.Float)
+    needMore = db.Column(db.Boolean)

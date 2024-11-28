@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `UserDisciplineResult`;
+DROP TABLE IF EXISTS `Discipline`;
 DROP TABLE IF EXISTS `Notification`;
 DROP TABLE IF EXISTS `UserEquipment`;
 DROP TABLE IF EXISTS `UserEquipment`;

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime, timedelta
-from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, ExemptionFromPhysicalActivity, UserEquipment, Equipment, EquipmentSize, Location, db
+from models import Event, UserAuthentication, UserProfileData, CarEnterPermission, ExemptionFromPhysicalActivity, UserEquipment, Equipment, EquipmentSize, Location, UserDisciplineResult, Discipline, db
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.utils import secure_filename
 import os
@@ -318,3 +318,62 @@ def get_all_locations():
         return jsonify(location_list), 200
     except Exception as e:
         return jsonify({'error': f'Failed to fetch locations: {str(e)}'}), 500
+
+@bp.route('/user-discipline-results/<string:cadet_id>', methods=['GET'])
+def get_user_discipline_results(cadet_id):
+    # Fetch user data
+    user = UserProfileData.query.filter_by(cadetId=cadet_id).first()
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    # Calculate age
+    today = datetime.now()
+    age = today.year - user.dateOfBirth.year - ((today.month, today.day) < (user.dateOfBirth.month, user.dateOfBirth.day))
+
+    # Fetch discipline results
+    results = (
+        db.session.query(
+            Discipline.name,
+            UserDisciplineResult.result,
+            Discipline.controlForMale if user.gender == 'Vyras' else Discipline.controlForFemale,
+            Discipline.needMore
+        )
+        .join(UserDisciplineResult, Discipline.disciplineId == UserDisciplineResult.disciplineId)
+        .filter(UserDisciplineResult.cadetId == cadet_id)
+        .all()
+    )
+
+    response = {
+        'username': user.fullName,
+        'gender': user.gender,
+        'age': age,
+        'results': [
+            {
+                'name': r[0],  # Discipline name
+                'result': r[1],  # User's result
+                'controlValue': r[2],  # Control value based on gender
+                'needMore': r[3],  # Need more status
+            }
+            for r in results
+        ],
+    }
+
+    return jsonify(response)
+
+@bp.route('/disciplines', methods=['GET'])
+def get_disciplines():
+    # Query all disciplines from the table
+    disciplines = Discipline.query.all()
+
+    # Convert disciplines to the required format
+    result = []
+    for discipline in disciplines:
+        result.append({
+            'name': discipline.name,
+            'controlForMale': discipline.controlForMale,
+            'controlForFemale': discipline.controlForFemale,
+            'controlValue': discipline.controlForMale + discipline.controlForFemale
+        })
+
+    # Return the disciplines as a JSON response
+    return jsonify(result)

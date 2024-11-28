@@ -12,6 +12,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { CareerComponent } from './components/career/career.component';
 import { EfpaComponent } from './components/permissions/efpa/efpa.component';
 import { CepComponent } from './components/permissions/cep/cep.component';
+import { ResultsTableComponent } from './components/results-table/results-table.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -25,5 +26,6 @@ export const routes: Routes = [
   { path: 'activities', component: EventsComponent, canActivate: [AuthGuard] },
   { path: 'results', component: ResultsComponent, canActivate: [AuthGuard] },
   { path: 'career', component: CareerComponent, canActivate: [AuthGuard] },
+  { path: 'disciplines', component: ResultsTableComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent },
 ];

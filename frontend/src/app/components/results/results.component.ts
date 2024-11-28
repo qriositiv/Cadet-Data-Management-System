@@ -1,29 +1,36 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { UserDisciplineResults } from '../../interfaces';
+import { CadetService } from '../../cadet.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './results.component.html'
 })
 export class ResultsComponent {
-  user = {
-    name: 'Antanas Antanauskas',
-    sex: 'Vyras',
-    age: 22
-  };
+  userDisciplineResults!: UserDisciplineResults;
+  
+  constructor(private cadetService: CadetService) {}
 
-  disciplines = [
-    { name: 'Atsispaudimai (kartai per 2 min.)', result: 85, control: 70, needsMore: true },
-    { name: 'Atsilenkimai (kartai per 2 min.)', result: 72, control: 70, needsMore: true },
-    { name: 'Begimas 3 km. (laikas, min., s)', result: 15.0, control: 15.5, needsMore: false },
-  ];
+  ngOnInit(): void {
+    const cadetId = 'LKA12345678901';
+    this.cadetService.getUserDisciplineResults(cadetId).subscribe({
+      next: (results) => {
+        this.userDisciplineResults = results;        
+      },
+      error: (err) => {
+        console.error('Failed to fetch discipline results:', err);
+      }
+    });
+  }
 
   get resultsBelowMinimum(): number {
-    return this.disciplines.filter(discipline => 
-      (discipline.needsMore && discipline.result < discipline.control) || 
-      (!discipline.needsMore && discipline.result > discipline.control)
+    return this.userDisciplineResults.results.filter(discipline => 
+      (discipline.needMore && discipline.result < discipline.controlValue) || 
+      (!discipline.needMore && discipline.result > discipline.controlValue)
     ).length;
   }  
 }

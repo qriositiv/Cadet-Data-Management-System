@@ -1,10 +1,10 @@
-<div class="results-table-container bg-white my-4 md:p-4 p-2 rounded-lg shadow-lg w-full mx-auto">
+<div *ngIf="userDisciplineResults" class="results-table-container bg-white my-4 md:p-4 p-2 rounded-lg shadow-lg w-full mx-auto">
   <h2 class="text-lg md:text-2xl font-bold md:mb-4 mb-2 text-center">Disciplinų Rezultatai</h2>
 
   <!-- User Information and Result Summary -->
   <div class="md:mb-4 mb-2 flex flex-col md:flex-row justify-between text-sm md:text-base">
     <p class="text-left">
-      {{ user.name }}, {{ user.sex }}, {{ user.age }} m.
+      {{ userDisciplineResults.username }}, {{ userDisciplineResults.gender }}, {{ userDisciplineResults.age }} m.
     </p>
     <div>
       @if (resultsBelowMinimum > 0) {
@@ -26,18 +26,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let discipline of disciplines" class="hover:bg-gray-100">
+        <tr *ngFor="let discipline of userDisciplineResults.results" class="hover:bg-gray-100">
           <td class="border border-gray-300 p-2">{{ discipline.name }}</td>
           <td
             class="border border-gray-300 p-2"
             [ngClass]="{
-              'text-green-500': (discipline.needsMore && discipline.result >= discipline.control) || (!discipline.needsMore && discipline.result <= discipline.control),
-              'text-red-500': (discipline.needsMore && discipline.result < discipline.control) || (!discipline.needsMore && discipline.result > discipline.control)
+              'text-green-500': (discipline.needMore && discipline.result >= discipline.controlValue) || (!discipline.needMore && discipline.result <= discipline.controlValue),
+              'text-red-500': (discipline.needMore && discipline.result < discipline.controlValue) || (!discipline.needMore && discipline.result > discipline.controlValue)
             }"
           >
             {{ discipline.result }}
           </td>
-          <td class="border border-gray-300 p-2">{{ discipline.control }}</td>
+          <td class="border border-gray-300 p-2">{{ discipline.controlValue }}</td>
         </tr>
       </tbody>
     </table>
@@ -46,8 +46,8 @@
   <!-- Notes Section -->
   <div class="mt-2">
     <p class="text-xs md:text-sm">
-      Kontrolinės vertės yra pagrįstos jūsų amžiaus grupės (22-25 metų amžiaus) tikslais. Visą lentelę galite rasti
-      <a href="#" class="underline text-rose-500 hover:text-rose-600">čia</a>.
+      Visą lentelę galite rasti
+      <a routerLink="/disciplines" class="underline text-rose-500 hover:text-rose-600">čia</a>.
     </p>
   </div>
 </div>

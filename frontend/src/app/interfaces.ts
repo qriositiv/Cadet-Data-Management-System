@@ -94,3 +94,24 @@ export interface Notification {
     message: string; 
     hidden: boolean; 
 }
+
+export interface UserDisciplineResults {
+    username: string;
+    gender: string;
+    age: number;
+    results: DisciplineResult[];
+}
+
+interface DisciplineResult {
+    name: string;
+    result: number;
+    controlValue: number;
+    needMore: boolean;
+}
+
+export interface Discipline {
+    name: string;
+    controlForMale: number;
+    controlForFemale: number;
+    controlValue: number;
+}

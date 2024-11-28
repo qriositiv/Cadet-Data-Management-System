@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { CarEnterPermission, Equipment, Event, ExemptionFromPhysicalActivity, LoginResponse, UserAuthenticationData, UserProfileData } from './interfaces';
+import { CarEnterPermission, Discipline, Equipment, Event, ExemptionFromPhysicalActivity, LoginResponse, UserAuthenticationData, UserDisciplineResults, UserProfileData } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -62,5 +62,13 @@ export class CadetService {
 
   updateUserEquipment(orderData: { cadetId: string, equipmentId: number; size: string; status: string }): Observable<any> {
     return this.http.put(this.apiUrl + 'updateUserEquipment', orderData);
+  }
+
+  getUserDisciplineResults(cadetId: string): Observable<UserDisciplineResults> {
+    return this.http.get<UserDisciplineResults>(this.apiUrl + 'user-discipline-results/' + cadetId);
+  }
+
+  getDisciplines(): Observable<Discipline[]> {
+    return this.http.get<Discipline[]>(this.apiUrl + 'disciplines');
   }
 }

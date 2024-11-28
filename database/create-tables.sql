@@ -86,7 +86,7 @@ CREATE TABLE `EquipmentSize` (
 CREATE TABLE `UserEquipment` (
     cadetId VARCHAR(14), 
     equipmentId INT,
-    status ENUM ('Negauta', 'Apdorojama', 'Gauta') DEFAULT 'Negauta' NOT NULL, 
+    status ENUM ('Negauta', 'Apdorojama', 'Gauta', 'Paruošta') DEFAULT 'Negauta' NOT NULL, 
     size VARCHAR(5), 
     dateGiven DATETIME NOT NULL,
     FOREIGN KEY (cadetId) REFERENCES UserAuthentication(cadetId),
@@ -104,4 +104,22 @@ CREATE TABLE Notification (
     message TEXT,
     hidden BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (cadetId) REFERENCES UserAuthentication(cadetId)
+);
+
+CREATE TABLE `Discipline` (
+    disciplineId INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) ,
+    controlForMale FLOAT,
+    controlForFemale FLOAT,
+    needMore BOOLEAN
+);
+
+
+CREATE TABLE `UserDisciplineResult` (
+    cadetId VARCHAR(14),
+    disciplineId INT,
+    result FLOAT,
+    FOREIGN KEY (cadetId) REFERENCES `UserAuthentication`(cadetId),
+    FOREIGN KEY (disciplineId) REFERENCES `Discipline`(disciplineId),
+    PRIMARY KEY (cadetId, disciplineId)
 );
