@@ -30,6 +30,7 @@ export class LoginComponent {
 
       this.cadetService.login(formValue).subscribe(
         (response) => {
+          localStorage.setItem('cadetId', formValue.cadetId)
           localStorage.setItem('access_token', response.access_token);
           this.router.navigate(['/']);
         },

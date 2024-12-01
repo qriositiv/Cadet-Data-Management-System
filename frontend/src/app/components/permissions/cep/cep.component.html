@@ -51,6 +51,9 @@
       <div>
         <label for="carNumber" class="block text-sm font-medium text-gray-700">Automobilio numeris</label>
         <input type="text" id="carNumber" formControlName="carNumber" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
+        <div *ngIf="permissionForm.get('carNumber')?.hasError('maxlength')" class="text-red-400">
+          Ne daugiau 6 simboliu.
+        </div>
       </div>
       <div>
         <label for="carBrand" class="block text-sm font-medium text-gray-700">Automobilio markė</label>

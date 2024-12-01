@@ -15,7 +15,7 @@ export class InventoryComponent implements OnInit {
   selectedItemId: number | null = null;
   selectedSize: string = '';
   isConfirmed: boolean = false;
-  cadetId: string = 'LKA12345678901';
+  cadetId: any = localStorage.getItem('cadetId');
   status: string = 'Apdorojama';
 
   constructor(private cadetService: CadetService) {}

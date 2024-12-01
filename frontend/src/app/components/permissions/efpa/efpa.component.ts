@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class EfpaComponent {
   physicalActivityPermissions: ExemptionFromPhysicalActivity[] = [];
-  cadetId: string = 'LKA12345678901';
+  cadetId: any = localStorage.getItem('cadetId');
   physicalPermissionForm: FormGroup;
   isPhysicalPermissionFormVisible = false;
 

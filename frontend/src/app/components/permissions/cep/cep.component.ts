@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CepComponent {
   enterWithCarPermissions: CarEnterPermission[] = [];
-  cadetId: string = 'LKA12345678901';
+  cadetId: any = localStorage.getItem('cadetId');
   locations!: string[];
   permissionForm: FormGroup;
   isFormVisible = false;
@@ -28,7 +28,7 @@ export class CepComponent {
     this.permissionForm = this.fb.group({
       dateFrom: [todayStr, Validators.required],
       dateTo: [threeDaysLaterStr, Validators.required],
-      carNumber: ['', Validators.required],
+      carNumber: ['', [Validators.required, Validators.maxLength(6)]],
       carBrand: ['', Validators.required],
       cadetId: [this.cadetId],
       location: ['', [Validators.required]],

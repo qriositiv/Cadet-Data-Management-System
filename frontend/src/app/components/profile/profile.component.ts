@@ -12,12 +12,12 @@ import { CadetService } from '../../cadet.service';
 export class ProfileComponent {
   currentTab: string = 'basic';
   cadet: UserProfileData | null = null;
+  cadetId: any = localStorage.getItem('cadetId');
 
   constructor(private cadetService: CadetService) {}
 
   ngOnInit(): void {
-    const cadetId = 'LKA12345678901';
-    this.cadetService.getUserProfile(cadetId).subscribe(
+    this.cadetService.getUserProfile(this.cadetId).subscribe(
       (data) => {
         this.cadet = data;
       },
