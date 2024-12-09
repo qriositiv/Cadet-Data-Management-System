@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { CarEnterPermission, Discipline, Equipment, Event, ExemptionFromPhysicalActivity, LoginResponse, UserAuthenticationData, UserDisciplineResults, UserProfileData } from './interfaces';
+import { CarEnterPermission, Discipline, Equipment, Event, ExemptionFromPhysicalActivity, LoginResponse, UserAuthenticationData, UserDisciplineResults, UserProfileData } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',

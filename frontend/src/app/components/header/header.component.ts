@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CadetService } from '../../cadet.service';
+import { CadetService } from '../../services/cadet.service';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +12,7 @@ import { CadetService } from '../../cadet.service';
 export class HeaderComponent {
   mobileMenuOpen: boolean = false;
   dropdownOpen = false;
+  @Input() intendantMenu: string = 'false';
 
   constructor(private router: Router, public cadetService: CadetService) {}
 

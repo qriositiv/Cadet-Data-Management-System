@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Event } from '../../interfaces';
-import { CadetService } from '../../cadet.service';
+import { Event } from '../../interfaces/interfaces';
+import { CadetService } from '../../services/cadet.service';
 
 @Component({
   selector: 'app-events',

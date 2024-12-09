@@ -19,9 +19,18 @@ def login():
     if not user:
         return jsonify({'error': 'Invalid credentials'}), 401
 
-    access_token = create_access_token(identity={'cadetId': cadetId})
-    return jsonify({'access_token': access_token}), 200
+    profile = UserProfileData.query.filter_by(cadetId=cadetId).first()
+    if not profile:
+        return jsonify({'error': 'Profile data not found'}), 404
 
+    isIntendant = profile.status == 'intendantas'
+    access_token = create_access_token(identity={'cadetId': cadetId})
+
+    return jsonify({
+        'access_token': access_token,
+        'isIntendant': isIntendant
+    }), 200
+    
 @bp.route('/protected', methods=['GET'])
 # @jwt_required()
 def protected():

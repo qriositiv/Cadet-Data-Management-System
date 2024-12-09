@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CarEnterPermission } from '../../../interfaces';
+import { CarEnterPermission } from '../../../interfaces/interfaces';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CadetService } from '../../../cadet.service';
+import { CadetService } from '../../../services/cadet.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

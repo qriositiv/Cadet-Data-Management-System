@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ExemptionFromPhysicalActivity } from '../../../interfaces';
+import { ExemptionFromPhysicalActivity } from '../../../interfaces/interfaces';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CadetService } from '../../../cadet.service';
+import { CadetService } from '../../../services/cadet.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

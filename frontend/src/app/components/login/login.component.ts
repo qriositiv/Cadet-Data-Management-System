@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserAuthenticationData } from '../../interfaces';
-import { CadetService } from '../../cadet.service';
+import { UserAuthenticationData } from '../../interfaces/interfaces';
+import { CadetService } from '../../services/cadet.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -32,6 +32,7 @@ export class LoginComponent {
         (response) => {
           localStorage.setItem('cadetId', formValue.cadetId)
           localStorage.setItem('access_token', response.access_token);
+          localStorage.setItem('intendant', response.isIntendant.toString());
           this.router.navigate(['/']);
         },
         (error) => {

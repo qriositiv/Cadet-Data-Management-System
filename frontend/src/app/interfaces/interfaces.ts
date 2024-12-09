@@ -5,6 +5,7 @@ export interface UserAuthenticationData {
 
 export interface LoginResponse {
     access_token: string;
+    isIntendant: boolean;
 }
 
 export interface Location {

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Notification } from '../../interfaces';
+import { Notification } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-notifications',
