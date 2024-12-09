@@ -2,11 +2,15 @@
     <app-header [intendantMenu]="isIntendant"></app-header>
 </header>
 <main class="flex-grow bg-stone-200 flex justify-center">
-    <div *ngIf='isIntendant==="false"'class="xl:w-3/5 lg:w-5/6 w-full lg:mx-auto px-2">
+    <div *ngIf='isIntendant==="true"'class="hidden xl:w-3/5 lg:w-5/6 w-full lg:mx-auto px-2">
         <router-outlet></router-outlet>
     </div>
     <div *ngIf='isIntendant==="true"'class="xl:w-3/5 lg:w-5/6 w-full lg:mx-auto px-2">
-        
+        <app-event-manager></app-event-manager>
+        <app-cep-manager></app-cep-manager>
+        <app-efpa-manager></app-efpa-manager>
+        <app-equipment-manager></app-equipment-manager>
+        <app-result-manager></app-result-manager>
     </div>
 </main>
 <footer class="z-10 shadow-2xl bg-rose-800 w-full h-16 text-white hover:text-rose-300 justify-center flex items-center">

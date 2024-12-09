@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ExemptionFromPhysicalActivity } from '../../../interfaces/interfaces';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CadetService } from '../../../services/cadet.service';
 import { CommonModule } from '@angular/common';
+import { CadetService } from '../../../../services/cadet.service';
+import { ExemptionFromPhysicalActivity } from '../../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-efpa',

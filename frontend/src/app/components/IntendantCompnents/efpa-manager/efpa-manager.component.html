@@ -1,0 +1,121 @@
+<div class="bg-white p-4 rounded-lg shadow-lg w-full mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-center">Fizinės Veiklos Leidimai</h2>
+  
+    <!-- Table -->
+    <table class="w-full border-collapse border border-gray-300 mb-6 text-base">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 p-2 text-left">Cadet ID</th>
+          <th class="border border-gray-300 p-2 text-left">Statusas</th>
+          <th class="border border-gray-300 p-2 text-left">Galioja nuo</th>
+          <th class="border border-gray-300 p-2 text-left">Galioja iki</th>
+          <th class="border border-gray-300 p-2 text-left">Dokumentas</th>
+          <th class="border border-gray-300 p-2 text-center">Veiksmai</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exemption of exemptions" class="hover:bg-gray-100">
+          <td class="border border-gray-300 p-2">{{ exemption.cadetId }}</td>
+          <td class="border border-gray-300 p-2">{{ exemption.status }}</td>
+          <td class="border border-gray-300 p-2">{{ exemption.dateFrom | date: 'shortDate' }}</td>
+          <td class="border border-gray-300 p-2">{{ exemption.dateTo | date: 'shortDate' }}</td>
+          <td class="border border-gray-300 p-2">
+            <a
+              [href]="exemption.documentPhotoUrl"
+              target="_blank"
+              class="text-rose-500 underline hover:text-rose-600"
+            >
+              Peržiūrėti nuotrauką
+            </a>
+          </td>
+          <td class="border border-gray-300 p-2 text-center">
+            <button
+              (click)="toggleForm(exemption)"
+              class="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600"
+            >
+              Redaguoti
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Add New Button -->
+    <button
+      (click)="toggleForm()"
+      class="w-full bg-rose-500 text-white font-semibold py-2 rounded-md hover:bg-rose-700 mb-4"
+    >
+      Pridėti naują leidimą
+    </button>
+  
+    <!-- Form -->
+    <form
+      *ngIf="isFormVisible"
+      [formGroup]="exemptionForm"
+      (ngSubmit)="submitForm()"
+      class="bg-gray-50 p-4 rounded-md shadow-md"
+    >
+      <h3 class="text-lg font-bold mb-4">Leidimo Forma</h3>
+  
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  
+        <!-- Status -->
+        <div>
+          <label for="status" class="block text-sm font-medium">Statusas</label>
+          <select
+            id="status"
+            formControlName="status"
+            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+          >
+            <option value="Patvirtintas">Patvirtintas</option>
+            <option value="Atšauktas">Atšauktas</option>
+          </select>
+        </div>
+  
+        <!-- Date From -->
+        <div>
+          <label for="dateFrom" class="block text-sm font-medium">Galioja nuo</label>
+          <input
+            id="dateFrom"
+            formControlName="dateFrom"
+            type="date"
+            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+          />
+        </div>
+  
+        <!-- Date To -->
+        <div>
+          <label for="dateTo" class="block text-sm font-medium">Galioja iki</label>
+          <input
+            id="dateTo"
+            formControlName="dateTo"
+            type="date"
+            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+          />
+        </div>
+  
+        <!-- Additional Information -->
+        <div class="col-span-2">
+          <label for="additionalInformation" class="block text-sm font-medium">Papildoma informacija</label>
+          <textarea
+            id="additionalInformation"
+            formControlName="additionalInformation"
+            rows="3"
+            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+          ></textarea>
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="mt-4">
+        <button
+          type="submit"
+          class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full"
+          [disabled]="!exemptionForm.valid"
+        >
+          Pateikti
+        </button>
+      </div>
+    </form>
+  </div>
+  

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Discipline } from '../../interfaces/interfaces';
-import { CadetService } from '../../services/cadet.service';
+import { Discipline } from '../../../interfaces/interfaces';
+import { CadetService } from '../../../services/cadet.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

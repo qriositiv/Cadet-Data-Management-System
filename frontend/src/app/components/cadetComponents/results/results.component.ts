@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { UserDisciplineResults } from '../../interfaces/interfaces';
-import { CadetService } from '../../services/cadet.service';
 import { RouterLink } from '@angular/router';
+import { CadetService } from '../../../services/cadet.service';
+import { UserDisciplineResults } from '../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-results',

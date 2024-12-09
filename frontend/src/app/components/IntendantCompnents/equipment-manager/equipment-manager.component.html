@@ -1,0 +1,36 @@
+<div class="bg-white p-4 rounded-lg shadow-lg my-4 w-full mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-center">Ekiperuotės Sąrašas</h2>
+  
+    <table class="w-full border-collapse border border-gray-300 text-base">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 p-2 text-left">Cadet ID</th>
+          <th class="border border-gray-300 p-2 text-left">Įrangos pavadinimas</th>
+          <th class="border border-gray-300 p-2 text-left">Dydis</th>
+          <th class="border border-gray-300 p-2 text-center">Veiksmai</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of equipmentList" class="hover:bg-gray-100">
+          <td class="border border-gray-300 p-2">{{ item.cadetId }}</td>
+          <td class="border border-gray-300 p-2">{{ item.name }}</td>
+          <td class="border border-gray-300 p-2">{{ item.size || 'Nenurodyta' }}</td>
+          <td class="border border-gray-300 p-2 text-center">
+            <button
+              (click)="approveEquipment(item.equipmentId)"
+              class="bg-green-500 text-white py-1 px-3 rounded-md hover:bg-green-600"
+            >
+              Patvirtinti
+            </button>
+            <button
+              (click)="rejectEquipment(item.equipmentId)"
+              class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600"
+            >
+              Atmesti
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

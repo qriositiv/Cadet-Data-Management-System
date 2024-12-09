@@ -1,0 +1,106 @@
+<div class="bg-white p-4 rounded-lg my-4 shadow-lg w-full mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-center">Renginiai</h2>
+  
+    <!-- Table -->
+    <table class="w-full border-collapse border border-gray-300 mb-6 text-base">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 p-2 text-left">Pavadinimas</th>
+          <th class="border border-gray-300 p-2 text-left">Pradžia</th>
+          <th class="border border-gray-300 p-2 text-left">Pabaiga</th>
+          <th class="border border-gray-300 p-2 text-left">Lokacija</th>
+          <th class="border border-gray-300 p-2 text-center">Veiksmai</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of events" class="hover:bg-gray-100">
+          <td class="border border-gray-300 p-2">{{ event.title }}</td>
+          <td class="border border-gray-300 p-2">{{ event.dateFrom | date: 'short' }}</td>
+          <td class="border border-gray-300 p-2">{{ event.dateTo | date: 'short' }}</td>
+          <td class="border border-gray-300 p-2">{{ event.location }}</td>
+          <td class="border border-gray-300 p-2 text-center">
+            <button
+              class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+              (click)="deleteEvent(event.eventId)"
+            >
+              Ištrinti
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Button to open form -->
+    <button
+      (click)="toggleFormVisibility()"
+      class="w-full bg-rose-600 text-white font-semibold py-2 rounded-md hover:bg-rose-700 mb-4"
+    >
+      {{ isFormVisible ? 'Atšaukti' : 'Pridėti naują renginį' }}
+    </button>
+  
+    <!-- Form to add new event -->
+    <form
+      *ngIf="isFormVisible"
+      [formGroup]="eventForm"
+      (ngSubmit)="addEvent()"
+      class="bg-gray-50 p-4 rounded-md shadow-md"
+    >
+      <h3 class="text-lg font-bold mb-4">Pridėti naują renginį</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="title" class="block text-sm font-medium">Pavadinimas</label>
+          <input
+            id="title"
+            formControlName="title"
+            type="text"
+            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+          />
+        </div>
+        <div>
+          <label for="location" class="block text-sm font-medium">Lokacija</label>
+          <input
+            id="location"
+            formControlName="location"
+            type="text"
+            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+          />
+        </div>
+          <div>
+            <label for="dateFrom" class="block text-sm font-medium">Pradžia</label>
+            <input
+              id="dateFrom"
+              formControlName="dateFrom"
+              type="datetime-local"
+              class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+            />
+          </div>
+          <div>
+            <label for="dateTo" class="block text-sm font-medium">Pabaiga</label>
+            <input
+              id="dateTo"
+              formControlName="dateTo"
+              type="datetime-local"
+              class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+            />
+          </div>
+        </div>
+        
+      <div class="flex justify-between mt-4">
+        <button
+          type="button"
+          (click)="toggleFormVisibility()"
+          class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
+        >
+          Atšaukti
+        </button>
+        <button
+          type="submit"
+          class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+          [disabled]="!eventForm.valid"
+        >
+          Išsaugoti
+        </button>
+      </div>
+    </form>
+  </div>
+  

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { CarEnterPermission } from '../../../interfaces/interfaces';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CadetService } from '../../../services/cadet.service';
 import { CommonModule } from '@angular/common';
+import { CadetService } from '../../../../services/cadet.service';
+import { CarEnterPermission } from '../../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-cep',

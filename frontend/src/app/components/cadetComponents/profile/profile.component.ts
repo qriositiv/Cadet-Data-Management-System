@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { UserProfileData } from '../../interfaces/interfaces'; // Adjust the path to your interface file
-import { CadetService } from '../../services/cadet.service';
+import { UserProfileData } from '../../../interfaces/interfaces'; // Adjust the path to your interface file
+import { CadetService } from '../../../services/cadet.service';
 
 @Component({
   selector: 'app-profile',

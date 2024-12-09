@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Equipment } from '../../interfaces/interfaces';
-import { CadetService } from '../../services/cadet.service';
+import { CadetService } from '../../../services/cadet.service';
+import { Equipment } from '../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-inventory',
