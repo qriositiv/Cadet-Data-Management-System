@@ -2,18 +2,18 @@
     <h2 class="text-lg md:text-2xl font-bold mb-4 text-center">Įrašyti Rezultatą</h2>
   
     <form [formGroup]="disciplineForm" (ngSubmit)="submitForm()" class="space-y-4">
-      <!-- Cadet ID -->
+      <!-- Kariūno ID -->
       <div>
-        <label for="cadetId" class="block text-sm font-medium text-gray-700">Cadet ID</label>
+        <label for="cadetId" class="block text-sm font-medium text-gray-700">Kariūno ID</label>
         <input
           type="text"
           id="cadetId"
           formControlName="cadetId"
           class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-rose-600 focus:border-rose-600"
-          placeholder="Įveskite Cadet ID"
+          placeholder="Įveskite Kariūno ID"
         />
         <div *ngIf="disciplineForm.get('cadetId')?.invalid && disciplineForm.get('cadetId')?.touched" class="text-red-500 text-sm">
-          Prašome įvesti galiojantį Cadet ID (iki 14 simbolių).
+          Prašome įvesti galiojantį Kariūno ID (iki 14 simbolių).
         </div>
       </div>
   

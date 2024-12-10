@@ -8,8 +8,10 @@ import os
 def create_app():
     app = Flask(__name__)
 
+    # Enable CORS
     CORS(app)
 
+    # Configuration
     UPLOAD_FOLDER = './images'
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -21,13 +23,11 @@ def create_app():
     app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+    # Initialize extensions
     db.init_app(app)
-    jwt = JWTManager(app)
+    JWTManager(app)
 
+    # Register blueprints
     app.register_blueprint(bp)
 
     return app
-
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)

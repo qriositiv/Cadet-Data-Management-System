@@ -5,20 +5,14 @@
     <table class="w-full border-collapse border border-gray-300 mb-6 text-base">
       <thead>
         <tr class="bg-gray-200">
-          <th class="border border-gray-300 p-2 text-left">Cadet ID</th>
-          <th class="border border-gray-300 p-2 text-left">Statusas</th>
-          <th class="border border-gray-300 p-2 text-left">Galioja nuo</th>
-          <th class="border border-gray-300 p-2 text-left">Galioja iki</th>
+          <th class="border border-gray-300 p-2 text-left">Kariūno ID</th>
           <th class="border border-gray-300 p-2 text-left">Dokumentas</th>
-          <th class="border border-gray-300 p-2 text-center">Veiksmai</th>
+          <th class="border border-gray-300 p-2 text-center">Atsakyti</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let exemption of exemptions" class="hover:bg-gray-100">
           <td class="border border-gray-300 p-2">{{ exemption.cadetId }}</td>
-          <td class="border border-gray-300 p-2">{{ exemption.status }}</td>
-          <td class="border border-gray-300 p-2">{{ exemption.dateFrom | date: 'shortDate' }}</td>
-          <td class="border border-gray-300 p-2">{{ exemption.dateTo | date: 'shortDate' }}</td>
           <td class="border border-gray-300 p-2">
             <a
               [href]="exemption.documentPhotoUrl"
@@ -30,23 +24,15 @@
           </td>
           <td class="border border-gray-300 p-2 text-center">
             <button
-              (click)="toggleForm(exemption)"
-              class="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600"
-            >
-              Redaguoti
-            </button>
+            class="bg-rose-500 text-white px-3 py-1 rounded hover:bg-rose-600"
+            (click)="toggleForm(exemption)"
+          >
+            <i class="fa-solid fa-pen"></i>
+          </button>
           </td>
         </tr>
       </tbody>
     </table>
-  
-    <!-- Add New Button -->
-    <button
-      (click)="toggleForm()"
-      class="w-full bg-rose-500 text-white font-semibold py-2 rounded-md hover:bg-rose-700 mb-4"
-    >
-      Pridėti naują leidimą
-    </button>
   
     <!-- Form -->
     <form
