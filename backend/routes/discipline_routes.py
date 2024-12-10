@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from datetime import datetime
 from models import UserProfileData, Discipline, UserDisciplineResult
 from extensions import db
@@ -50,6 +50,7 @@ def get_disciplines():
     result = []
     for discipline in disciplines:
         result.append({
+            'disciplineId': discipline.disciplineId,
             'name': discipline.name,
             'controlForMale': discipline.controlForMale,
             'controlForFemale': discipline.controlForFemale,
@@ -57,3 +58,36 @@ def get_disciplines():
         })
 
     return jsonify(result)
+
+@bp.route('/user-discipline-results', methods=['PUT'])
+def update_user_discipline_result():
+    try:
+        # Parse the request data
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No data provided'}), 400
+
+        # Validate required fields
+        required_fields = ['cadetId', 'disciplineId', 'result']
+        for field in required_fields:
+            if field not in data or not data[field]:
+                return jsonify({'error': f'{field} is required'}), 400
+
+        # Fetch the existing result
+        user_discipline_result = UserDisciplineResult.query.filter_by(
+            cadetId=data['cadetId'],
+            disciplineId=data['disciplineId']
+        ).first()
+
+        if not user_discipline_result:
+            return jsonify({'error': 'Discipline result not found for the specified cadet'}), 404
+
+        # Update the result
+        user_discipline_result.result = data['result']
+        db.session.commit()
+
+        return jsonify({'message': 'Discipline result updated successfully'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to update discipline result: {str(e)}'}), 500

@@ -37,4 +37,12 @@ export class IntendantService {
   ): Observable<any> {
     return this.http.put(this.apiUl + 'permission/physical/' + permissionId, updatedData);
   }
+
+  updateUserDisciplineResult(data: {
+    cadetId: string;
+    disciplineId: number;
+    result: number;
+  }): Observable<any> {
+    return this.http.put(this.apiUl + 'user-discipline-results', data);
+  }
 }

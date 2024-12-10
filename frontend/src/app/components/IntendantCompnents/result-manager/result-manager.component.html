@@ -26,12 +26,17 @@
           class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-rose-600 focus:border-rose-600"
         >
           <option value="" disabled selected>Pasirinkite discipliną</option>
-          <option *ngFor="let discipline of disciplines" [value]="discipline.name">{{ discipline.name }}</option>
+          <option *ngFor="let discipline of disciplines" [value]="discipline.disciplineId">
+            {{ discipline.name }}
+          </option>
         </select>
-        <div *ngIf="disciplineForm.get('discipline')?.invalid && disciplineForm.get('discipline')?.touched" class="text-red-500 text-sm">
+        <div
+          *ngIf="disciplineForm.get('discipline')?.invalid && disciplineForm.get('discipline')?.touched"
+          class="text-red-500 text-sm"
+        >
           Prašome pasirinkti discipliną.
         </div>
-      </div>
+      </div>      
   
       <!-- Result Input -->
       <div>

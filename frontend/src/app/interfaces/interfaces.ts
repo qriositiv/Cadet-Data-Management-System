@@ -111,6 +111,7 @@ interface DisciplineResult {
 }
 
 export interface Discipline {
+    disciplineId: number;
     name: string;
     controlForMale: number;
     controlForFemale: number;
