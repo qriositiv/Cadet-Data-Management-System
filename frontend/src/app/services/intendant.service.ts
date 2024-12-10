@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CarEnterPermission, Event, ExemptionFromPhysicalActivity } from '../interfaces/interfaces';
+import { CarEnterPermission, Equipment, Event, ExemptionFromPhysicalActivity } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +44,14 @@ export class IntendantService {
     result: number;
   }): Observable<any> {
     return this.http.put(this.apiUl + 'user-discipline-results', data);
+  }
+
+  getProcessingUserEquipment(): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(this.apiUl + '/user-equipment/processing');
+  }
+
+  responseEquipment(equipmentId: number, cadetId: string, status: string): Observable<any> {
+    const payload = { cadetId, status };
+    return this.http.put(this.apiUl + 'user-equipment/' + equipmentId + '/status', payload);
   }
 }

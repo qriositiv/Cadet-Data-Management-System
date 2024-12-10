@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Equipment } from '../../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
+import { IntendantService } from '../../../services/intendant.service';
 
 @Component({
   selector: 'app-equipment-manager',
@@ -9,40 +10,44 @@ import { CommonModule } from '@angular/common';
   templateUrl: './equipment-manager.component.html'
 })
 export class EquipmentManagerComponent {
-  equipmentList: Equipment[] = [
-    {
-      equipmentId: 1,
-      cadetId: '12345',
-      photoUrl: 'https://via.placeholder.com/100',
-      status: 'Gauta',
-      name: 'Helmet',
-      sizes: ['S', 'M', 'L'],
-      size: 'M',
-      dateGiven: new Date(),
-    },
-    {
-      equipmentId: 2,
-      cadetId: '67890',
-      photoUrl: 'https://via.placeholder.com/100',
-      status: 'Negauta',
-      name: 'Gloves',
-      sizes: ['S', 'M', 'L'],
-      size: '',
-      dateGiven: new Date(),
-    },
-  ];
+  equipmentList: Equipment[] = [];
 
-  approveEquipment(equipmentId: number) {
-    const equipment = this.equipmentList.find((e) => e.equipmentId === equipmentId);
-    if (equipment) {
-      equipment.status = 'Patvirtintas';
-    }
+  constructor(private intendantService: IntendantService) {}
+
+  ngOnInit(): void {
+    this.loadProcessingEquipment();
   }
 
-  rejectEquipment(equipmentId: number) {
-    const equipment = this.equipmentList.find((e) => e.equipmentId === equipmentId);
-    if (equipment) {
-      equipment.status = 'Atmesta';
-    }
+  loadProcessingEquipment(): void {
+    this.intendantService.getProcessingUserEquipment().subscribe(
+      (data) => {
+        this.equipmentList = data;
+      },
+      (error) => {
+        console.error('Error fetching processing equipment:', error);
+      }
+    );
   }
+
+  getEquipmentLeft(item: any): number | string {
+    if (!item.sizes || !Array.isArray(item.sizes)) {
+      return 'Nenurodyta';
+    }
+  
+    const foundSize = item.sizes.find((s: any) => s.size === item.size);
+    return foundSize ? foundSize.equipmentLeft : 'Nenurodyta';
+  }
+
+  updateEquipmentStatus(equipmentId: number, cadetId: string, newStatus: string) {
+    this.intendantService.responseEquipment(equipmentId, cadetId, newStatus).subscribe(
+      (response) => {
+        console.log('Status updated successfully:', response);
+        this.loadProcessingEquipment();
+      },
+      (error) => {
+        console.error('Error updating status:', error);
+      }
+    );
+  }
+  
 }

@@ -10,8 +10,9 @@ class Equipment(db.Model):
 class EquipmentSize(db.Model):
     __tablename__ = 'EquipmentSize'
 
-    equipmentId = db.Column(db.Integer, db.ForeignKey('Equipment.equipmentId'), primary_key=True)
     size = db.Column(db.String(5), primary_key=True)
+    equipmentId = db.Column(db.Integer, db.ForeignKey('Equipment.equipmentId'), primary_key=True)
+    equipmentLeft = db.Column(db.Integer, nullable=True)
 
     equipment = db.relationship('Equipment', backref=db.backref('sizes', lazy=True))
 

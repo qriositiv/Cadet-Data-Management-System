@@ -1,5 +1,6 @@
 INSERT INTO UserAuthentication (cadetId, nationalId)
-VALUES ('LKA12345678901', 5001226);
+VALUES ('LKA12345678901', 5001226),
+('LKA12345678909', 5001229);
 
 INSERT INTO `Location` (location) VALUES 
 ('Vilnius'), ('Pabradė'), ('Rūdninkai');
@@ -37,6 +38,23 @@ VALUES (
     'Astma',                               
     'Vilnius',                             
     'ppkt'                                 
+),
+(
+    'LKA12345678909',                       
+    '2000-12-26',                          
+    'Antanas Antanaitis',                   
+    'https://media.istockphoto.com/id/482417564/vector/captain-line-icon.jpg?s=612x612&w=0&k=20&c=UUcjc08MjP_VGwp5g6qOgtT0TtuLcGRiEpaX2JvmBgg=', 
+    '+37067777777',                        
+    'antanaitis.a1@gmail.com',              
+    'Minijos g. XX / XX, Vilnius, Vilniaus apsk.',
+    'O+',                                  
+    'Vyras',                               
+    180.00,                                 
+    75.70,                                 
+    'Žuvys, riešutai',                     
+    'Astma',                               
+    'Vilnius',                             
+    'intendantas'                                 
 );
 
 INSERT INTO Event (eventId, title, dateFrom, dateTo, location) VALUES
@@ -89,18 +107,18 @@ INSERT INTO `Equipment` (photoUrl, name) VALUES
 ('https://www.aic.lt/22324-large_default/zieminiai-batai-demar-caribou-pro-40.jpg', 'Žieminiai batai'),
 ('', 'Vasariniai batai');
 
-INSERT INTO `EquipmentSize` (equipmentId, size) VALUES
-(1, '-'),
-(2, 'xs'), (2, 's'), (2, 'm'), (2, 'l'), (2, 'xl'),
-(3, '-'),
-(4, 'xs'), (4, 's'), (4, 'm'), (4, 'l'), (4, 'xl'),
-(5, 'xs'), (5, 's'), (5, 'm'), (5, 'l'), (5, 'xl'),
-(6, '-'),
-(7, '-'),
-(8, 'xs'), (8, 's'), (8, 'm'), (8, 'l'), (8, 'xl'),
-(9, 'xs'), (9, 's'), (9, 'm'), (9, 'l'), (9, 'xl'),
-(10, '37'), (10, '38'), (10, '39'), (10, '40'), (10, '41'), (10, '42'), (10, '43'),
-(11, '37'), (11, '38'), (11, '39'), (11, '40'), (11, '41'), (11, '42'), (11, '43');
+INSERT INTO `EquipmentSize` (equipmentId, size, equipmentLeft) VALUES
+(1, '-', 10),
+(2, 'xs', 15), (2, 's', 12), (2, 'm', 8), (2, 'l', 5), (2, 'xl', 3),
+(3, '-', 20),
+(4, 'xs', 10), (4, 's', 8), (4, 'm', 6), (4, 'l', 4), (4, 'xl', 2),
+(5, 'xs', 7), (5, 's', 6), (5, 'm', 5), (5, 'l', 4), (5, 'xl', 3),
+(6, '-', 25),
+(7, '-', 30),
+(8, 'xs', 9), (8, 's', 8), (8, 'm', 7), (8, 'l', 5), (8, 'xl', 3),
+(9, 'xs', 6), (9, 's', 5), (9, 'm', 4), (9, 'l', 3), (9, 'xl', 2),
+(10, '37', 10), (10, '38', 8), (10, '39', 6), (10, '40', 4), (10, '41', 3), (10, '42', 2), (10, '43', 1),
+(11, '37', 9), (11, '38', 8), (11, '39', 7), (11, '40', 6), (11, '41', 5), (11, '42', 4), (11, '43', 3);
 
 INSERT INTO `UserEquipment` (cadetId, equipmentId, status, size, dateGiven) VALUES
 ('LKA12345678901', 1, 'Negauta', '-', '2024-11-14'),

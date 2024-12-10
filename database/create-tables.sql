@@ -78,6 +78,7 @@ CREATE TABLE `Equipment` (
 CREATE TABLE `EquipmentSize` (
     size VARCHAR(5),
     equipmentId INT,
+    equipmentLeft INT,
     PRIMARY KEY (equipmentId, size),
     FOREIGN KEY (equipmentId) REFERENCES Equipment(equipmentId)
 );

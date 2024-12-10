@@ -21,6 +21,10 @@ export class InventoryComponent implements OnInit {
   constructor(private cadetService: CadetService) {}
 
   ngOnInit(): void {
+    this.loadEquipment();
+  }
+
+  loadEquipment() {
     this.cadetService.getAllEquipment(this.cadetId).subscribe(
       (data) => {
         this.items = data;
@@ -45,10 +49,11 @@ export class InventoryComponent implements OnInit {
         size: this.selectedSize,
         status: this.status,
       };
-  
+      
       this.cadetService.updateUserEquipment(orderData).subscribe(
         (response) => {
           this.selectedItemId = null;
+          this.loadEquipment();
         },
         (error) => {
           console.error('Error submitting order:', error);

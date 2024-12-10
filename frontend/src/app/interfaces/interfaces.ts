@@ -82,9 +82,14 @@ export interface Equipment {
     photoUrl: string;
     status: string;
     name: string;
-    sizes: string[];
+    sizes: EquipmentSize[];
     size: string;
     dateGiven: Date;
+}
+
+interface EquipmentSize {
+    equipmentLeft: number;
+    size: string;
 }
 
 export interface Notification {

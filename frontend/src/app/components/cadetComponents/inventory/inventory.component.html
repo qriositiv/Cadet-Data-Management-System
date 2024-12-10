@@ -58,7 +58,7 @@
           <div class="md:w-1/2">
             <label for="sizeSelect" class="block text-sm font-medium text-gray-700">Pasirinkti didį</label>
             <select id="sizeSelect" [(ngModel)]="selectedSize" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600">
-              <option *ngFor="let size of item.sizes" [value]="size" class="uppercase">{{ size }}</option>
+              <option *ngFor="let size of item.sizes" [value]="size.size" class="uppercase">{{ size.size }}</option>
             </select>
           </div>
       
