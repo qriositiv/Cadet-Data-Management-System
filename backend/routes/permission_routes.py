@@ -160,3 +160,60 @@ def upload_file():
         return jsonify({'file_name': random_filename}), 201
 
     return jsonify({'error': 'File type not allowed'}), 400
+
+
+@bp.route('/permission/car/unapproved', methods=['GET'])
+def get_unapproved_permissions():
+    try:
+        # Query all permissions with status 'Nepatvirtintas'
+        unapproved_permissions = CarEnterPermission.query.filter_by(status='Nepatvirtintas').all()
+
+        # Serialize the data
+        result = [
+            {
+                'permissionId': perm.permissionId,
+                'cadetId': perm.cadetId,
+                'status': perm.status,
+                'location': perm.location,
+                'dateFrom': perm.dateFrom.isoformat(),
+                'dateTo': perm.dateTo.isoformat(),
+                'carNumber': perm.carNumber,
+                'carBrand': perm.carBrand,
+                'additionalInformation': perm.additionalInformation,
+            }
+            for perm in unapproved_permissions
+        ]
+
+        return jsonify(result), 200
+    
+    except Exception as e:
+        return jsonify({'error': f'Failed to fetch unapproved permissions: {str(e)}'}), 500
+    
+@bp.route('/permission/car/<int:permissionId>', methods=['PUT'])
+def update_permission(permissionId):
+    try:
+        # Fetch the permission by ID
+        permission = CarEnterPermission.query.get(permissionId)
+        if not permission:
+            return jsonify({'error': 'Permission not found'}), 404
+
+        # Parse the request data
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No data provided'}), 400
+
+        # Update the fields if provided in the request
+        if 'dateTo' in data:
+            permission.dateTo = data['dateTo']
+        if 'additionalInformation' in data:
+            permission.additionalInformation = data['additionalInformation']
+        if 'status' in data:
+            permission.status = data['status']
+
+        # Commit changes to the database
+        db.session.commit()
+        return jsonify({'message': f'Permission with ID {permissionId} updated successfully!'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to update permission: {str(e)}'}), 500

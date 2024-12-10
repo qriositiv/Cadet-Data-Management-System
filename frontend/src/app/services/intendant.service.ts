@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Event } from '../interfaces/interfaces';
+import { CarEnterPermission, Event } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -18,4 +18,13 @@ export class IntendantService {
   deleteEvent(eventId: number): Observable<any> {
     return this.http.delete(this.apiUl + 'events/delete/' + eventId);
   }
+
+  getUnapprovedCarPermissions(): Observable<CarEnterPermission[]> {
+    return this.http.get<CarEnterPermission[]>(this.apiUl + 'permission/car/unapproved');
+  }
+
+  updatePermission(permissionId: number, updatedData: Partial<CarEnterPermission>): Observable<any> {
+    return this.http.put(this.apiUl + 'permission/car/' + permissionId, updatedData);
+  }
+  
 }
