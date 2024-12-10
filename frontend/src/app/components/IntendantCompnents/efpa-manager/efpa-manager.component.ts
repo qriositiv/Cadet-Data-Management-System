@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ExemptionFromPhysicalActivity } from '../../../interfaces/interfaces';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { IntendantService } from '../../../services/intendant.service';
 
 @Component({
   selector: 'app-efpa-manager',
@@ -10,24 +11,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './efpa-manager.component.html'
 })
 export class EfpaManagerComponent {
-  exemptions: ExemptionFromPhysicalActivity[] = [
-    {
-      permissionId: 1,
-      cadetId: '12345',
-      status: 'Patvirtintas',
-      dateFrom: new Date('2024-01-01'),
-      dateTo: new Date('2024-01-10'),
-      documentPhotoUrl: 'https://via.placeholder.com/100',
-      additionalInformation: 'Medical leave approved.',
-    },
-  ];
+  exemptions: ExemptionFromPhysicalActivity[] = [];
 
   isFormVisible = false;
   selectedExemption: ExemptionFromPhysicalActivity | null = null;
 
   exemptionForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private intendantService: IntendantService) {
     this.exemptionForm = this.fb.group({
       cadetId: ['', Validators.required],
       status: ['Nepatvirtintas', Validators.required],
@@ -36,6 +27,22 @@ export class EfpaManagerComponent {
       documentPhotoUrl: ['', Validators.required],
       additionalInformation: [''],
     });
+  }
+
+  ngOnInit(): void {
+    this.loadUnapprovedExemptions();
+  }
+
+  loadUnapprovedExemptions(): void {
+    this.intendantService.getUnapprovedExemptions().subscribe(
+      (data) => {
+        this.exemptions = data;
+        console.log('Unapproved Exemptions:', this.exemptions);
+      },
+      (error) => {
+        console.error('Error fetching unapproved exemptions:', error);
+      }
+    );
   }
 
   toggleForm(exemption: ExemptionFromPhysicalActivity | null = null) {
@@ -57,27 +64,28 @@ export class EfpaManagerComponent {
     }
   }
 
-  submitForm() {
-    if (this.exemptionForm.valid) {
-      const formData = this.exemptionForm.value;
+  submitForm(): void {
+    if (this.exemptionForm.valid && this.selectedExemption) {
+      const updatedData = this.exemptionForm.value;
 
-      if (this.selectedExemption) {
-        // Update existing exemption
-        this.exemptions = this.exemptions.map((exemption) =>
-          exemption.permissionId === this.selectedExemption!.permissionId
-            ? { ...exemption, ...formData }
-            : exemption
-        );
-      } else {
-        // Create new exemption
-        const newExemption: ExemptionFromPhysicalActivity = {
-          permissionId: Date.now(),
-          ...formData,
-        };
-        this.exemptions.push(newExemption);
-      }
-
-      this.toggleForm();
+      this.intendantService.updateExemption(
+        this.selectedExemption.permissionId,
+        updatedData
+      ).subscribe(
+        (response) => {
+          console.log('Exemption updated:', response);
+          this.exemptions = this.exemptions.map((exemption) =>
+            exemption.permissionId === this.selectedExemption!.permissionId
+              ? { ...exemption, ...updatedData }
+              : exemption
+          );
+          this.toggleForm();
+          this.loadUnapprovedExemptions();
+        },
+        (error) => {
+          console.error('Error updating exemption:', error);
+        }
+      );
     }
   }
 }

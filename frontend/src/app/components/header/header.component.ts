@@ -31,5 +31,6 @@ export class HeaderComponent {
   logout() {
     localStorage.removeItem('cadetId');
     localStorage.removeItem('access_token');
+    localStorage.removeItem('intendant');
   }
 }

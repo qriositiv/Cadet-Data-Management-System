@@ -3,7 +3,7 @@ from models import Location
 
 bp = Blueprint('locations', __name__)
 
-@bp.route('/', methods=['GET'])
+@bp.route('/locations/', methods=['GET'])
 def get_all_locations():
     try:
         locations = Location.query.all()

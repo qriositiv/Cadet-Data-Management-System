@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CarEnterPermission, Event } from '../interfaces/interfaces';
+import { CarEnterPermission, Event, ExemptionFromPhysicalActivity } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +27,14 @@ export class IntendantService {
     return this.http.put(this.apiUl + 'permission/car/' + permissionId, updatedData);
   }
   
+  getUnapprovedExemptions(): Observable<ExemptionFromPhysicalActivity[]> {
+    return this.http.get<ExemptionFromPhysicalActivity[]>(this.apiUl + '/permission/physical/unapproved');
+  }
+
+  updateExemption(
+    permissionId: number,
+    updatedData: Partial<ExemptionFromPhysicalActivity>
+  ): Observable<any> {
+    return this.http.put(this.apiUl + 'permission/physical/' + permissionId, updatedData);
+  }
 }

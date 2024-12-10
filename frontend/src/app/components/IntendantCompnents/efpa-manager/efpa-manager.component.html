@@ -15,7 +15,7 @@
           <td class="border border-gray-300 p-2">{{ exemption.cadetId }}</td>
           <td class="border border-gray-300 p-2">
             <a
-              [href]="exemption.documentPhotoUrl"
+              [href]="'http://127.0.0.1:5000/images/' + exemption.documentPhotoUrl"
               target="_blank"
               class="text-rose-500 underline hover:text-rose-600"
             >

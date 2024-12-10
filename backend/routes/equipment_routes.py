@@ -4,7 +4,7 @@ from extensions import db
 
 bp = Blueprint('equipment', __name__)
 
-@bp.route('/<string:cadetId>', methods=['GET'])
+@bp.route('/equipment/<string:cadetId>', methods=['GET'])
 def get_user_equipment(cadetId):
     try:
         user_equipment = db.session.query(

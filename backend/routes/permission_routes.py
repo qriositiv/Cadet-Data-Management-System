@@ -217,3 +217,64 @@ def update_permission(permissionId):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': f'Failed to update permission: {str(e)}'}), 500
+    
+@bp.route('/permission/physical/unapproved', methods=['GET'])
+def get_unapproved_exemptions():
+    try:
+        # Query all exemptions with status 'Nepatvirtintas'
+        unapproved_exemptions = ExemptionFromPhysicalActivity.query.filter_by(status='Nepatvirtintas').all()
+
+        # Serialize the data
+        result = [
+            {
+                'permissionId': exemption.permissionId,
+                'cadetId': exemption.cadetId,
+                'status': exemption.status,
+                'dateFrom': exemption.dateFrom.isoformat(),
+                'dateTo': exemption.dateTo.isoformat(),
+                'documentPhotoUrl': exemption.documentPhotoUrl,
+                'additionalInformation': exemption.additionalInformation,
+            }
+            for exemption in unapproved_exemptions
+        ]
+
+        return jsonify(result), 200
+
+    except Exception as e:
+        return jsonify({'error': f'Failed to fetch unapproved exemptions: {str(e)}'}), 500
+    
+@bp.route('/permission/physical/<int:permissionId>', methods=['PUT'])
+def update_exemption(permissionId):
+    try:
+        # Fetch the exemption by ID
+        exemption = ExemptionFromPhysicalActivity.query.get(permissionId)
+        if not exemption:
+            return jsonify({'error': 'Exemption not found'}), 404
+
+        # Parse request data
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No data provided'}), 400
+
+        # Update fields if they exist in the request
+        if 'cadetId' in data:
+            exemption.cadetId = data['cadetId']
+        if 'status' in data:
+            exemption.status = data['status']
+        if 'dateFrom' in data:
+            exemption.dateFrom = data['dateFrom']
+        if 'dateTo' in data:
+            exemption.dateTo = data['dateTo']
+        if 'documentPhotoUrl' in data:
+            exemption.documentPhotoUrl = data['documentPhotoUrl']
+        if 'additionalInformation' in data:
+            exemption.additionalInformation = data['additionalInformation']
+
+        # Commit changes to the database
+        db.session.commit()
+
+        return jsonify({'message': f'Exemption with ID {permissionId} updated successfully!'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to update exemption: {str(e)}'}), 500
