@@ -61,7 +61,6 @@ export class CepManagerComponent implements OnInit {
   
       this.intendantService.updatePermission(this.selectedPermission.permissionId, updatedData).subscribe(
         (response) => {
-          console.log('Permission updated:', response);
           this.permissions = this.permissions.map((permission) =>
             permission.permissionId === this.selectedPermission!.permissionId
               ? { ...permission, ...updatedData }

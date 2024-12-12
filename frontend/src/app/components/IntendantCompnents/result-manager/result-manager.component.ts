@@ -47,7 +47,6 @@ export class ResultManagerComponent implements OnInit {
   
       this.intendantService.updateUserDisciplineResult(updatePayload).subscribe(
         (response) => {
-          console.log('Discipline result updated successfully:', response);
           this.disciplineForm.reset();
         },
         (error) => {

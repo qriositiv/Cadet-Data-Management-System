@@ -13,32 +13,10 @@ import { IntendantService } from './services/intendant.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, CommonModule, EventManagerComponent, CepManagerComponent, EfpaManagerComponent, EquipmentManagerComponent, ResultManagerComponent],
+  imports: [RouterOutlet, HeaderComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   email = 'info@kdvs.lt'
-  role!: string;
-
-  constructor(private intendantService: IntendantService) {}
-
-  ngOnInit(): void {
-    this.getUserRole();
-    
-  }
-
-  getUserRole(): void {
-    this.intendantService.getUserRole().subscribe(
-      (response: any) => {
-        this.role = response.role;
-        console.log(response);
-        
-      },
-      (error) => {
-        console.error('Error fetching user role:', error);
-        this.role = 'Error fetching role';
-      }
-    );
-  }
 }

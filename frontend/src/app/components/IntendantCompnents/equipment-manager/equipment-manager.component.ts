@@ -41,7 +41,6 @@ export class EquipmentManagerComponent {
   updateEquipmentStatus(equipmentId: number, cadetId: string, newStatus: string) {
     this.intendantService.responseEquipment(equipmentId, cadetId, newStatus).subscribe(
       (response) => {
-        console.log('Status updated successfully:', response);
         this.loadProcessingEquipment();
       },
       (error) => {

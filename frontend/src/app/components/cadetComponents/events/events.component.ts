@@ -48,11 +48,23 @@ export class EventsComponent implements OnInit {
   }
   
   exportToGoogleCalendar(event: Event) {
-    const startDate = event.dateFrom.toISOString().replace(/-|:|\.\d+/g, '');
-    const endDate = event.dateTo.toISOString().replace(/-|:|\.\d+/g, '');
+    // Ensure event.dateFrom and event.dateTo are valid Date objects
+    const dateFrom = new Date(event.dateFrom);
+    const dateTo = new Date(event.dateTo);
+  
+    // Convert dates to Google Calendar format: YYYYMMDDTHHmmssZ
+    const startDate = dateFrom.toISOString().replace(/-|:|\.\d+/g, '');
+    const endDate = dateTo.toISOString().replace(/-|:|\.\d+/g, '');
+  
+    // URL encode the title and location
     const title = encodeURIComponent(event.title);
-    const location = encodeURIComponent(event.location);
+    const location = encodeURIComponent(event.location || '');
+  
+    // Create Google Calendar URL
     const details = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&location=${location}`;
+  
+    // Open the Google Calendar event creation page
     window.open(details, '_blank');
   }
+  
 }

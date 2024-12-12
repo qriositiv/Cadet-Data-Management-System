@@ -16,7 +16,7 @@ export class ResultsComponent {
   constructor(private cadetService: CadetService) {}
 
   ngOnInit(): void {
-    const cadetId = 'LKA12345678901';
+    const cadetId = localStorage.getItem('cadetId') || '';
     this.cadetService.getUserDisciplineResults(cadetId).subscribe({
       next: (results) => {
         this.userDisciplineResults = results;        

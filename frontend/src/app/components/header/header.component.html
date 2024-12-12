@@ -1,4 +1,4 @@
-<nav class="w-full bg-rose-900 text-white">
+<nav *ngIf="role" class="w-full bg-rose-900 text-white">
   <div class="w-11/12 mx-auto md:h-20 h-16 flex items-center justify-between">
     <div class="text-xl md:text-2xl font-bold flex items-center">
       <a [routerLink]="['/']" class="flex items-center space-x-2 hover:text-rose-300">
@@ -14,7 +14,7 @@
     </div>  
 
     <div *ngIf="cadetService.isAuthenticated()" class="hidden md:flex items-center space-x-4 lg:space-x-8 text-sm lg:text-lg">
-      <a [routerLink]="['/notifications']" class="flex flex-col items-center hover:text-rose-300 transition">
+      <a *ngIf="role !== 'intendantas'" [routerLink]="['/notifications']" class="flex flex-col items-center hover:text-rose-300 transition">
         <span class="relative">
           <i class="fa-solid fa-bell text-lg lg:text-2xl"></i>
           <span class="absolute top-1.5 left-3 flex h-2 w-2">
@@ -24,11 +24,7 @@
         </span>
         <span class="text-xs">Pranešimai</span>
       </a>
-      <a [routerLink]="['/info']" class="flex flex-col items-center hover:text-rose-300 transition">
-        <i class="fa-solid fa-circle-info text-lg lg:text-2xl"></i>
-        <span class="text-xs">Informacija</span>
-      </a>
-      <a [routerLink]="['/profile']" class="flex flex-col items-center hover:text-rose-300 transition">
+      <a *ngIf="role !== 'intendantas'" [routerLink]="['/profile']" class="flex flex-col items-center hover:text-rose-300 transition">
         <i class="fa-solid fa-circle-user text-lg lg:text-2xl"></i>
         <span class="text-xs">Jūsų Paskyra</span>
       </a>
@@ -39,7 +35,7 @@
     </div>
   </div>
 
-  <div *ngIf="cadetService.isAuthenticated()" class="hidden md:flex w-full bg-rose-800 h-10 items-center">
+  <div *ngIf="cadetService.isAuthenticated() && role !== 'intendantas'" class="hidden md:flex w-full bg-rose-800 h-10 items-center">
     <div class="w-11/12 h-full mx-auto flex justify-center items-center space-x-5 sm:space-x-10 lg:space-x-20 text-xs md:text-base">
       <a [routerLink]="['/activities']" class="hover:text-rose-300 transition">Renginiai</a>
 
@@ -59,10 +55,28 @@
     </div>
   </div>
 
+  <div *ngIf="cadetService.isAuthenticated() && role === 'intendantas'" class="hidden md:flex w-full bg-rose-800 h-10 items-center">
+    <div class="w-11/12 h-full mx-auto flex justify-center items-center space-x-5 sm:space-x-10 lg:space-x-20 text-xs md:text-base">
+      <a [routerLink]="['/manage/activities']" class="hover:text-rose-300 transition">Renginiai</a>
+
+      <div class="relative group">
+        <button class="hover:text-rose-300 transition">Leidimai</button>
+        <div
+          class="absolute hidden group-hover:block bg-white text-black text-sm shadow-lg rounded-md mt-0 w-64"
+        >
+          <a [routerLink]="['/manage/permissions/cep']" class="block px-4 py-2 hover:bg-rose-100">Leidimai įvažiuoti į teritoriją</a>
+          <a [routerLink]="['/manage/permissions/efpa']" class="block px-4 py-2 hover:bg-rose-100">Atleidimai nuo fizinės veiklos</a>
+        </div>
+      </div>
+
+      <a [routerLink]="['/manage/equipment']" class="hover:text-rose-300 transition">Ekipuotė</a>
+      <a [routerLink]="['/manage/results']" class="hover:text-rose-300 transition">Disciplinų Rezultatai</a>
+    </div>
+  </div>
+
   <div *ngIf="mobileMenuOpen" class="md:hidden bg-rose-800">
     <div class="w-11/12 mx-auto py-4 flex flex-col space-y-4">
       <a [routerLink]="['/notifications']" class="hover:text-rose-300" (click)="closeMobileMenu()">Pranešimai</a>
-      <a [routerLink]="['/info']" class="hover:text-rose-300" (click)="closeMobileMenu()">Informacija</a>
       <a [routerLink]="['/profile']" class="hover:text-rose-300" (click)="closeMobileMenu()">Jūsų Paskyra</a>
       <a [routerLink]="['/login']" class="hover:text-rose-300" (click)="logout()" (click)="closeMobileMenu()">Atsijungti</a>
       <hr class="border-rose-700" />

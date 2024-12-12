@@ -1,8 +1,15 @@
-<div class="w-full">
+<div *ngIf="role !== 'intendantas'" class="w-full">
     <app-notifications></app-notifications>
     <app-profile></app-profile>
     <app-events></app-events>
     <app-permissions></app-permissions>
     <app-inventory></app-inventory>
     <app-results></app-results>
+</div>
+<div *ngIf="role === 'intendantas'" class="w-full">
+    <app-event-manager></app-event-manager>
+    <app-cep-manager></app-cep-manager>
+    <app-efpa-manager></app-efpa-manager>
+    <app-equipment-manager></app-equipment-manager>
+    <app-result-manager></app-result-manager>
 </div>

@@ -19,7 +19,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   fetchNotifications(): void {
-    const cadetId = 'LKA12345678901'; // Example cadetId
+    const cadetId = localStorage.getItem('cadetId') || '';
     this.cadetService.getNotificationsByCadet(cadetId).subscribe(
       (data) => (this.notifications = data),
       (error) => console.error('Error fetching notifications:', error)
@@ -29,7 +29,6 @@ export class NotificationsComponent implements OnInit {
   hideNotification(notificationId: number): void {
     this.cadetService.hideNotification(notificationId).subscribe({
       next: () => {
-        console.log(`Notification ${notificationId} has been marked as hidden`);
         this.notifications = this.notifications.map(notification =>
           notification.notificationId === notificationId
             ? { ...notification, hidden: true }

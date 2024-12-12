@@ -13,6 +13,12 @@ import { PermissionsComponent } from '../cadetComponents/permissions/permissions
 import { CepComponent } from '../cadetComponents/permissions/cep/cep.component';
 import { EfpaComponent } from '../cadetComponents/permissions/efpa/efpa.component';
 import { ResultsComponent } from '../cadetComponents/results/results.component';
+import { EquipmentManagerComponent } from './equipment-manager/equipment-manager.component';
+import { EfpaManagerComponent } from './efpa-manager/efpa-manager.component';
+import { CepManagerComponent } from './cep-manager/cep-manager.component';
+import { EventManagerComponent } from './event-manager/event-manager.component';
+import { ResultManagerComponent } from './result-manager/result-manager.component';
+import { RoleGuard } from '../../guards/role.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -27,5 +33,13 @@ export const routes: Routes = [
   { path: 'results', component: ResultsComponent, canActivate: [AuthGuard] },
   { path: 'career', component: CareerComponent, canActivate: [AuthGuard] },
   { path: 'disciplines', component: ResultsTableComponent, canActivate: [AuthGuard] },
+
+  // Restricted routes for 'intendantas' role
+  { path: 'manage/equipment', component: EquipmentManagerComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'intendantas' } },
+  { path: 'manage/permissions/cep', component: CepManagerComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'intendantas' } },
+  { path: 'manage/permissions/efpa', component: EfpaManagerComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'intendantas' } },
+  { path: 'manage/activities', component: EventManagerComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'intendantas' } },
+  { path: 'manage/results', component: ResultManagerComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'intendantas' } },
+
   { path: '**', component: NotFoundComponent },
 ];

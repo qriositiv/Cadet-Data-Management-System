@@ -17,7 +17,6 @@ export class ResultsTableComponent {
   ngOnInit(): void {
     this.cadetService.getDisciplines().subscribe((data: Discipline[]) => {
       this.disciplines = data;
-      console.log(data);
     });
   }
 }

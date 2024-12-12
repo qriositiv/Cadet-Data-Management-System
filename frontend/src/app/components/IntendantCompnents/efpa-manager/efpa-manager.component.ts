@@ -37,7 +37,6 @@ export class EfpaManagerComponent {
     this.intendantService.getUnapprovedExemptions().subscribe(
       (data) => {
         this.exemptions = data;
-        console.log('Unapproved Exemptions:', this.exemptions);
       },
       (error) => {
         console.error('Error fetching unapproved exemptions:', error);
@@ -73,7 +72,6 @@ export class EfpaManagerComponent {
         updatedData
       ).subscribe(
         (response) => {
-          console.log('Exemption updated:', response);
           this.exemptions = this.exemptions.map((exemption) =>
             exemption.permissionId === this.selectedExemption!.permissionId
               ? { ...exemption, ...updatedData }

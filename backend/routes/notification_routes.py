@@ -9,8 +9,10 @@ bp = Blueprint('notifications', __name__)
 # @jwt_required
 def get_notifications_by_cadet(cadet_id):
     notifications = Notification.query.filter_by(cadetId=cadet_id, hidden=False).all()
+    # Return an empty array if no notifications are found
     if not notifications:
-        return jsonify({'message': 'No notifications found for the given cadetId'}), 404
+        return jsonify([]), 200
+    # Return the notifications as a list of JSON objects
     return jsonify([{
         'notificationId': n.notificationId,
         'cadetId': n.cadetId,
@@ -18,8 +20,8 @@ def get_notifications_by_cadet(cadet_id):
         'title': n.title,
         'message': n.message,
         'hidden': n.hidden
-    } for n in notifications])
-    
+    } for n in notifications]), 200
+
 @bp.route('/notifications/<int:notification_id>/hide', methods=['PATCH'])
 def hide_notification(notification_id):
     # Query the notification by ID

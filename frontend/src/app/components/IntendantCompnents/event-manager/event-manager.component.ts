@@ -33,7 +33,6 @@ export class EventManagerComponent implements OnInit {
   deleteEvent(eventId: number): void {
     this.intendantService.deleteEvent(eventId).subscribe(
       (response) => {
-        console.log('Event deleted:', response);
         this.events = this.events.filter(event => event.eventId !== eventId);
         this.loadEvents();
       },
@@ -47,8 +46,6 @@ export class EventManagerComponent implements OnInit {
     this.cadetService.getEvents().subscribe(
       (data) => {
         this.events = data;
-        console.log(data);
-        
       },
       (error) => {
         console.error('Error fetching events:', error);
@@ -76,7 +73,6 @@ export class EventManagerComponent implements OnInit {
   
       this.intendantService.postEvent(newEvent).subscribe(
         (response) => {
-          console.log('Event created:', response);
           this.events.push({
             ...newEvent,
             eventId: response.eventId,

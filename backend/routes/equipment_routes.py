@@ -46,7 +46,7 @@ def get_user_equipment(cadetId):
 
             return jsonify(equipment_list), 200
         else:
-            return jsonify({'message': 'No equipment found for this cadet.'}), 404
+            return jsonify({'message': 'No equipment found for this cadet.'}), 204
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -66,7 +66,7 @@ def update_user_equipment():
         user_equipment = db.session.query(UserEquipment).filter_by(cadetId=cadetId, equipmentId=equipmentId).first()
 
         if not user_equipment:
-            return jsonify({'error': 'User equipment not found'}), 404
+            return jsonify({'error': 'User equipment not found'}), 204
 
         size_entry = EquipmentSize.query.filter_by(equipmentId=equipmentId, size=size).first()
 
@@ -150,7 +150,7 @@ def update_equipment_status(equipmentId):
         ).first()
 
         if not user_equipment:
-            return jsonify({'error': 'Equipment not found for the given cadet'}), 404
+            return jsonify({'error': 'Equipment not found for the given cadet'}), 204
 
         # Retrieve equipment details
         equipment_name = user_equipment.equipment.name if user_equipment.equipment else "Unknown Equipment"
