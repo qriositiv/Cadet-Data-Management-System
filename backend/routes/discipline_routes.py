@@ -1,11 +1,13 @@
 from flask import Blueprint, jsonify, request
 from datetime import datetime
+from flask_jwt_extended import jwt_required
 from models import UserProfileData, Discipline, UserDisciplineResult
 from extensions import db
 
 bp = Blueprint('discipline', __name__)
 
 @bp.route('/user-discipline-results/<string:cadet_id>', methods=['GET'])
+@jwt_required()
 def get_user_discipline_results(cadet_id):
     user = UserProfileData.query.filter_by(cadetId=cadet_id).first()
     if not user:
@@ -44,6 +46,7 @@ def get_user_discipline_results(cadet_id):
     return jsonify(response)
 
 @bp.route('/disciplines', methods=['GET'])
+@jwt_required()
 def get_disciplines():
     disciplines = Discipline.query.all()
 
@@ -60,6 +63,7 @@ def get_disciplines():
     return jsonify(result)
 
 @bp.route('/user-discipline-results', methods=['PUT'])
+@jwt_required()
 def update_user_discipline_result():
     try:
         # Parse the request data

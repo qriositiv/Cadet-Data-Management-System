@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify
+from flask_jwt_extended import jwt_required
 from models import Location
 
 bp = Blueprint('locations', __name__)
 
 @bp.route('/locations/', methods=['GET'])
+@jwt_required()
 def get_all_locations():
     try:
         locations = Location.query.all()

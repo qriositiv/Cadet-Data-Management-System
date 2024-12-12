@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
 from extensions import db
 from datetime import datetime, timedelta
 from models import Event
@@ -6,7 +7,6 @@ from models import Event
 bp = Blueprint('events', __name__)
 
 @bp.route('/events/', methods=['GET'])
-# @jwt_required() 
 def get_events():
     now = datetime.utcnow() + timedelta(hours=2)
     events = Event.query.filter(Event.dateTo > now).order_by(Event.dateFrom).all()
@@ -23,6 +23,7 @@ def get_events():
     return jsonify(event_list)
 
 @bp.route('/events/new', methods=['POST'])
+@jwt_required()
 def post_event():
     try:
         data = request.get_json()
@@ -59,6 +60,7 @@ def post_event():
         return jsonify({'error': f'Failed to create event: {str(e)}'}), 500
 
 @bp.route('/events/delete/<int:eventId>', methods=['DELETE'])
+@jwt_required()
 def delete_event(eventId):
     try:
         # Fetch the event by eventId

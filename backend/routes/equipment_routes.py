@@ -1,10 +1,12 @@
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
 from models import UserEquipment, Equipment, EquipmentSize, UserAuthentication
 from extensions import db
 
 bp = Blueprint('equipment', __name__)
 
 @bp.route('/equipment/<string:cadetId>', methods=['GET'])
+@jwt_required()
 def get_user_equipment(cadetId):
     try:
         user_equipment = db.session.query(
@@ -49,6 +51,7 @@ def get_user_equipment(cadetId):
         return jsonify({'error': str(e)}), 500
 
 @bp.route('/updateUserEquipment', methods=['PUT'])
+@jwt_required()
 def update_user_equipment():
     try:
         data = request.get_json()
@@ -81,6 +84,7 @@ def update_user_equipment():
         return jsonify({'error': str(e)}), 500
 
 @bp.route('/user-equipment/processing', methods=['GET'])
+@jwt_required()
 def get_processing_user_equipment():
     try:
         # Query for UserEquipment with status 'Apdorojama'
@@ -127,6 +131,7 @@ def get_processing_user_equipment():
         return jsonify({'error': str(e)}), 500
 
 @bp.route('/user-equipment/<int:equipmentId>/status', methods=['PUT'])
+@jwt_required()
 def update_equipment_status(equipmentId):
     try:
         # Parse the request data

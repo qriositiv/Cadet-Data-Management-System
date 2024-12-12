@@ -1,10 +1,11 @@
 from flask import Blueprint, jsonify
+from flask_jwt_extended import jwt_required
 from models import UserProfileData
 
 bp = Blueprint('profile', __name__)
 
 @bp.route('/profile/<string:cadetId>', methods=['GET'])
-# @jwt_required() 
+@jwt_required() 
 def get_user_profile(cadetId):
     profile = UserProfileData.query.filter_by(cadetId=cadetId).first()
 

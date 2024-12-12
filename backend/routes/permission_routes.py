@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime
+
+from flask_jwt_extended import jwt_required
 from models import CarEnterPermission, ExemptionFromPhysicalActivity
 from extensions import db
 import os
@@ -10,6 +12,7 @@ from werkzeug.utils import secure_filename
 bp = Blueprint('permissions', __name__)
 
 @bp.route('/permission/car/<string:cadetId>', methods=['GET'])
+@jwt_required()
 def get_car_permissions(cadetId):
     permissions = CarEnterPermission.query.filter_by(cadetId=cadetId).all()
 
@@ -31,6 +34,7 @@ def get_car_permissions(cadetId):
     return jsonify({'enterWithCarPermissions': permissions_list})
 
 @bp.route('/permission/car', methods=['POST'])
+@jwt_required()
 def create_car_permission():
     data = request.get_json()
 
@@ -76,6 +80,7 @@ def create_car_permission():
         return jsonify({'error': f'Failed to create permission: {str(e)}'}), 500
 
 @bp.route('/permission/physical/<string:cadetId>', methods=['GET'])
+@jwt_required()
 def get_physical_permissions(cadetId):
     permissions = ExemptionFromPhysicalActivity.query.filter_by(cadetId=cadetId).all()
 
@@ -95,6 +100,7 @@ def get_physical_permissions(cadetId):
     return jsonify(permission_list)
 
 @bp.route('/permission/physical', methods=['POST'])
+@jwt_required()
 def create_physical_permission():
     data = request.get_json()
 
@@ -142,6 +148,7 @@ def generate_random_filename(extension):
     return f"{random_str}.{extension}"
 
 @bp.route('/upload', methods=['POST'])
+@jwt_required()
 def upload_file():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
@@ -163,6 +170,7 @@ def upload_file():
 
 
 @bp.route('/permission/car/unapproved', methods=['GET'])
+@jwt_required()
 def get_unapproved_permissions():
     try:
         # Query all permissions with status 'Nepatvirtintas'
@@ -190,6 +198,7 @@ def get_unapproved_permissions():
         return jsonify({'error': f'Failed to fetch unapproved permissions: {str(e)}'}), 500
     
 @bp.route('/permission/car/<int:permissionId>', methods=['PUT'])
+@jwt_required()
 def update_permission(permissionId):
     try:
         # Fetch the permission by ID
@@ -219,6 +228,7 @@ def update_permission(permissionId):
         return jsonify({'error': f'Failed to update permission: {str(e)}'}), 500
     
 @bp.route('/permission/physical/unapproved', methods=['GET'])
+@jwt_required()
 def get_unapproved_exemptions():
     try:
         # Query all exemptions with status 'Nepatvirtintas'
@@ -244,6 +254,7 @@ def get_unapproved_exemptions():
         return jsonify({'error': f'Failed to fetch unapproved exemptions: {str(e)}'}), 500
     
 @bp.route('/permission/physical/<int:permissionId>', methods=['PUT'])
+@jwt_required()
 def update_exemption(permissionId):
     try:
         # Fetch the exemption by ID
