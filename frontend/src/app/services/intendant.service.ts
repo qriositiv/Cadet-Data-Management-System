@@ -54,4 +54,16 @@ export class IntendantService {
     const payload = { cadetId, status };
     return this.http.put(this.apiUl + 'user-equipment/' + equipmentId + '/status', payload);
   }
+
+  getUserRole(): Observable<any> {
+    const token = localStorage.getItem('access_token'); // Retrieve the token from storage
+  
+    // Add the Authorization header
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+  
+    // Make the HTTP GET request with headers
+    return this.http.get(this.apiUl + 'user-role', { headers });
+  }
 }

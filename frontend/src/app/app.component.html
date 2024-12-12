@@ -1,18 +1,26 @@
 <header class="shadow-2xl z-10">
-    <app-header [intendantMenu]="isIntendant"></app-header>
+    <app-header [intendantMenu]="role === 'intendantas'"></app-header>
 </header>
+
 <main class="flex-grow bg-stone-200 flex justify-center">
-    <div *ngIf='isIntendant==="false"'class="xl:w-3/5 lg:w-5/6 w-full lg:mx-auto px-2">
-        <router-outlet></router-outlet>
-    </div>
-    <div *ngIf='isIntendant==="true"'class="xl:w-3/5 lg:w-5/6 w-full lg:mx-auto px-2">
+    <ng-container *ngIf="role">
+    <!-- Main Section for Intendant Role -->
+    <div *ngIf="role === 'intendantas'" class="xl:w-3/5 lg:w-5/6 w-full lg:mx-auto px-2">
+        <!-- Intendant Management Components -->
         <app-event-manager></app-event-manager>
         <app-cep-manager></app-cep-manager>
         <app-efpa-manager></app-efpa-manager>
         <app-equipment-manager></app-equipment-manager>
         <app-result-manager></app-result-manager>
     </div>
+
+    <!-- Fallback Section (Optional) -->
+    <div *ngIf="role !== 'intendantas'" class="xl:w-3/5 lg:w-5/6 w-full lg:mx-auto px-2">
+        <router-outlet></router-outlet>
+    </div>
+    </ng-container>
 </main>
+
 <footer class="z-10 shadow-2xl bg-rose-800 w-full h-16 text-white hover:text-rose-300 justify-center flex items-center">
     <a>{{ email }}</a>
 </footer>

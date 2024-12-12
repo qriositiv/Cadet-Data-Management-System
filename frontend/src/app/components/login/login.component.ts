@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor(private fb: FormBuilder, private cadetService: CadetService, private router: Router) {
     this.loginForm = this.fb.group({
       cadetId: ['', [Validators.required, Validators.pattern(/^\w+$/)]],
-      nationalId: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      password: ['', [Validators.required]],
     });
   }
 
@@ -25,7 +25,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const formValue: UserAuthenticationData = {
         cadetId: this.loginForm.value.cadetId,
-        nationalId: Number(this.loginForm.value.nationalId),
+        password: this.loginForm.value.password,
       };
 
       this.cadetService.login(formValue).subscribe(

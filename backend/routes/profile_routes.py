@@ -14,7 +14,6 @@ def get_user_profile(cadetId):
     profile_data = {
         "authentication": {
             "cadetId": profile.cadetId,
-            "nationalId": profile.authentication.nationalId
         },
         "basicData": {
             "dateOfBirth": profile.dateOfBirth.strftime('%Y-%m-%d'),

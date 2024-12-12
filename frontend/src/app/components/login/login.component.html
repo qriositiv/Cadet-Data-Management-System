@@ -19,14 +19,14 @@
       </div>
 
       <div class="mb-6">
-        <label for="nationalId" class="block text-sm font-medium text-gray-700">Asmens kodas</label>
+        <label for="password" class="block text-sm font-medium text-gray-700">Asmens kodas</label>
         <input
           type="text"
-          id="nationalId"
-          formControlName="nationalId"
+          id="password"
+          formControlName="password"
           class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
         />
-        @if (loginForm.get('nationalId')?.invalid && loginForm.get('nationalId')?.touched) {
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
           <div class="text-red-500 text-sm">
             Asmens kodas būtinas laukas
           </div>

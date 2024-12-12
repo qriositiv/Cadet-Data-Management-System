@@ -1,6 +1,5 @@
-INSERT INTO UserAuthentication (cadetId, nationalId)
-VALUES ('LKA12345678901', 5001226),
-('LKA12345678909', 5001229);
+INSERT INTO UserAuthentication (cadetId, hashedPassword) VALUES ('LKA12345678901', '$2b$12$EixZaYVK1fsbw1Zfbx3OXePaWxn96p36Bc9eGeYxa9Xy5uxDRoG.e'); -- slap
+INSERT INTO UserAuthentication (cadetId, hashedPassword) VALUES ('LKA12345678909', '$2b$12$NjB/5qwhZ8/xt0Uvbds92O4d6YfJ8qpPzYTWr4zDciP0yfhTpVmSO'); -- inten
 
 INSERT INTO `Location` (location) VALUES 
 ('Vilnius'), ('Pabradė'), ('Rūdninkai');

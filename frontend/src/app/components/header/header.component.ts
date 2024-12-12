@@ -12,7 +12,7 @@ import { CadetService } from '../../services/cadet.service';
 export class HeaderComponent {
   mobileMenuOpen: boolean = false;
   dropdownOpen = false;
-  @Input() intendantMenu: string = 'false';
+  @Input() intendantMenu: boolean = false;
 
   constructor(private router: Router, public cadetService: CadetService) {}
 
@@ -32,5 +32,6 @@ export class HeaderComponent {
     localStorage.removeItem('cadetId');
     localStorage.removeItem('access_token');
     localStorage.removeItem('intendant');
+    window.location.reload();
   }
 }

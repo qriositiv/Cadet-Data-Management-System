@@ -8,6 +8,7 @@ import { CepManagerComponent } from "./components/IntendantCompnents/cep-manager
 import { EfpaManagerComponent } from "./components/IntendantCompnents/efpa-manager/efpa-manager.component";
 import { EquipmentManagerComponent } from "./components/IntendantCompnents/equipment-manager/equipment-manager.component";
 import { ResultManagerComponent } from "./components/IntendantCompnents/result-manager/result-manager.component";
+import { IntendantService } from './services/intendant.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,26 @@ import { ResultManagerComponent } from "./components/IntendantCompnents/result-m
 })
 export class AppComponent {
   email = 'info@kdvs.lt'
+  role!: string;
 
-  isIntendant = localStorage.getItem('intendant') || 'false';
+  constructor(private intendantService: IntendantService) {}
+
+  ngOnInit(): void {
+    this.getUserRole();
+    
+  }
+
+  getUserRole(): void {
+    this.intendantService.getUserRole().subscribe(
+      (response: any) => {
+        this.role = response.role;
+        console.log(response);
+        
+      },
+      (error) => {
+        console.error('Error fetching user role:', error);
+        this.role = 'Error fetching role';
+      }
+    );
+  }
 }

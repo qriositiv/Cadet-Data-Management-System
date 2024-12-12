@@ -1,6 +1,6 @@
 export interface UserAuthenticationData {
     cadetId: string;
-    nationalId: number;
+    password: string;
 }
 
 export interface LoginResponse {
