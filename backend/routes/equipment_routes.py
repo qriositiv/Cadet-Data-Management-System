@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
-from models import UserEquipment, Equipment, EquipmentSize, UserAuthentication
+from models import UserEquipment, Equipment, EquipmentSize, UserAuthentication, Notification
 from extensions import db
 
 bp = Blueprint('equipment', __name__)
@@ -129,7 +129,7 @@ def get_processing_user_equipment():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
+    
 @bp.route('/user-equipment/<int:equipmentId>/status', methods=['PUT'])
 @jwt_required()
 def update_equipment_status(equipmentId):
@@ -144,7 +144,7 @@ def update_equipment_status(equipmentId):
         if data['status'] not in valid_statuses:
             return jsonify({'error': f'Invalid status. Must be one of {valid_statuses}'}), 400
 
-        # Find the UserEquipment by equipmentId and cadetId
+        # Find the UserEquipment entry by equipmentId and cadetId
         user_equipment = UserEquipment.query.filter_by(
             equipmentId=equipmentId, cadetId=data['cadetId']
         ).first()
@@ -152,8 +152,28 @@ def update_equipment_status(equipmentId):
         if not user_equipment:
             return jsonify({'error': 'Equipment not found for the given cadet'}), 404
 
+        # Retrieve equipment details
+        equipment_name = user_equipment.equipment.name if user_equipment.equipment else "Unknown Equipment"
+
         # Update the status
         user_equipment.status = data['status']
+        db.session.commit()
+
+        # Create a notification for the cadet
+        notification_type = 'success' if data['status'] == 'Paruošta' else 'fail'
+        notification_message = (
+            f"Statusas atnaujintas į {data['status']} įrangai: {equipment_name}."
+            if notification_type == 'success' else
+            f"Statusas pakeistas: {data['status']} įrangai: {equipment_name}. Sekite atnaujinimus."
+        )
+        notification = Notification(
+            cadetId=data['cadetId'],
+            type=notification_type,
+            title='Įrangos statusas atnaujintas',
+            message=notification_message,
+            hidden=False
+        )
+        db.session.add(notification)
         db.session.commit()
 
         return jsonify({'message': 'Equipment status updated successfully'}), 200

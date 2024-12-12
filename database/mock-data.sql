@@ -56,6 +56,16 @@ VALUES (
     'intendantas'                                 
 );
 
+-- Insert sample notifications
+INSERT INTO Notification (cadetId, type, title, message, hidden)
+VALUES
+('LKA12345678901', 'info', 'Welcome Message', 'Welcome to the system!', FALSE),
+('LKA12345678901', 'important', 'System Update', 'A new update will be applied tomorrow.', FALSE),
+('LKA12345678901', 'success', 'Task Completed', 'Your recent task has been successfully completed.', FALSE),
+('LKA12345678901', 'fail', 'Failed Login Attempt', 'There was a failed login attempt on your account.', TRUE),
+('LKA12345678901', 'info', 'Reminder', 'Don’t forget your upcoming event.', FALSE);
+
+
 INSERT INTO Event (eventId, title, dateFrom, dateTo, location) VALUES
 (1, 'Paskaita – diskusija „Lietuvos žvalgybos veiksmai prijungiant Klaipėdos kraštą”', 
     NOW() - INTERVAL 1 HOUR, NOW() + INTERVAL 1 HOUR, 'LITEXPO, Vilnius'),

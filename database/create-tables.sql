@@ -100,7 +100,7 @@ CREATE TABLE `UserEquipment` (
 CREATE TABLE Notification (
     notificationId INT AUTO_INCREMENT PRIMARY KEY,
     cadetId VARCHAR(14),
-    type VARCHAR(14),
+    type ENUM ('info', 'success', 'fail', 'important') DEFAULT 'info' NOT NULL, 
     title VARCHAR(255) NOT NULL,
     message TEXT,
     hidden BOOLEAN NOT NULL DEFAULT FALSE,

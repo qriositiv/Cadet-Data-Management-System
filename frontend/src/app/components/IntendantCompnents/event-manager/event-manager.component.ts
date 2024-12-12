@@ -62,10 +62,16 @@ export class EventManagerComponent implements OnInit {
 
   addEvent() {
     if (this.eventForm.valid) {
+      const dateFrom = new Date(this.eventForm.value.dateFrom);
+      const dateTo = new Date(this.eventForm.value.dateTo);
+  
+      dateFrom.setHours(dateTo.getHours() + 2);
+      dateTo.setHours(dateTo.getHours() + 2);
+  
       const newEvent = {
         ...this.eventForm.value,
-        dateFrom: new Date(this.eventForm.value.dateFrom).toISOString(),
-        dateTo: new Date(this.eventForm.value.dateTo).toISOString(),
+        dateFrom: dateFrom.toISOString(),
+        dateTo: dateTo.toISOString(),
       };
   
       this.intendantService.postEvent(newEvent).subscribe(
@@ -83,5 +89,5 @@ export class EventManagerComponent implements OnInit {
         }
       );
     }
-  }
+  }  
 }

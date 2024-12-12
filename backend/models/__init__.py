@@ -6,3 +6,4 @@ from .cep import CarEnterPermission
 from .efpa import ExemptionFromPhysicalActivity
 from .equipment import Equipment, EquipmentSize, UserEquipment
 from .discipline import Discipline, UserDisciplineResult
+from .notification import Notification

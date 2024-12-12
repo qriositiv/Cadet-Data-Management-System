@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime
 
 from flask_jwt_extended import jwt_required
-from models import CarEnterPermission, ExemptionFromPhysicalActivity
+from models import CarEnterPermission, ExemptionFromPhysicalActivity, Notification
 from extensions import db
 import os
 import random
@@ -211,16 +211,35 @@ def update_permission(permissionId):
         if not data:
             return jsonify({'error': 'No data provided'}), 400
 
+        # Track changes for notifications
+        updated_fields = []
+
         # Update the fields if provided in the request
-        if 'dateTo' in data:
+        if 'dateTo' in data and permission.dateTo != data['dateTo']:
             permission.dateTo = data['dateTo']
-        if 'additionalInformation' in data:
+            updated_fields.append('dateTo')
+        if 'additionalInformation' in data and permission.additionalInformation != data['additionalInformation']:
             permission.additionalInformation = data['additionalInformation']
-        if 'status' in data:
+            updated_fields.append('additionalInformation')
+        if 'status' in data and permission.status != data['status']:
             permission.status = data['status']
+            updated_fields.append('status')
 
         # Commit changes to the database
         db.session.commit()
+
+        # Create a notification if critical fields (e.g., status) were updated
+        if 'status' in updated_fields:
+            notification = Notification(
+                cadetId=permission.cadetId,
+                type='fail' if data['status'] != 'Approved' else 'success',
+                title='Car Permission Updated',
+                message=f"Your car permission status has been updated to '{data['status']}' for location {permission.location}.",
+                hidden=False
+            )
+            db.session.add(notification)
+            db.session.commit()
+
         return jsonify({'message': f'Permission with ID {permissionId} updated successfully!'}), 200
 
     except Exception as e:
@@ -267,22 +286,40 @@ def update_exemption(permissionId):
         if not data:
             return jsonify({'error': 'No data provided'}), 400
 
+        # Track changes for notifications
+        updated_fields = []
+
         # Update fields if they exist in the request
-        if 'cadetId' in data:
-            exemption.cadetId = data['cadetId']
-        if 'status' in data:
+        if 'status' in data and exemption.status != data['status']:
             exemption.status = data['status']
-        if 'dateFrom' in data:
+            updated_fields.append('status')
+        if 'dateFrom' in data and exemption.dateFrom != data['dateFrom']:
             exemption.dateFrom = data['dateFrom']
-        if 'dateTo' in data:
+            updated_fields.append('dateFrom')
+        if 'dateTo' in data and exemption.dateTo != data['dateTo']:
             exemption.dateTo = data['dateTo']
-        if 'documentPhotoUrl' in data:
+            updated_fields.append('dateTo')
+        if 'documentPhotoUrl' in data and exemption.documentPhotoUrl != data['documentPhotoUrl']:
             exemption.documentPhotoUrl = data['documentPhotoUrl']
-        if 'additionalInformation' in data:
+            updated_fields.append('documentPhotoUrl')
+        if 'additionalInformation' in data and exemption.additionalInformation != data['additionalInformation']:
             exemption.additionalInformation = data['additionalInformation']
+            updated_fields.append('additionalInformation')
 
         # Commit changes to the database
         db.session.commit()
+
+        # Create a notification if critical fields (e.g., status) were updated
+        if 'status' in updated_fields:
+            notification = Notification(
+                cadetId=exemption.cadetId,
+                type='fail' if data['status'] != 'Approved' else 'success',
+                title='Exemption Status Updated',
+                message=f"Your physical activity exemption status has been updated to '{data['status']}' effective from {exemption.dateFrom}.",
+                hidden=False
+            )
+            db.session.add(notification)
+            db.session.commit()
 
         return jsonify({'message': f'Exemption with ID {permissionId} updated successfully!'}), 200
 

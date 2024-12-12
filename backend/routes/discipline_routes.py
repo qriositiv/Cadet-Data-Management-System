@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from datetime import datetime
 from flask_jwt_extended import jwt_required
-from models import UserProfileData, Discipline, UserDisciplineResult
+from models import UserProfileData, Discipline, UserDisciplineResult, Notification
 from extensions import db
 
 bp = Blueprint('discipline', __name__)
@@ -89,6 +89,19 @@ def update_user_discipline_result():
         # Update the result
         user_discipline_result.result = data['result']
         db.session.commit()
+
+        # Create a new notification
+        discipline = Discipline.query.filter_by(disciplineId=data['disciplineId']).first()
+        if discipline:
+            notification = Notification(
+                cadetId=data['cadetId'],
+                type='info',
+                title='Disciplinu rezultatas atnaujintas',
+                message=f'{discipline.name} Rezultatas nustatitas {data["result"]}',
+                hidden=False
+            )
+            db.session.add(notification)
+            db.session.commit()
 
         return jsonify({'message': 'Discipline result updated successfully'}), 200
 

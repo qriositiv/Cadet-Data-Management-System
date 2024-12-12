@@ -8,6 +8,7 @@ from .permission_routes import bp as permission_bp
 from .equipment_routes import bp as equipment_bp
 from .location_routes import bp as location_bp
 from .discipline_routes import bp as discipline_bp
+from .notification_routes import bp as notification_bp
 
 # Create a main blueprint to aggregate all routes
 bp = Blueprint('api', __name__)
@@ -20,3 +21,4 @@ bp.register_blueprint(permission_bp)
 bp.register_blueprint(equipment_bp)
 bp.register_blueprint(location_bp)
 bp.register_blueprint(discipline_bp)
+bp.register_blueprint(notification_bp)

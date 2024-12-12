@@ -8,6 +8,7 @@ import {
   Event,
   ExemptionFromPhysicalActivity,
   LoginResponse,
+  Notification,
   UserAuthenticationData,
   UserDisciplineResults,
   UserProfileData,
@@ -37,9 +38,7 @@ export class CadetService {
   }
 
   getAllLocations(): Observable<string[]> {
-    return this.http.get<string[]>(this.apiUrl + 'locations', {
-      headers: this.getHeaders(),
-    });
+    return this.http.get<string[]>(this.apiUrl + 'locations');
   }
 
   getUserProfile(cadetId: string): Observable<UserProfileData> {
@@ -113,5 +112,13 @@ export class CadetService {
     return this.http.get<Discipline[]>(this.apiUrl + 'disciplines', {
       headers: this.getHeaders(),
     });
+  }
+
+  getNotificationsByCadet(cadetId: string): Observable<Notification[]> {
+    return this.http.get<Notification[]>(this.apiUrl + 'notifications/' + cadetId);
+  }
+
+  hideNotification(notificationId: number): Observable<any> {
+    return this.http.patch(this.apiUrl + 'notifications/' + notificationId + '/hide', {});
   }
 }

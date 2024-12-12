@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Notification } from '../../../interfaces/interfaces';
+import { CadetService } from '../../../services/cadet.service';
 
 @Component({
   selector: 'app-notifications',
@@ -8,46 +9,35 @@ import { Notification } from '../../../interfaces/interfaces';
   imports: [CommonModule],
   templateUrl: './notifications.component.html',
 })
-export class NotificationsComponent {
-  notifications: Notification[] = [
-    {
-      notificationId: 0,
-      cadetId: 'E07794',
-      type: 'success',
-      title: 'Prašimas patvirtintas',
-      message: 'Jūsų prašimas nr. E07794 dėl ekipuotės užsakimo patvirtintas.',
-      hidden: false,
-    },
-    {
-      notificationId: 1,
-      cadetId: 'L31313',
-      type: 'fail',
-      title: 'Prašimas atšauktas',
-      message: 'Jūsų prašimas nr. L31313 dėl leidimo išrašimo atšauktas - "Neteisingai užpyldyti duomenys".',
-      hidden: false,
-    },
-    {
-      notificationId: 2,
-      cadetId: 'N/A',
-      type: '',
-      title: 'Renginys vyksta dabar',
-      message: 'Paskaita – diskusija „Lietuvos žvalgybos veiksmai prijungiant Klaipėdos kraštą”.',
-      hidden: false,
-    },
-    {
-      notificationId: 3,
-      cadetId: 'N/A',
-      type: 'important',
-      title: 'Svarbi žinutė',
-      message: 'Atkreipkite dėmesį į naujausius sistemos pakeitimus.',
-      hidden: false,
-    },
-  ];
+export class NotificationsComponent implements OnInit {
+  notifications: Notification[] = [];
 
-  closeNotification(notificationId: number) {
-    const notification = this.notifications.find(n => n.notificationId === notificationId);
-    if (notification) {
-      notification.hidden = true;
-    }
+  constructor(private cadetService: CadetService) {}
+
+  ngOnInit(): void {
+    this.fetchNotifications();
+  }
+
+  fetchNotifications(): void {
+    const cadetId = 'LKA12345678901'; // Example cadetId
+    this.cadetService.getNotificationsByCadet(cadetId).subscribe(
+      (data) => (this.notifications = data),
+      (error) => console.error('Error fetching notifications:', error)
+    );
+  }
+
+  hideNotification(notificationId: number): void {
+    this.cadetService.hideNotification(notificationId).subscribe({
+      next: () => {
+        console.log(`Notification ${notificationId} has been marked as hidden`);
+        this.notifications = this.notifications.map(notification =>
+          notification.notificationId === notificationId
+            ? { ...notification, hidden: true }
+            : notification
+        );
+        this.fetchNotifications();
+      },
+      error: (error) => console.error('Error hiding notification:', error)
+    });
   }
 }

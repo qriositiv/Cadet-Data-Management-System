@@ -4,8 +4,8 @@ from models import Location
 
 bp = Blueprint('locations', __name__)
 
-@bp.route('/locations/', methods=['GET'])
-@jwt_required()
+@bp.route('/locations', methods=['GET'])
+# @jwt_required()
 def get_all_locations():
     try:
         locations = Location.query.all()
