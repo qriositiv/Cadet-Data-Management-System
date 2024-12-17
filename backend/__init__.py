@@ -12,7 +12,7 @@ def create_app():
     CORS(app)
 
     # Configuration
-    UPLOAD_FOLDER = './images'
+    UPLOAD_FOLDER = '../frontend/public'
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:admin@localhost/CadetDatabase'
