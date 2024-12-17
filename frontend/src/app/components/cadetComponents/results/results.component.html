@@ -1,16 +1,23 @@
 <div *ngIf="userDisciplineResults" class="results-table-container bg-white my-4 md:p-4 p-2 rounded-lg shadow-lg w-full mx-auto">
+  <!-- Section title -->
   <h2 class="text-lg md:text-2xl font-bold md:mb-4 mb-2 text-center">Disciplinų Rezultatai</h2>
 
-  <!-- User Information and Result Summary -->
+  <!-- User Information and Summary -->
   <div class="md:mb-4 mb-2 flex flex-col md:flex-row justify-between text-sm md:text-base">
+    <!-- User's basic information -->
     <p class="text-left">
       {{ userDisciplineResults.username }}, {{ userDisciplineResults.gender }}, {{ userDisciplineResults.age }} m.
     </p>
+    <!-- Summary of results -->
     <div>
       @if (resultsBelowMinimum > 0) {
-        <p class="text-red-500 flex items-center"><i class="fa-regular fa-circle-xmark mr-1"></i>Blogų rezultatų: {{ resultsBelowMinimum }}</p>
+        <p class="text-red-500 flex items-center">
+          <i class="fa-regular fa-circle-xmark mr-1"></i>Blogų rezultatų: {{ resultsBelowMinimum }}
+        </p>
       } @else {
-        <p class="text-green-500 flex items-center"><i class="fa-regular fa-circle-check mr-1"></i>Visi normativai išlaikyti</p>
+        <p class="text-green-500 flex items-center">
+          <i class="fa-regular fa-circle-check mr-1"></i>Visi normativai išlaikyti
+        </p>
       }
     </div>
   </div>
@@ -26,8 +33,11 @@
         </tr>
       </thead>
       <tbody>
+        <!-- Loop through discipline results -->
         <tr *ngFor="let discipline of userDisciplineResults.results" class="hover:bg-gray-100">
+          <!-- Discipline name -->
           <td class="border border-gray-300 p-2">{{ discipline.name }}</td>
+          <!-- Discipline result with dynamic coloring based on the control value -->
           <td
             class="border border-gray-300 p-2"
             [ngClass]="{
@@ -37,6 +47,7 @@
           >
             {{ discipline.result }}
           </td>
+          <!-- Control value for the discipline -->
           <td class="border border-gray-300 p-2">{{ discipline.controlValue }}</td>
         </tr>
       </tbody>

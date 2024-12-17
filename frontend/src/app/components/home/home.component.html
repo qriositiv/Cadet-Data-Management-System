@@ -1,4 +1,5 @@
-<div *ngIf="role !== 'intendantas'" class="w-full">
+<!-- Section for default users -->
+<div *ngIf="role !== 'intendantas' && role !== 'undefined'" class="w-full">
     <app-notifications></app-notifications>
     <app-profile></app-profile>
     <app-events></app-events>
@@ -6,6 +7,8 @@
     <app-inventory></app-inventory>
     <app-results></app-results>
 </div>
+
+<!-- Section specifically for the "intendantas" role -->
 <div *ngIf="role === 'intendantas'" class="w-full">
     <app-event-manager></app-event-manager>
     <app-cep-manager></app-cep-manager>

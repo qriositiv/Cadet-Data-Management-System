@@ -1,7 +1,8 @@
 <div class="w-full bg-white rounded-lg shadow-lg my-4 md:p-4 p-4 pb-0 mx-auto">
+  <!-- Section Title -->
   <h2 class="text-2xl font-bold mb-4 text-center">Automobilių Leidimai</h2>
 
-  <!-- Lentelė -->
+  <!-- Permissions Table -->
   <table class="w-full border-collapse border border-gray-300 mb-6 text-base">
     <thead>
       <tr class="bg-gray-200">
@@ -16,6 +17,7 @@
       </tr>
     </thead>
     <tbody>
+      <!-- Loop through permissions -->
       <tr *ngFor="let permission of permissions" class="hover:bg-gray-100">
         <td class="border border-gray-300 p-2">{{ permission.cadetId }}</td>
         <td class="border border-gray-300 p-2">{{ permission.location }}</td>
@@ -25,6 +27,7 @@
         <td class="border border-gray-300 p-2">{{ permission.carBrand }}</td>
         <td class="border border-gray-300 p-2">{{ permission.additionalInformation }}</td>
         <td class="border border-gray-300 text-center">
+          <!-- Edit Button -->
           <button
             class="bg-rose-500 text-white px-3 py-1 rounded hover:bg-rose-600"
             (click)="openForm(permission)"
@@ -36,7 +39,7 @@
     </tbody>
   </table>
 
-  <!-- Forma -->
+  <!-- Permission Edit Form -->
   <form
     *ngIf="isFormVisible"
     [formGroup]="permissionForm"
@@ -45,6 +48,7 @@
   >
     <h3 class="text-lg font-bold mb-4">Atsakyti į Leidimą</h3>
     <div class="grid grid-cols-2 gap-4">
+      <!-- Expiration Date -->
       <div>
         <label for="dateTo" class="block text-sm font-medium">Galioja iki</label>
         <input
@@ -54,6 +58,7 @@
           class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
         />
       </div>
+      <!-- Status Dropdown -->
       <div>
         <label for="status" class="block text-sm font-medium">Statusas</label>
         <select
@@ -66,10 +71,9 @@
         </select>
       </div>
     </div>
+    <!-- Additional Information -->
     <div>
-      <label for="additionalInformation" class="block text-sm font-medium">
-        Papildoma Informacija
-      </label>
+      <label for="additionalInformation" class="block text-sm font-medium">Papildoma Informacija</label>
       <textarea
         id="additionalInformation"
         formControlName="additionalInformation"
@@ -77,6 +81,7 @@
         class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
       ></textarea>
     </div>
+    <!-- Form Buttons -->
     <div class="flex justify-between mt-4">
       <button
         type="button"

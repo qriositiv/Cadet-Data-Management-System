@@ -1,107 +1,109 @@
 <div class="w-full bg-white rounded-lg shadow-lg my-4 md:p-4 p-4 pb-0 mx-auto">
-    <h2 class="text-2xl font-bold mb-4 text-center">Fizinės Veiklos Leidimai</h2>
-  
-    <!-- Table -->
-    <table class="w-full border-collapse border border-gray-300 mb-6 text-base">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="border border-gray-300 p-2 text-left">Kariūno ID</th>
-          <th class="border border-gray-300 p-2 text-left">Dokumentas</th>
-          <th class="border border-gray-300 p-2 text-center">Atsakyti</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let exemption of exemptions" class="hover:bg-gray-100">
-          <td class="border border-gray-300 p-2">{{ exemption.cadetId }}</td>
-          <td class="border border-gray-300 p-2">
-            <a
-              [href]="'http://127.0.0.1:5000/images/' + exemption.documentPhotoUrl"
-              target="_blank"
-              class="text-rose-500 underline hover:text-rose-600"
-            >
-              Peržiūrėti nuotrauką
-            </a>
-          </td>
-          <td class="border border-gray-300 p-2 text-center">
-            <button
+  <!-- Section Title -->
+  <h2 class="text-2xl font-bold mb-4 text-center">Atleidimas nuo fizinės veiklos</h2>
+
+  <!-- Exemptions Table -->
+  <table class="w-full border-collapse border border-gray-300 mb-6 text-base">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border border-gray-300 p-2 text-left">Kariūno ID</th>
+        <th class="border border-gray-300 p-2 text-left">Dokumentas</th>
+        <th class="border border-gray-300 p-2 text-center">Atsakyti</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop through exemptions -->
+      <tr *ngFor="let exemption of exemptions" class="hover:bg-gray-100">
+        <td class="border border-gray-300 p-2">{{ exemption.cadetId }}</td>
+        <td class="border border-gray-300 p-2">
+          <!-- Link to view the document -->
+          <a
+            [href]="'http://127.0.0.1:5000/images/' + exemption.documentPhotoUrl"
+            target="_blank"
+            class="text-rose-500 underline hover:text-rose-600"
+          >
+            Peržiūrėti nuotrauką
+          </a>
+        </td>
+        <td class="border border-gray-300 p-2 text-center">
+          <!-- Edit Button -->
+          <button
             class="bg-rose-500 text-white px-3 py-1 rounded hover:bg-rose-600"
             (click)="toggleForm(exemption)"
           >
             <i class="fa-solid fa-pen"></i>
           </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <!-- Form -->
-    <form
-      *ngIf="isFormVisible"
-      [formGroup]="exemptionForm"
-      (ngSubmit)="submitForm()"
-      class="bg-gray-50 p-4 rounded-md shadow-md"
-    >
-      <h3 class="text-lg font-bold mb-4">Leidimo Forma</h3>
-  
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-  
-        <!-- Status -->
-        <div>
-          <label for="status" class="block text-sm font-medium">Statusas</label>
-          <select
-            id="status"
-            formControlName="status"
-            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
-          >
-            <option value="Patvirtintas">Patvirtintas</option>
-            <option value="Atšauktas">Atšauktas</option>
-          </select>
-        </div>
-  
-        <!-- Date From -->
-        <div>
-          <label for="dateFrom" class="block text-sm font-medium">Galioja nuo</label>
-          <input
-            id="dateFrom"
-            formControlName="dateFrom"
-            type="date"
-            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
-          />
-        </div>
-  
-        <!-- Date To -->
-        <div>
-          <label for="dateTo" class="block text-sm font-medium">Galioja iki</label>
-          <input
-            id="dateTo"
-            formControlName="dateTo"
-            type="date"
-            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
-          />
-        </div>
-  
-        <!-- Additional Information -->
-        <div class="col-span-2">
-          <label for="additionalInformation" class="block text-sm font-medium">Papildoma informacija</label>
-          <textarea
-            id="additionalInformation"
-            formControlName="additionalInformation"
-            rows="3"
-            class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
-          ></textarea>
-        </div>
-      </div>
-  
-      <!-- Submit Button -->
-      <div class="mt-4">
-        <button
-          type="submit"
-          class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full"
-          [disabled]="!exemptionForm.valid"
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Exemption Form -->
+  <form
+    *ngIf="isFormVisible"
+    [formGroup]="exemptionForm"
+    (ngSubmit)="submitForm()"
+    class="bg-gray-50 p-4 rounded-md shadow-md"
+  >
+    <h3 class="text-lg font-bold mb-4">Leidimo Forma</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Status Dropdown -->
+      <div>
+        <label for="status" class="block text-sm font-medium">Statusas</label>
+        <select
+          id="status"
+          formControlName="status"
+          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
         >
-          Pateikti
-        </button>
+          <option value="Patvirtintas">Patvirtintas</option>
+          <option value="Atšauktas">Atšauktas</option>
+        </select>
       </div>
-    </form>
-  </div>
-  
+
+      <!-- Valid From Date -->
+      <div>
+        <label for="dateFrom" class="block text-sm font-medium">Galioja nuo</label>
+        <input
+          id="dateFrom"
+          formControlName="dateFrom"
+          type="date"
+          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+        />
+      </div>
+
+      <!-- Valid To Date -->
+      <div>
+        <label for="dateTo" class="block text-sm font-medium">Galioja iki</label>
+        <input
+          id="dateTo"
+          formControlName="dateTo"
+          type="date"
+          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+        />
+      </div>
+
+      <!-- Additional Information -->
+      <div class="col-span-2">
+        <label for="additionalInformation" class="block text-sm font-medium">Papildoma informacija</label>
+        <textarea
+          id="additionalInformation"
+          formControlName="additionalInformation"
+          rows="3"
+          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-4">
+      <button
+        type="submit"
+        class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full"
+        [disabled]="!exemptionForm.valid"
+      >
+        Pateikti
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,6 +1,8 @@
 <div class="permissions-container bg-white md:p-4 p-2 rounded-lg shadow-lg w-full my-4 mx-auto">
+  <!-- Section title -->
   <h2 class="md:text-2xl text-lg font-bold mb-4 text-center">Leidimai įvažiuoti į teritoriją</h2>
 
+  <!-- Table displaying existing permissions -->
   <table class="w-full border-collapse border border-gray-300 mb-6 md:text-base text-xs">
     <thead>
       <tr class="bg-gray-200">
@@ -12,13 +14,16 @@
       </tr>
     </thead>
     <tbody>
+      <!-- Loop through permissions -->
       <tr *ngFor="let permission of enterWithCarPermissions" class="hover:bg-gray-100">
+        <!-- Permission status with dynamic icons -->
         <td class="border border-gray-300 md:p-2 p-1 md:text-left text-center text-nowrap space-x-1">
           <i *ngIf="permission.status === 'Patvirtintas'" class="fa-solid fa-circle-check text-green-400"></i>
           <i *ngIf="permission.status === 'Atšauktas'" class="fa-solid fa-circle-xmark text-red-400"></i>
           <i *ngIf="permission.status === 'Nepatvirtintas'" class="fa-solid fa-clock text-amber-400"></i>
           <span class="max-sm:hidden">{{ permission.status }}</span>
         </td>
+        <!-- Permission details -->
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateFrom | date: 'shortDate' }}</td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.dateTo | date: 'shortDate' }}</td>
         <td class="border border-gray-300 md:p-2 p-1">{{ permission.carNumber }}, {{ permission.carBrand }}</td>
@@ -27,11 +32,14 @@
     </tbody>
   </table>
 
+  <!-- Button to toggle form visibility -->
   <button (click)="toggleFormVisibility()" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full mb-4 md:text-base text-sm">
     {{ isFormVisible ? 'Atšaukti prašymą' : 'Pildyti naują prašymą' }}
   </button>
 
+  <!-- Form to submit a new permission -->
   <form *ngIf="isFormVisible" [formGroup]="permissionForm" (ngSubmit)="submitPermission()" class="space-y-4">
+    <!-- Location dropdown -->
     <div *ngIf="locations">
       <label for="location" class="block text-sm font-medium text-gray-700">Pasirinkite vietą</label>
       <select id="location" formControlName="location" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
@@ -39,15 +47,20 @@
         <option *ngFor="let area of locations" [value]="area">{{ area }}</option>
       </select>
     </div>
+
+    <!-- Date and car information inputs -->
     <div class="grid grid-cols-2 gap-4">
+      <!-- Start date -->
       <div>
         <label for="dateFrom" class="block text-sm font-medium text-gray-700">Galioja nuo</label>
         <input type="date" id="dateFrom" formControlName="dateFrom" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
+      <!-- End date -->
       <div>
         <label for="dateTo" class="block text-sm font-medium text-gray-700">Galioja iki</label>
         <input type="date" id="dateTo" formControlName="dateTo" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
+      <!-- Car number -->
       <div>
         <label for="carNumber" class="block text-sm font-medium text-gray-700">Automobilio numeris</label>
         <input type="text" id="carNumber" formControlName="carNumber" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
@@ -55,15 +68,20 @@
           Ne daugiau 6 simboliu.
         </div>
       </div>
+      <!-- Car brand -->
       <div>
         <label for="carBrand" class="block text-sm font-medium text-gray-700">Automobilio markė</label>
         <input type="text" id="carBrand" formControlName="carBrand" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm">
       </div>
     </div>
+
+    <!-- Additional information textarea -->
     <div>
       <label for="additionalInformation" class="block text-sm font-medium text-gray-700">Papildoma informacija</label>
       <textarea id="additionalInformation" formControlName="additionalInformation" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-rose-600 focus:border-rose-600 md:text-base text-sm"></textarea>
     </div>
+
+    <!-- Submit button -->
     <button type="submit" class="bg-rose-500 text-white py-2 px-4 rounded-md hover:bg-rose-600 w-full md:text-base text-sm" [disabled]="!permissionForm.valid">
       Pateikti prašymą
     </button>

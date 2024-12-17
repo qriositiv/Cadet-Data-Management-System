@@ -1,43 +1,57 @@
 <div class="w-full bg-white rounded-lg shadow-lg my-4 md:p-4 p-4 pb-0 mx-auto">
+    <!-- Notifications section title -->
     <h2 class="text-lg font-semibold md:mb-4 mb-2 border-b pb-2">Pranešimai</h2>
+
+    <!-- List of notifications -->
     <ul>
+        <!-- Loop through notifications -->
         @for (notification of notifications; track $index) {
+            <!-- Display only non-hidden notifications -->
             @if (!notification.hidden) {
             <li class="md:mb-4 mb-2 border-b pb-2 flex justify-between">
-            <div class="flex md:space-x-4 space-x-2">
-                <div class="my-auto text-3xl">
-                    @switch (notification.type) {
-                        @case ('important') {
-                            <i class="fa-solid fa-triangle-exclamation text-orange-400"></i>
+                <div class="flex md:space-x-4 space-x-2">
+                    <!-- Icon based on notification type -->
+                    <div class="my-auto text-3xl">
+                        @switch (notification.type) {
+                            @case ('important') {
+                                <i class="fa-solid fa-triangle-exclamation text-orange-400"></i>
+                            }
+                            @case ('success') {
+                                <i class="fa-solid fa-circle-check text-green-400"></i>
+                            }
+                            @case ('fail') {
+                                <i class="fa-solid fa-circle-xmark text-red-400"></i>
+                            }
+                            @case ('wait') {
+                                <i class="fa-solid fa-clock text-amber-400"></i>
+                            }
+                            @default {
+                                <i class="fa-solid fa-circle-info text-blue-400"></i>
+                            }
                         }
-                        @case ('success') {
-                            <i class="fa-solid fa-circle-check text-green-400"></i>
-                        }
-                        @case ('fail') {
-                            <i class="fa-solid fa-circle-xmark text-red-400"></i>
-                        }
-                        @case ('wait') {
-                            <i class="fa-solid fa-clock text-amber-400"></i>
-                        }
-                        @default {
-                            <i class="fa-solid fa-circle-info text-blue-400"></i>
-                        }
-                    }
+                    </div>
+
+                    <!-- Notification details -->
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-800">{{ notification.title }}</h3>
+                        <p class="text-sm text-gray-600 mt-1">{{ notification.message }}</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="text-sm font-medium text-gray-800">{{ notification.title }}</h3>
-                    <p class="text-sm text-gray-600 mt-1">{{ notification.message }}</p>
+
+                <!-- Hide notification button -->
+                <div class="md:pr-4 my-auto text-right">
+                    <button 
+                        class="text-lg text-gray-500 hover:text-red-500" 
+                        (click)="hideNotification(notification.notificationId)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
-            </div>
-            <div class="md:pr-4 my-auto text-right">
-                <button class="text-lg text-gray-500 hover:text-red-500" (click)="hideNotification(notification.notificationId)">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
             </li>
             }
         }
     </ul>
+
+    <!-- Message when no notifications are available -->
     <div *ngIf="notifications.length === 0" class="text-center text-gray-500 pb-2">
         Nėra naujų pranešimų
     </div>

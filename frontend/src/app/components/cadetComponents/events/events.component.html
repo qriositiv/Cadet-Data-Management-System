@@ -1,38 +1,68 @@
 <div class="bg-white p-4 rounded-lg my-4 shadow-lg w-full mx-auto">
-    <h2 class="md:text-2xl text-lg font-bold mb-4 text-center">Renginiai</h2>
-  
-    <ul>
-      <li *ngFor="let event of upcomingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="md:mb-4 md-2 md:p-4 p-2 rounded-md hover:bg-rose-200">
-        <div class="md:text-lg font-semibold text-gray-800">{{ event.title }}</div>
-        <div class="flex justify-between items-center md:text-sm text-xs text-gray-600">
-          <span>Pradžia: {{ event.dateFrom | date: 'short' }} - Pabaiga: {{ event.dateTo | date: 'short' }}</span>
-          <button (click)="exportToGoogleCalendar(event)" class="text-rose-500 mt-2 text-xs font-semibold underline">
-            Pridėti į kalendorį
-          </button>
-        </div>
-        <div class="text-sm text-gray-600">Lokacija: {{ event.location }}</div>
-      </li>
-  
-      <ng-container *ngIf="showAllEvents">
-        <li *ngFor="let event of remainingEvents" [ngClass]="{'bg-rose-100': isEventLive(event)}" class="md:mb-4 md-2 md:p-4 p-2 rounded-md hover:bg-rose-200">
+  <!-- Section title -->
+  <h2 class="md:text-2xl text-lg font-bold mb-4 text-center">Renginiai</h2>
+
+  <!-- List of upcoming events -->
+  <ul>
+      <!-- Loop through upcoming events -->
+      <li 
+          *ngFor="let event of upcomingEvents" 
+          [ngClass]="{'bg-rose-100': isEventLive(event)}" 
+          class="md:mb-4 md-2 md:p-4 p-2 rounded-md hover:bg-rose-200">
+          
+          <!-- Event title -->
           <div class="md:text-lg font-semibold text-gray-800">{{ event.title }}</div>
+          
+          <!-- Event time and Google Calendar button -->
           <div class="flex justify-between items-center md:text-sm text-xs text-gray-600">
-            <span>Pradžia: {{ event.dateFrom | date: 'short' }} - Pabaiga: {{ event.dateTo | date: 'short' }}</span>
-            <button (click)="exportToGoogleCalendar(event)" class="text-rose-500 mt-2 text-xs font-semibold underline">
-              Pridėti į kalendorį
-            </button>
+              <span>Pradžia: {{ event.dateFrom | date: 'short' }} - Pabaiga: {{ event.dateTo | date: 'short' }}</span>
+              <button 
+                  (click)="exportToGoogleCalendar(event)" 
+                  class="text-rose-500 mt-2 text-xs font-semibold underline">
+                  Pridėti į kalendorių
+              </button>
           </div>
+          
+          <!-- Event location -->
           <div class="text-sm text-gray-600">Lokacija: {{ event.location }}</div>
-        </li>
+      </li>
+
+      <!-- Additional events if 'showAllEvents' is true -->
+      <ng-container *ngIf="showAllEvents">
+          <li 
+              *ngFor="let event of remainingEvents" 
+              [ngClass]="{'bg-rose-100': isEventLive(event)}" 
+              class="md:mb-4 md-2 md:p-4 p-2 rounded-md hover:bg-rose-200">
+              
+              <!-- Event title -->
+              <div class="md:text-lg font-semibold text-gray-800">{{ event.title }}</div>
+              
+              <!-- Event time and Google Calendar button -->
+              <div class="flex justify-between items-center md:text-sm text-xs text-gray-600">
+                  <span>Pradžia: {{ event.dateFrom | date: 'short' }} - Pabaiga: {{ event.dateTo | date: 'short' }}</span>
+                  <button 
+                      (click)="exportToGoogleCalendar(event)" 
+                      class="text-rose-500 mt-2 text-xs font-semibold underline">
+                      Pridėti į kalendorį
+                  </button>
+              </div>
+              
+              <!-- Event location -->
+              <div class="text-sm text-gray-600">Lokacija: {{ event.location }}</div>
+          </li>
       </ng-container>
-    </ul>
-    @if (events.length > 3) {
-    <button (click)="toggleShowAll()" class="w-full mt-2 bg-rose-600 text-white font-semibold py-2 rounded-md hover:bg-rose-700">
+  </ul>
+
+  <!-- Show more/less button for events (visible if events > 3) -->
+  <button 
+      *ngIf="events.length > 3" 
+      (click)="toggleShowAll()" 
+      class="w-full mt-2 bg-rose-600 text-white font-semibold py-2 rounded-md hover:bg-rose-700">
       {{ showAllEvents ? 'Rodyti mažiau' : 'Rodyti daugiau' }}
-    </button>
-    }
-    @if (events.length === 0) {
-      <div class="text-center">Nėra renginių.</div>
-    }
+  </button>
+
+  <!-- Message when there are no events -->
+  <div *ngIf="events.length === 0" class="text-center">
+      Nėra renginių.
   </div>
-  
+</div>

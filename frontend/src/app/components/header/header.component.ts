@@ -11,23 +11,45 @@ import { IntendantService } from '../../services/intendant.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
+  // State to manage the visibility of the mobile menu
   mobileMenuOpen: boolean = false;
+  
+  // State to manage the visibility of the dropdown menu
   dropdownOpen = false;
 
-  constructor(private router: Router, public cadetService: CadetService, private intendantService: IntendantService) {}
+  // Stores the user's role
+  role!: string;
 
+  constructor(
+    private router: Router,
+    public cadetService: CadetService,
+    private intendantService: IntendantService
+  ) {}
+
+  /**
+   * Toggles the visibility of the dropdown menu.
+   */
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
+  /**
+   * Toggles the visibility of the mobile menu.
+   */
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
+  /**
+   * Closes the mobile menu.
+   */
   closeMobileMenu() {
     this.mobileMenuOpen = false;
   }
 
+  /**
+   * Logs the user out by clearing local storage and refreshing the page.
+   */
   logout() {
     localStorage.removeItem('cadetId');
     localStorage.removeItem('access_token');
@@ -35,13 +57,17 @@ export class HeaderComponent {
     window.location.reload();
   }
 
-  role!: string;
-
+  /**
+   * Lifecycle hook that initializes the component.
+   * Fetches the user's role.
+   */
   ngOnInit(): void {
     this.getUserRole();
-    
   }
 
+  /**
+   * Retrieves the user's role from the service and assigns it to the `role` property.
+   */
   getUserRole(): void {
     this.intendantService.getUserRole().subscribe(
       (response: any) => {

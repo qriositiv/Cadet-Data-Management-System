@@ -1,68 +1,69 @@
 <div class="w-full bg-white rounded-lg shadow-lg my-4 md:p-4 p-4 pb-0 mx-auto">
-    <h2 class="text-lg md:text-2xl font-bold mb-4 text-center">Įrašyti Rezultatą</h2>
-  
-    <form [formGroup]="disciplineForm" (ngSubmit)="submitForm()" class="space-y-4">
-      <!-- Kariūno ID -->
-      <div>
-        <label for="cadetId" class="block text-sm font-medium text-gray-700">Kariūno ID</label>
-        <input
-          type="text"
-          id="cadetId"
-          formControlName="cadetId"
-          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-rose-600 focus:border-rose-600"
-          placeholder="Įveskite Kariūno ID"
-        />
-        <div *ngIf="disciplineForm.get('cadetId')?.invalid && disciplineForm.get('cadetId')?.touched" class="text-red-500 text-sm">
-          Prašome įvesti galiojantį Kariūno ID (iki 14 simbolių).
-        </div>
+  <!-- Title -->
+  <h2 class="text-lg md:text-2xl font-bold mb-4 text-center">Įrašyti Rezultatą</h2>
+
+  <!-- Form for submitting a result -->
+  <form [formGroup]="disciplineForm" (ngSubmit)="submitForm()" class="space-y-4">
+    <!-- Cadet ID Input -->
+    <div>
+      <label for="cadetId" class="block text-sm font-medium text-gray-700">Kariūno ID</label>
+      <input
+        type="text"
+        id="cadetId"
+        formControlName="cadetId"
+        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-rose-600 focus:border-rose-600"
+        placeholder="Įveskite Kariūno ID"
+      />
+      <!-- Validation Message -->
+      <div *ngIf="disciplineForm.get('cadetId')?.invalid && disciplineForm.get('cadetId')?.touched" class="text-red-500 text-sm">
+        Prašome įvesti galiojantį Kariūno ID (iki 14 simbolių).
       </div>
-  
-      <!-- Discipline Dropdown -->
-      <div>
-        <label for="discipline" class="block text-sm font-medium text-gray-700">Disciplina</label>
-        <select
-          id="discipline"
-          formControlName="discipline"
-          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-rose-600 focus:border-rose-600"
-        >
-          <option value="" disabled selected>Pasirinkite discipliną</option>
-          <option *ngFor="let discipline of disciplines" [value]="discipline.disciplineId">
-            {{ discipline.name }}
-          </option>
-        </select>
-        <div
-          *ngIf="disciplineForm.get('discipline')?.invalid && disciplineForm.get('discipline')?.touched"
-          class="text-red-500 text-sm"
-        >
-          Prašome pasirinkti discipliną.
-        </div>
-      </div>      
-  
-      <!-- Result Input -->
-      <div>
-        <label for="result" class="block text-sm font-medium text-gray-700">Rezultatas</label>
-        <input
-          type="number"
-          id="result"
-          formControlName="result"
-          class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-rose-600 focus:border-rose-600"
-          placeholder="Įveskite rezultatą"
-        />
-        <div *ngIf="disciplineForm.get('result')?.invalid && disciplineForm.get('result')?.touched" class="text-red-500 text-sm">
-          Prašome įvesti galiojantį rezultatą.
-        </div>
+    </div>
+
+    <!-- Discipline Dropdown -->
+    <div>
+      <label for="discipline" class="block text-sm font-medium text-gray-700">Disciplina</label>
+      <select
+        id="discipline"
+        formControlName="discipline"
+        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-rose-600 focus:border-rose-600"
+      >
+        <option value="" disabled selected>Pasirinkite discipliną</option>
+        <option *ngFor="let discipline of disciplines" [value]="discipline.disciplineId">
+          {{ discipline.name }}
+        </option>
+      </select>
+      <!-- Validation Message -->
+      <div *ngIf="disciplineForm.get('discipline')?.invalid && disciplineForm.get('discipline')?.touched" class="text-red-500 text-sm">
+        Prašome pasirinkti discipliną.
       </div>
-  
-      <!-- Submit Button -->
-      <div>
-        <button
-          type="submit"
-          class="bg-rose-600 text-white py-2 px-4 rounded-md hover:bg-rose-700 w-full"
-          [disabled]="!disciplineForm.valid"
-        >
-          Pateikti rezultatą
-        </button>
+    </div>
+
+    <!-- Result Input -->
+    <div>
+      <label for="result" class="block text-sm font-medium text-gray-700">Rezultatas</label>
+      <input
+        type="number"
+        id="result"
+        formControlName="result"
+        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-rose-600 focus:border-rose-600"
+        placeholder="Įveskite rezultatą"
+      />
+      <!-- Validation Message -->
+      <div *ngIf="disciplineForm.get('result')?.invalid && disciplineForm.get('result')?.touched" class="text-red-500 text-sm">
+        Prašome įvesti galiojantį rezultatą.
       </div>
-    </form>
-  </div>
-  
+    </div>
+
+    <!-- Submit Button -->
+    <div>
+      <button
+        type="submit"
+        class="bg-rose-600 text-white py-2 px-4 rounded-md hover:bg-rose-700 w-full"
+        [disabled]="!disciplineForm.valid"
+      >
+        Pateikti rezultatą
+      </button>
+    </div>
+  </form>
+</div>

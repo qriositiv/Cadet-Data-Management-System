@@ -1,5 +1,5 @@
-INSERT INTO UserAuthentication (cadetId, hashedPassword) VALUES ('LKA12345678901', '$2b$12$EixZaYVK1fsbw1Zfbx3OXePaWxn96p36Bc9eGeYxa9Xy5uxDRoG.e'); -- slap
-INSERT INTO UserAuthentication (cadetId, hashedPassword) VALUES ('LKA12345678909', '$2b$12$NjB/5qwhZ8/xt0Uvbds92O4d6YfJ8qpPzYTWr4zDciP0yfhTpVmSO'); -- inten
+INSERT INTO UserAuthentication (cadetId, hashedPassword) VALUES ('LKA12345678901', 'slap'); -- slap
+INSERT INTO UserAuthentication (cadetId, hashedPassword) VALUES ('LKA12345678909', 'inten'); -- inten
 
 INSERT INTO `Location` (location) VALUES 
 ('Vilnius'), ('Pabradė'), ('Rūdninkai');
@@ -145,7 +145,7 @@ INSERT INTO `UserEquipment` (cadetId, equipmentId, status, size, dateGiven) VALU
 INSERT INTO `Discipline` (name, controlForMale, controlForFemale, needMore) VALUES
     ('Atsispaudimai (kartai per 2 min.)', 57, 31, TRUE),
     ('Atsilenkimai (kartai per 2 min.)', 66, 66, TRUE),
-    ('Begimas 3 km. (laikas, min., s)', 13.33, 16.21, FALSE);
+    ('Bėgimas 3 km. (laikas, min., s)', 13.33, 16.21, FALSE);
 
 INSERT INTO `UserDisciplineResult` (cadetId, disciplineId, result) VALUES
     ('LKA12345678901', 1, 85),

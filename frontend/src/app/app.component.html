@@ -1,11 +1,13 @@
 <header class="shadow-2xl z-10">
-    <app-header></app-header>
+    <app-header></app-header> <!-- Header component -->
 </header>
 
 <main class="flex-grow bg-stone-200 flex justify-center">
-        <router-outlet></router-outlet>
+    <div class="w-full p-4 mx-auto md:w-3/4">
+    <router-outlet></router-outlet> <!-- Placeholder for routed Angular components -->
+    </div>
 </main>
 
 <footer class="z-10 shadow-2xl bg-rose-800 w-full h-16 text-white hover:text-rose-300 justify-center flex items-center">
-    <a>{{ email }}</a>
+    <a>{{ email }}</a> <!-- Displays dynamic email; visible on all screen sizes -->
 </footer>

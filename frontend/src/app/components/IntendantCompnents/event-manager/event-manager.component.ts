@@ -12,12 +12,21 @@ import { IntendantService } from '../../../services/intendant.service';
   templateUrl: './event-manager.component.html'
 })
 export class EventManagerComponent implements OnInit {
+  // List of events managed by the intendant
   events: Event[] = [];
 
+  // Form visibility toggle for adding a new event
   isFormVisible = false;
+
+  // Reactive form group for managing event details
   eventForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private cadetService: CadetService, private intendantService: IntendantService) {
+  constructor(
+    private fb: FormBuilder,
+    private cadetService: CadetService,
+    private intendantService: IntendantService
+  ) {
+    // Initialize the event form with validation rules
     this.eventForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(50)]],
       dateFrom: [null, Validators.required],
@@ -26,64 +35,84 @@ export class EventManagerComponent implements OnInit {
     });
   }
 
+  /**
+   * Lifecycle hook: Fetches the events on component initialization.
+   */
   ngOnInit(): void {
     this.loadEvents();
   }
 
-  deleteEvent(eventId: number): void {
-    this.intendantService.deleteEvent(eventId).subscribe(
-      (response) => {
-        this.events = this.events.filter(event => event.eventId !== eventId);
-        this.loadEvents();
-      },
-      (error) => {
-        console.error('Error deleting event:', error);
-      }
-    );
-  }
-
+  /**
+   * Fetches the list of events from the server.
+   */
   loadEvents(): void {
     this.cadetService.getEvents().subscribe(
       (data) => {
-        this.events = data;
+        this.events = data; // Populate the events list
       },
       (error) => {
-        console.error('Error fetching events:', error);
+        console.error('Error fetching events:', error); // Handle fetch errors
       }
     );
   }
 
-  toggleFormVisibility() {
+  /**
+   * Deletes an event by its ID and refreshes the event list.
+   *
+   * @param eventId - The ID of the event to delete
+   */
+  deleteEvent(eventId: number): void {
+    this.intendantService.deleteEvent(eventId).subscribe(
+      () => {
+        // Remove the event locally after successful deletion
+        this.events = this.events.filter(event => event.eventId !== eventId);
+        this.loadEvents(); // Reload events to ensure consistency
+      },
+      (error) => {
+        console.error('Error deleting event:', error); // Handle deletion errors
+      }
+    );
+  }
+
+  /**
+   * Toggles the visibility of the event creation form.
+   */
+  toggleFormVisibility(): void {
     this.isFormVisible = !this.isFormVisible;
   }
 
-  addEvent() {
+  /**
+   * Adds a new event to the system by submitting the event form.
+   */
+  addEvent(): void {
     if (this.eventForm.valid) {
       const dateFrom = new Date(this.eventForm.value.dateFrom);
       const dateTo = new Date(this.eventForm.value.dateTo);
-  
-      dateFrom.setHours(dateTo.getHours() + 2);
+
+      // Adjust times to account for server or timezone differences
+      dateFrom.setHours(dateFrom.getHours() + 2);
       dateTo.setHours(dateTo.getHours() + 2);
-  
+
       const newEvent = {
         ...this.eventForm.value,
         dateFrom: dateFrom.toISOString(),
         dateTo: dateTo.toISOString(),
       };
-  
+
       this.intendantService.postEvent(newEvent).subscribe(
         (response) => {
+          // Add the newly created event to the local list
           this.events.push({
             ...newEvent,
             eventId: response.eventId,
           });
-          this.eventForm.reset();
-          this.toggleFormVisibility();
+          this.eventForm.reset(); // Reset the form
+          this.toggleFormVisibility(); // Hide the form
         },
         (error) => {
-          console.error('Error creating event:', error);
+          console.error('Error creating event:', error); // Handle creation errors
         }
       );
     }
-  }  
+  }
 }

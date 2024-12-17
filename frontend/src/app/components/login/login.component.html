@@ -1,8 +1,11 @@
 <div class="h-full flex items-center justify-center bg-stone-200">
   <div class="bg-white p-8 rounded-lg shadow-lg w-80">
+    <!-- Title -->
     <h2 class="text-2xl font-bold mb-6 text-center">Autorizacija</h2>
 
+    <!-- Login Form -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Cadet ID Input -->
       <div class="mb-4">
         <label for="cadetId" class="block text-sm font-medium text-gray-700">Kariūno Numeris</label>
         <input
@@ -11,13 +14,13 @@
           formControlName="cadetId"
           class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
         />
-        @if (loginForm.get('cadetId')?.invalid && loginForm.get('cadetId')?.touched) {
-          <div class="text-red-500 text-sm">
-            Kariūno Numeris būtinas laukas
-          </div>
-        }
+        <!-- Validation Message for Cadet ID -->
+        <div *ngIf="loginForm.get('cadetId')?.invalid && loginForm.get('cadetId')?.touched" class="text-red-500 text-sm">
+          Kariūno Numeris būtinas laukas
+        </div>
       </div>
 
+      <!-- Password Input -->
       <div class="mb-6">
         <label for="password" class="block text-sm font-medium text-gray-700">Asmens kodas</label>
         <input
@@ -26,13 +29,13 @@
           formControlName="password"
           class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-600"
         />
-        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-          <div class="text-red-500 text-sm">
-            Asmens kodas būtinas laukas
-          </div>
-        }
+        <!-- Validation Message for Password -->
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm">
+          Asmens kodas būtinas laukas
+        </div>
       </div>
 
+      <!-- Submit Button -->
       <button
         type="submit"
         class="w-full bg-rose-600 text-white font-semibold py-2 rounded-md hover:bg-rose-700"
@@ -41,8 +44,5 @@
         Prisijungti
       </button>
     </form>
-    <div class="w-full text-center pt-4">
-      <a class="text-rose-600 hover:text-rose-700 text-sm">Pagalba</a>
-    </div>
   </div>
 </div>

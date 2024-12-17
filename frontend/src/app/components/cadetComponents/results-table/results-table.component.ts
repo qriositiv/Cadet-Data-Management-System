@@ -10,12 +10,18 @@ import { CommonModule } from '@angular/common';
   templateUrl: './results-table.component.html'
 })
 export class ResultsTableComponent {
+  // Stores the list of all available disciplines
   disciplines: Discipline[] = [];
 
   constructor(private cadetService: CadetService) {}
 
+  /**
+   * Lifecycle hook that initializes the component.
+   * Fetches the list of disciplines from the server via the cadet service.
+   */
   ngOnInit(): void {
     this.cadetService.getDisciplines().subscribe((data: Discipline[]) => {
+      // Assign the fetched list of disciplines to the component property
       this.disciplines = data;
     });
   }

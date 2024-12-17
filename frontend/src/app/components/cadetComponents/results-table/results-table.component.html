@@ -1,21 +1,26 @@
 <div class="bg-white p-4 rounded-lg shadow-lg w-full mx-auto my-4">
-    <h2 class="text-lg font-bold text-center mb-4">Disciplino Kontroliniai Įvertinimai</h2>
-  
-    <table class="w-full border-collapse table-auto border border-gray-300 text-sm">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="border border-gray-300 p-2">Pratimo pavadinimas</th>
-          <th class="border border-gray-300 p-2">Vaikinai</th>
-          <th class="border border-gray-300 p-2">Merginos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let discipline of disciplines">
-          <td class="border border-gray-300 p-2">{{ discipline.name }}</td>
-          <td class="border border-gray-300 p-2 text-center">{{ discipline.controlForMale }}</td>
-          <td class="border border-gray-300 p-2 text-center">{{ discipline.controlForFemale }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <!-- Section Title -->
+  <h2 class="text-lg font-bold text-center mb-4">Disciplino Kontroliniai Įvertinimai</h2>
+
+  <!-- Discipline Table -->
+  <table class="w-full border-collapse table-auto border border-gray-300 text-sm">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border border-gray-300 p-2">Pratimo pavadinimas</th>
+        <th class="border border-gray-300 p-2">Vaikinai</th>
+        <th class="border border-gray-300 p-2">Merginos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop through disciplines -->
+      <tr *ngFor="let discipline of disciplines">
+        <!-- Discipline Name -->
+        <td class="border border-gray-300 p-2">{{ discipline.name }}</td>
+        <!-- Control value for males -->
+        <td class="border border-gray-300 p-2 text-center">{{ discipline.controlForMale }}</td>
+        <!-- Control value for females -->
+        <td class="border border-gray-300 p-2 text-center">{{ discipline.controlForFemale }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
